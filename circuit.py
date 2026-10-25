@@ -102,6 +102,21 @@ KNOWN_PINS = {
         "nRPIBOOT": "Forces USB boot (lets the eMMC be reflashed)",
         "EEPROM_nWP": "Boot EEPROM write-protect",
     },
+    # RISC-V ESP32 variants: boot strap on GPIO9, built-in USB-Serial/JTAG on fixed pins.
+    "ESP32-C6": {
+        "IO9": "Boot-mode strap: held low at reset = download mode (firmware can be reflashed)",
+        "TXD0": "UART0 TX (ROM bootloader / debug console)",
+        "RXD0": "UART0 RX (ROM bootloader / debug console)",
+        "IO12": "USB D- of the built-in USB-Serial/JTAG (programming and debug port)",
+        "IO13": "USB D+ of the built-in USB-Serial/JTAG (programming and debug port)",
+    },
+    "ESP32-C3": {
+        "IO9": "Boot-mode strap: held low at reset = download mode (firmware can be reflashed)",
+        "TXD0": "UART0 TX (ROM bootloader / debug console)",
+        "RXD0": "UART0 RX (ROM bootloader / debug console)",
+        "IO18": "USB D- of the built-in USB-Serial/JTAG (programming and debug port)",
+        "IO19": "USB D+ of the built-in USB-Serial/JTAG (programming and debug port)",
+    },
     # ESP32-S3 (modules like ESP32-S3-WROOM-1). Listed before plain ESP32 so it matches first.
     "ESP32-S3": {
         "IO0": "Boot-mode strap: held low at reset = UART/USB download mode (firmware can be reflashed)",
@@ -208,9 +223,9 @@ def rule_debug_ports(components, nets):
             fix = ("Anyone with access can read out or reprogram the chip. Remove the header/pad on production "
                    "boards and enable code/read protection." if prog else
                    "Remove the header/pad on production boards or disable the console in firmware.")
-            findings.append(("HIGH", f"Debug interface {short(name)} ({label}) reaches {', '.join(exposed)}", fix))
+            findings.append(("HIGH", f"Debug interface {nice_net(name)} ({label}) reaches {', '.join(exposed)}", fix))
         else:
-            findings.append(("OK", f"{short(name)} ({label}) is not routed to any header or test point", ""))
+            findings.append(("OK", f"{nice_net(name)} ({label}) is not routed to any header or test point", ""))
 
     # Programming headers recognised by the connector itself (e.g. ISP1 "AVRISP-6"),
     # unless one of their pins was already reported above.
@@ -261,6 +276,16 @@ def rule_boot_pins(components, nets):
         if not boot_node or name.startswith("unconnected"):
             continue
         reach = [n["ref"] for n in nodes if is_exposed(n["ref"]) or is_switch(n["ref"])]
+        # One step through a transistor, e.g. the DTR/RTS auto-programming circuit on ESP32 boards
+        by_ref = nets_by_ref(nets)
+        for n in nodes:
+            if ref_prefix(n["ref"]) == "Q" or "TRANSISTOR" in part_text(n["ref"], components):
+                for other in by_ref[n["ref"]] - {name}:
+                    if is_ground(other) or is_power_net(other):
+                        continue
+                    hits = sorted({m["ref"] for m in nets[other] if is_exposed(m["ref"])})
+                    reach += [f"{h} (via {n['ref']}, {short(other)})" for h in hits]
+        reach = list(dict.fromkeys(reach))
         label = meaning_of(boot_node, components) or "boot-mode pin"
         if reach:
             findings.append(("MEDIUM", f"Boot pin {short(name)} ({label}) can be driven from {', '.join(reach)}",
@@ -557,7 +582,10 @@ def rule_power_input(components, nets):
         chips = sorted({n["ref"] for n in nodes if is_active_pin(n) and not is_exposed(n["ref"])})
         # On-board parts that produce this rail: regulator outputs, or a transistor switching it.
         sources = {n["ref"] for n in nodes if not is_exposed(n["ref"])
-                   and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q")}
+                   and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q"
+                        # regulator output pins that the symbol left as "passive"
+                        or (re.fullmatch(r"V?OUT(PUT)?[PS]?|VO", pin_name(n), re.I)
+                            and re.search(r"REGULATOR|LDO|CONVERTER|BUCK|BOOST", part_text(n["ref"], components))))}
         # Switching regulators: chip SW/LX pin -> inductor -> this rail
         for n in nodes:
             if ref_prefix(n["ref"]) == "L":
@@ -575,7 +603,7 @@ def rule_power_input(components, nets):
             continue
         if sources:
             # The board makes this rail and sends it OUT to the connector.
-            if all(ref_prefix(s) in ("U", "Q") for s in sources):
+            if all(ref_prefix(s) in ("U", "Q", "IC") for s in sources):
                 findings.append(("OK", f"Power output {short(name)} to {short_list(entry)} comes through "
                                  f"{short_list(sources)} (switch/regulator, can limit a short)", ""))
             else:
