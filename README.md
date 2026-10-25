@@ -6,6 +6,9 @@ It works on digital boards, analog boards and **mains-powered IoT appliances**. 
 
 It's a single Python file with no dependencies (Python 3.8+).
 
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/f968a079-1d76-4fb3-a4ef-d983e1145d54" />
+
+
 ## Usage
 
 1. In KiCad's schematic editor: **File → Export → Netlist**, KiCad format.
