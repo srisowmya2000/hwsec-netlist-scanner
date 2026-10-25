@@ -129,6 +129,9 @@ def is_switch(ref):
 
 def is_power_net(name):
     n = short(name).upper()
+    # Status/sense signals named after a rail (e.g. VCC_SENSE, PWR_GOOD) are not rails.
+    if re.search(r"SENSE|ERR|DETECT|GOOD|_EN\b|\bPG\b", n):
+        return False
     return (n.startswith("+") or "VBUS" in n or n.startswith("VCC")
             or n.startswith("VDD") or n.endswith("V") or "_3V3" in n or "BATT" in n)
 
@@ -270,7 +273,7 @@ def rule_usb_esd(components, nets):
 
 
 DIGITAL_HINTS = re.compile(r"GPIO|UART|TXD|RXD|_TX|_RX|MOSI|MISO|SCLK|SDA|SCL|USB|JTAG|SWD|BOOT|nRST|RESET"
-                           r"|ICSP|MCLR|\bRB\d|\bGP\d", re.I)
+                           r"|ICSP|MCLR|\bRB\d|\bGP\d|\bTCK|\bTMS|\bTDI|\bTDO", re.I)
 
 
 def digital_signals(nets):
@@ -346,8 +349,10 @@ def interface_points(components, nets):
         if name.startswith("unconnected") or is_ground(name) or is_power_net(name):
             continue
         for n in nodes:
-            if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP":
-                points[n["ref"]].append(name)
+            mechanical = re.match(r"^(MP|SH|SHIELD|MH)\d*$", pin_name(n), re.I)
+            if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP" and not mechanical:
+                if name not in points[n["ref"]]:
+                    points[n["ref"]].append(name)
     if points:
         return points, False
     for name, nodes in nets.items():
@@ -375,15 +380,34 @@ def rule_signal_protection(components, nets):
     module_low = []
     for label, net_names in points.items():
         direct, series, clamps = [], [], []
+        used_nets, clamped_nets = 0, 0
+        unclamped = []                  # (net, parts it connects to) for lines without clamps
         for net in net_names:
             others = [n for n in nets[net] if n["ref"] != label]
-            direct += [f"{n['ref']}.{pin_name(n)}" for n in others
-                       if is_active_pin(n) and n["type"] != "power_in" and not is_exposed(n["ref"])]
+            if not others:
+                continue
+            used_nets += 1
+            unclamped_direct = [f"{n['ref']}.{pin_name(n)}" for n in others
+                                if is_active_pin(n) and n["type"] != "power_in" and not is_exposed(n["ref"])]
             series += [n["ref"] for n in others if ref_prefix(n["ref"]) in SERIES_PREFIXES]
-            clamps += protection_near(net, nets, components, by_ref, label)
+            here = protection_near(net, nets, components, by_ref, label)
+            if here:
+                clamped_nets += 1
+                clamps += here
+            else:
+                direct += unclamped_direct
+                unclamped.append((nice_net(net), [n["ref"] for n in others]))
         name = label if is_module else f"{label} ({components.get(label, {}).get('value', '')})"
-        if clamps:
+        if used_nets == 0:
+            continue
+        if clamped_nets == used_nets:
             findings.append(("OK", f"{name} signals have clamp/ESD protection ({short_list(clamps)})", ""))
+        elif clamped_nets and not direct:
+            lines = ", ".join(f"{net} -> {short_list(refs, 3)}" for net, refs in unclamped[:4])
+            more = f" (+{len(unclamped) - 4} more)" if len(unclamped) > 4 else ""
+            findings.append(("LOW", f"{name}: only {clamped_nets} of {used_nets} signal lines have clamps "
+                             f"({short_list(clamps)}). Unclamped: {lines}{more}",
+                             "Add clamp diodes or a TVS array covering every signal pin on the connector."))
         elif direct:
             findings.append(("MEDIUM", f"{name} is wired straight into chip pins {short_list(direct)}",
                              "Noise, ESD or an injected signal hits the chip directly. Add a series resistor "

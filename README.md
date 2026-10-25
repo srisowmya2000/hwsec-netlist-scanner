@@ -78,6 +78,7 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `multichannel_mixer.net` | Multichannel audio mixer | KiCad demo project by CERN, licensed CC-BY-SA 4.0 |
 | `modul.net` | Video (PAL encoder) module | KiCad demo project |
 | `pic_programmer.net` | JDM COM84 PIC programmer | KiCad demo project |
+| `sonde_xilinx.net` | Xilinx "Parallel Cable III" JTAG programming cable | KiCad demo project ("sonde xilinx") |
 
 ## License
 
