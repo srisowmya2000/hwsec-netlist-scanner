@@ -2,6 +2,8 @@
 
 A small hardware-security checker for KiCad schematics. Give it a KiCad netlist and it flags places where an attacker with physical access could get into the board: exposed debug ports, boot-mode overrides, unprotected power inputs, glitchable supplies, tamperable trimmers and more. Each finding comes with a cybersecurity explanation (attack, attacker access, CIA impact, STRIDE category, CWE ID).
 
+It works on digital boards, analog boards and **mains-powered IoT appliances**. For appliances like a washing machine it also checks the cyber-physical side: which dangerous loads (heater, motor, door lock) the firmware controls, and whether hardware interlocks still keep the machine safe if that firmware is hacked.
+
 It's a single Python file with no dependencies (Python 3.8+).
 
 ## Usage
@@ -13,9 +15,10 @@ It's a single Python file with no dependencies (Python 3.8+).
 python3 circuit.py path/to/board.net
 ```
 
-Try it on the included examples:
+Try it on the included examples (run from the project folder):
 
 ```bash
+python3 circuit.py examples/mygenwashy.net      # washing machine
 python3 circuit.py examples/pic_programmer.net
 ```
 
@@ -44,6 +47,27 @@ python3 circuit.py examples/pic_programmer.net
 | Trimmers | Internal calibration parts that could be tampered with (vs. front-panel controls) |
 
 The report ends with a **security assessment**: overall risk rating, findings by attacker access (external vs. case opened), impact on confidentiality/integrity/availability, and the top fixes.
+
+## Results on the example boards
+
+| Board | Type | Overall risk | Main findings |
+|---|---|---|---|
+| `mygenwashy.net` | Washing machine controller (230 V, ATtiny3226) | **HIGH** | Exposed UPDI programming port; unprotected sensor and I²C pins; mains side well protected, with hardware interlocks |
+| `pic_programmer.net` | PIC programmer | **HIGH** | Programming pins on the sockets (by design); EEPROM write-protect unconnected; serial data line unclamped |
+| `sonde_xilinx.net` | JTAG cable | **HIGH** | JTAG lines on the connectors (by design); partial clamp protection |
+| `CM5_MINIMA_3.net` | Raspberry Pi CM5 carrier | MEDIUM | Boot pin on a switch; USB-C power input with no TVS/fuse; power rails on test points |
+| `multichannel_mixer.net` | Audio mixer (analog) | MEDIUM | 12 V power jack with no reverse-polarity, fuse or TVS protection |
+| `modul.net` | PAL video encoder (analog) | LOW | Unclamped module ports; tamperable trimmers |
+
+### Case study: washing machine (MyGenWashy)
+
+A connected washing machine shows why hardware security matters for IoT. Its firmware switches 230 V loads, so a firmware compromise can turn into a physical hazard.
+
+- **Main risk (HIGH):** the ATtiny3226's UPDI programming port is on a header (J1). With the case open, anyone can read out or replace the firmware that drives the heater, motor and door lock.
+- **Exposed interfaces:** the temperature sensor (J17) and the I²C header (J13, likely the link to a Wi-Fi/ESPHome module) go straight into the chip with no protection, and the I²C traffic can be tapped.
+- **Good mains design:** fused and surge-protected mains input, an isolated power supply, and optocouplers between mains and logic.
+- **Hardware interlocks:** the water-level and door switches drive their own relays, which gate the heater, water valves, drain and door lock. Even malicious firmware can't, for example, heat with no water.
+- **Remaining gap:** the drum motor (triac Q1) is switched by firmware alone, so a hacked or buggy firmware could run it in an unsafe state.
 
 ## Example output
 
