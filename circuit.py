@@ -115,7 +115,7 @@ KNOWN_PINS = {
 # ---------------------------------------------------------------------------
 
 # Headers, connectors, test points. ("X" is left out: KiCad uses it for crystals.)
-EXPOSED_PREFIXES = ("J", "P", "CN", "TP", "USB")
+EXPOSED_PREFIXES = ("J", "P", "CN", "CON", "TP", "USB", "JP", "ISP", "JTAG", "SWD", "HDR")
 SWITCH_PREFIXES = ("SW", "S")
 ESD_PARTS = ("RCLAMP", "TPD", "PUSB", "ESD", "TVS", "PESD", "USBLC")
 
@@ -197,6 +197,45 @@ def rule_debug_ports(components, nets):
             findings.append(("HIGH", f"Debug interface {short(name)} ({label}) reaches {', '.join(exposed)}", fix))
         else:
             findings.append(("OK", f"{short(name)} ({label}) is not routed to any header or test point", ""))
+
+    # Programming headers recognised by the connector itself (e.g. ISP1 "AVRISP-6"),
+    # unless one of their pins was already reported above.
+    reported = {r for f in findings if f[0] == "HIGH" for r in re.findall(r"reaches (.*)$", f[1])[0].split(", ")}
+    for ref, comp in components.items():
+        text = f"{ref_prefix(ref)} {comp['value']} {comp['part']}"
+        if (is_exposed(ref) and ref not in reported
+                and re.search(r"\b(ISP|AVRISP\w*|ICSP|JTAG|SWD|UPDI|PDI|TAG-?CONNECT)\b", text, re.I)):
+            pins = sorted({short(net) for net in nets_by_ref(nets)[ref]
+                           if not (is_ground(net) or is_power_net(net) or net.startswith(("Net-", "unconnected")))})
+            findings.append(("HIGH", f"Programming header {ref} ({comp['value']})"
+                             + (f" carries {', '.join(pins)}" if pins else ""),
+                             "Anyone with access can read out or reprogram the chip. Remove the header on production "
+                             "boards and set the lock/read-protection bits."))
+    return findings
+
+
+WIRELESS = re.compile(r"\b(BT|BLE|BLUETOOTH|WI-?FI|WIFI|WLAN|ESP\d*\w*|LORA\w*|ZIGBEE|GSM|LTE|NB-?IOT|NRF\d+\w*|"
+                      r"HC-?0[56]|RFM\d+\w*|CC\d{4}|SIM\d{3,4}\w*|XBEE)\b", re.I)
+
+
+def rule_wireless(components, nets):
+    """Radios (or headers for radio modules) give a remote attack surface."""
+    radios = defaultdict(set)              # part/header -> signals it uses
+    for ref, comp in components.items():
+        if WIRELESS.search(f"{comp['value']} {comp['part']} {comp['description']}"):
+            radios[ref]
+    for name, nodes in nets.items():
+        if WIRELESS.search(short(name).replace("-", " ").replace("_", " ")):
+            for n in nodes:
+                if is_exposed(n["ref"]) or n["ref"] in radios:
+                    radios[n["ref"]].add(short(name))
+    findings = []
+    for ref, sigs in sorted(radios.items()):
+        uart = sorted(s for s in sigs if re.search(r"TX|RX", s, re.I))
+        link = f" over UART ({', '.join(uart)})" if uart else (f" ({', '.join(sorted(sigs)[:5])})" if sigs else "")
+        findings.append(("MEDIUM", f"Wireless module/header {ref} ({components[ref]['value']}) talks to the board{link}",
+                         "This is a remote attack surface: anyone in radio range can reach the firmware. Require "
+                         "pairing/authentication, validate every command, and keep the module's firmware updated."))
     return findings
 
 
@@ -568,11 +607,33 @@ def connector_name(ref, components):
     return f"{v} ({ref})" if v and not re.match(r"^(Conn|PRG|Screw_Terminal)", v, re.I) else ref
 
 
+LOAD_WORDS = re.compile(r"\b(SSR|RELAY|HEATER|HEAT|MOTOR|PUMP|VALVE|SOLENOID|LOCK|COMPRESSOR|MAGNETRON)\b", re.I)
+
+
+def external_loads(components, nets):
+    """No mains on the board, but headers that drive an external power stage (e.g. an SSR for a heater)."""
+    by_ref = nets_by_ref(nets)
+    found = []
+    for ref, comp in sorted(components.items()):
+        if not is_exposed(ref):
+            continue
+        sigs = sorted({short(n) for n in by_ref[ref] if LOAD_WORDS.search(short(n).replace("_", " "))})
+        if LOAD_WORDS.search(comp["value"].replace("_", " ")) or sigs:
+            found.append(f"{connector_name(ref, components)}" + (f" ({', '.join(sigs)})" if sigs else ""))
+    if not found:
+        return []
+    return [("MEDIUM", "Firmware drives an external power load (relay/SSR/heater/motor) through " + "; ".join(found)
+             + " - no hardware interlock on this board",
+             "If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater running away). "
+             "Add an independent hardware cutoff: thermal fuse/thermostat in the load path or a watchdog-driven "
+             "enable.")]
+
+
 def rule_mains(components, nets):
     """Mains entry protection, isolation, and which mains loads the firmware controls (cyber-physical)."""
     mains = mains_nets(components, nets)
     if not mains:
-        return []
+        return external_loads(components, nets)
     findings = []
     by_ref = nets_by_ref(nets)
     connectors = sorted({n["ref"] for net in mains for n in nets[net] if is_exposed(n["ref"])})
@@ -736,6 +797,7 @@ def rule_trimmers(components, nets):
 
 DIGITAL_RULES = [
     ("Debug interfaces", rule_debug_ports),
+    ("Wireless interfaces (remote attack surface)", rule_wireless),
     ("Boot-mode pins", rule_boot_pins),
     ("Write protection", rule_write_protect),
     ("Power test points", rule_power_testpoints),
@@ -772,6 +834,12 @@ THREATS = {
         access=BOARD, cia="CIA",
         stride="Information disclosure, Tampering, Elevation of privilege",
         cwe="CWE-1191 (debug interface with improper access control), CWE-1263 (physical access)"),
+    "Wireless interfaces (remote attack surface)": dict(
+        attack="Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed - and send "
+               "commands, replay traffic, or exploit bugs in the firmware's command handling to take over the device.",
+        access="Remote - within radio range, no physical access needed", cia="CIA",
+        stride="Spoofing, Tampering, Information disclosure, Elevation of privilege",
+        cwe="CWE-306 (missing authentication for critical function), CWE-319 (cleartext transmission)"),
     "Boot-mode pins": dict(
         attack="Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping the normal "
                "boot chain to read the storage or load attacker firmware.",
@@ -859,7 +927,8 @@ ANALOG_THREATS = {
 }
 
 PARENT = "Via parent board - these are module ports, not connectors; exposure depends on that board"
-ACCESS_LEVELS = (EXTERNAL, PARENT, BOARD)
+REMOTE = "Remote - within radio range, no physical access needed"
+ACCESS_LEVELS = (REMOTE, EXTERNAL, PARENT, BOARD)
 
 CIA_NAMES = {"C": "Confidentiality", "I": "Integrity", "A": "Availability"}
 
@@ -907,7 +976,7 @@ def print_assessment(results, ctx):
     print("Who can exploit it (by attacker access):")
     for access in ACCESS_LEVELS:
         mine = [r for r in issues if threat_for(r[0], ctx).get("access") == access]
-        if access == PARENT and not mine:
+        if access in (PARENT, REMOTE) and not mine:
             continue
         hits = [r for r in mine if r[1] != "INFO"]
         infos = len(mine) - len(hits)
