@@ -19,6 +19,7 @@ Try it on the included examples (run from the project folder):
 
 ```bash
 python3 circuit.py examples/mygenwashy.net      # washing machine
+python3 circuit.py examples/doorman.net         # smart door opener
 python3 circuit.py examples/pic_programmer.net
 ```
 
@@ -54,6 +55,7 @@ The report ends with a **security assessment**: overall risk rating, findings by
 | Board | Type | Overall risk | Main findings |
 |---|---|---|---|
 | `mygenwashy.net` | Washing machine controller (230 V, ATtiny3226) | **HIGH** | Exposed UPDI programming port; unprotected sensor and I²C pins; mains side well protected, with hardware interlocks |
+| `doorman.net` | Smart door intercom / door opener (ESP32-S3, Wi-Fi) | **HIGH** | USB-C is a built-in JTAG/programming port; UART console on test pads; boot button; Wi-Fi/BLE remote surface; door-opener relay driven by firmware alone |
 | `open_vapors.net` | Reflow oven controller (ATmega32U4, Bluetooth) | **HIGH** | AVR ISP programming header; Bluetooth module header (remote attack surface); heater SSR driven by firmware with no hardware cutoff |
 | `pic_programmer.net` | PIC programmer | **HIGH** | Programming pins on the sockets (by design); EEPROM write-protect unconnected; serial data line unclamped |
 | `sonde_xilinx.net` | JTAG cable | **HIGH** | JTAG lines on the connectors (by design); partial clamp protection |
@@ -70,6 +72,16 @@ A connected washing machine shows why hardware security matters for IoT. Its fir
 - **Good mains design:** fused and surge-protected mains input, an isolated power supply, and optocouplers between mains and logic.
 - **Hardware interlocks:** the water-level and door switches drive their own relays, which gate the heater, water valves, drain and door lock. Even malicious firmware can't, for example, heat with no water.
 - **Remaining gap:** the drum motor (triac Q1) is switched by firmware alone, so a hacked or buggy firmware could run it in an unsafe state.
+
+### Case study: smart door opener (Doorman S3)
+
+Doorman connects a building's door intercom to Wi-Fi so you can ring and open the door from your phone. Taking it over means getting through the door.
+
+- **Programming and debug ports (HIGH):** the ESP32-S3's built-in USB-Serial/JTAG goes straight to the USB-C port, and the UART0 console is on test pads (J4/J5). Unless these are locked down in the chip's eFuses (secure boot, flash encryption, JTAG disabled), anyone with the device in hand can dump or replace the firmware.
+- **Boot button (MEDIUM):** the "Flash" button (SW2 on IO0) puts the chip into download mode at reset.
+- **Remote attack surface (MEDIUM):** Wi-Fi and Bluetooth on the ESP32-S3. Weak authentication in the firmware or app would let someone nearby open the door.
+- **Cyber-physical risk (MEDIUM):** the door-opener relay (U3, RELAY_WIRE1/2 on J2) is switched by firmware alone, with no hardware interlock, so compromised firmware can open the door at will.
+- **USB ESD (MEDIUM):** the USB-C data lines have no ESD protection.
 
 ### Case study: reflow oven (Open-Vapors)
 
@@ -126,6 +138,7 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `pic_programmer.net` | JDM COM84 PIC programmer | KiCad demo project |
 | `sonde_xilinx.net` | Xilinx "Parallel Cable III" JTAG programming cable | KiCad demo project ("sonde xilinx") |
 | `mygenwashy.net` | MyGenWashy washing machine controller (230 V, ATtiny3226) | [mayermakes/MyGenWashy](https://github.com/mayermakes/MyGenWashy), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
+| `doorman.net` | Doorman S3 door intercom gateway, Rev 1.6.1 | [AzonInc/Doorman](https://github.com/AzonInc/Doorman), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 | `open_vapors.net` | Open Vapors reflow oven controller, Rev 2 | [baldengineer/Open-Vapors](https://github.com/baldengineer/Open-Vapors) by baldengineer, MIT license (the project's LICENSE reads "Copyright (c) 2013-2021 Damien P. George"). Generated from the KiCad PCB with `tools/pcb2net.py`. |
 
 ## License

@@ -102,6 +102,19 @@ KNOWN_PINS = {
         "nRPIBOOT": "Forces USB boot (lets the eMMC be reflashed)",
         "EEPROM_nWP": "Boot EEPROM write-protect",
     },
+    # ESP32-S3 (modules like ESP32-S3-WROOM-1). Listed before plain ESP32 so it matches first.
+    "ESP32-S3": {
+        "IO0": "Boot-mode strap: held low at reset = UART/USB download mode (firmware can be reflashed)",
+        "TXD0": "UART0 TX (ROM bootloader / debug console)",
+        "RXD0": "UART0 RX (ROM bootloader / debug console)",
+        "IO19": "USB D- of the built-in USB-Serial/JTAG (programming and debug port)",
+        "IO20": "USB D+ of the built-in USB-Serial/JTAG (programming and debug port)",
+    },
+    "ESP32": {
+        "IO0": "Boot-mode strap: held low at reset = UART download mode (firmware can be reflashed)",
+        "TXD0": "UART0 TX (ROM bootloader / debug console)",
+        "RXD0": "UART0 RX (ROM bootloader / debug console)",
+    },
     # tinyAVR 2-series (matched as a substring of the part value)
     "ATtiny3226": {
         "PA0": "UPDI programming/debug pin",
@@ -175,7 +188,8 @@ def rule_debug_ports(components, nets):
     findings = []
     pattern = re.compile(r"UART|_TX|_RX|TXD|RXD|SWD|SWCLK|SWDIO|JTAG|TCK|TMS|TDI|TDO|UPDI|CONSOLE|DEBUG", re.I)
     for name, nodes in nets.items():
-        meanings = [m for m in (meaning_of(n, components) for n in nodes) if m and re.search(r"UART|UPDI|debug", m)]
+        meanings = [m for m in (meaning_of(n, components) for n in nodes)
+                    if m and re.search(r"UART|UPDI|debug", m) and "Boot-mode" not in m]
         prog = [f"{n['ref']}.{pin_name(n)}" for n in nodes if PROG_PIN.search(pin_name(n))]
         if re.search(r"UPDI|ICSP|SWD|JTAG", short(name), re.I) or any("programming" in m for m in meanings):
             prog = prog or [f"{n['ref']}.{pin_name(n)}" for n in nodes if not is_exposed(n["ref"])]
@@ -183,7 +197,7 @@ def rule_debug_ports(components, nets):
             continue
         if name.startswith("unconnected"):
             continue
-        exposed = [n["ref"] for n in nodes if is_exposed(n["ref"])]
+        exposed = sorted({n["ref"] for n in nodes if is_exposed(n["ref"])})
         if meanings:
             label = meanings[0]
         elif prog:
@@ -242,7 +256,8 @@ def rule_wireless(components, nets):
 def rule_boot_pins(components, nets):
     findings = []
     for name, nodes in nets.items():
-        boot_node = next((n for n in nodes if re.search(r"BOOT|STRAP", n["function"] + name, re.I)), None)
+        boot_node = next((n for n in nodes if re.search(r"BOOT|STRAP", n["function"] + name, re.I)
+                          or "Boot-mode" in (meaning_of(n, components) or "")), None)
         if not boot_node or name.startswith("unconnected"):
             continue
         reach = [n["ref"] for n in nodes if is_exposed(n["ref"]) or is_switch(n["ref"])]
@@ -310,7 +325,7 @@ def rule_exposed_buses(components, nets):
 def rule_usb_esd(components, nets):
     findings = []
     for name, nodes in nets.items():
-        if not re.search(r"USB.*D_?[NP]$", short(name), re.I):
+        if not re.search(r"USB.*(D_?[NP]|D[+-]|DP|DM)$", short(name), re.I):
             continue
         if not any(is_exposed(n["ref"]) for n in nodes):
             continue
@@ -356,7 +371,8 @@ def is_ground(name):
 
 def is_led(ref, components):
     t = part_text(ref, components)
-    return "LED" in t or bool(re.search(r"\b(RED|GREEN|BLUE|YELLOW|WHITE|AMBER|ORANGE)\b", t))
+    return "LED" in t or bool(re.search(r"\b(RED|GREEN|BLUE|YELLOW|WHITE|AMBER|ORANGE)\b|WS28\d\d|SK68\d\d|"
+                                        r"APA10\d|NEOPIXEL", t))
 
 
 def is_protection(ref, components):
@@ -529,6 +545,7 @@ def rule_signal_protection(components, nets):
 
 def rule_power_input(components, nets):
     findings = []
+    by_ref = nets_by_ref(nets)
     for name, nodes in nets.items():
         if not is_power_net(name) or is_ground(name):
             continue
@@ -539,8 +556,15 @@ def rule_power_input(components, nets):
         diodes = [n["ref"] for n in nodes if is_protection(n["ref"], components)]
         chips = sorted({n["ref"] for n in nodes if is_active_pin(n) and not is_exposed(n["ref"])})
         # On-board parts that produce this rail: regulator outputs, or a transistor switching it.
-        sources = sorted({n["ref"] for n in nodes if not is_exposed(n["ref"])
-                          and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q")})
+        sources = {n["ref"] for n in nodes if not is_exposed(n["ref"])
+                   and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q")}
+        # Switching regulators: chip SW/LX pin -> inductor -> this rail
+        for n in nodes:
+            if ref_prefix(n["ref"]) == "L":
+                for other in by_ref[n["ref"]] - {name}:
+                    sources |= {m["ref"] for m in nets[other]
+                                if ref_prefix(m["ref"]) == "U" and re.fullmatch(r"SW\d?|LX\d?|PH", pin_name(m), re.I)}
+        sources = sorted(sources)
         # A connector whose pins are "power_in" draws power from us, so this rail is an output.
         connector_draws = all(n["type"] == "power_in" for n in nodes
                               if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP")
@@ -607,7 +631,8 @@ def connector_name(ref, components):
     return f"{v} ({ref})" if v and not re.match(r"^(Conn|PRG|Screw_Terminal)", v, re.I) else ref
 
 
-LOAD_WORDS = re.compile(r"\b(SSR|RELAY|HEATER|HEAT|MOTOR|PUMP|VALVE|SOLENOID|LOCK|COMPRESSOR|MAGNETRON)\b", re.I)
+LOAD_WORDS = re.compile(r"\b(SSR|RELAY|HEATER|HEAT|MOTOR|PUMP|VALVE|SOLENOID|LOCK|COMPRESSOR|MAGNETRON|"
+                        r"DOOR|OPENER|STRIKE|LATCH)\b", re.I)
 
 
 def external_loads(components, nets):

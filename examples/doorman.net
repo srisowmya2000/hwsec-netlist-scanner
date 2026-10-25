@@ -1,0 +1,6060 @@
+(export
+	(version "E")
+	(design
+		(source "Doorman/pcb/doorman.kicad_sch")
+		(date "2026-10-25T14:19:44")
+		(tool "Eeschema 10.0.7")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "Doorman S3")
+				(company)
+				(rev "1.6.1")
+				(date "2026-01-07")
+				(source "doorman.kicad_sch")
+				(comment
+					(number "1")
+					(value "TC:Bus Intercom Gateway")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "C1")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C14663")
+				(field
+					(name "MPN") "CC0603KRX7R9BB104")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C14663")
+			)
+			(property
+				(name "MPN")
+				(value "CC0603KRX7R9BB104")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5b053de1-d132-4184-809e-d854fad21bc8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C2")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C14663")
+				(field
+					(name "MPN") "CC0603KRX7R9BB104")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C14663")
+			)
+			(property
+				(name "MPN")
+				(value "CC0603KRX7R9BB104")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f381cdc8-7758-4266-95dc-07a35222fce5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C3")
+			(value "470uF")
+			(footprint "Capacitor_SMD:CP_Elec_8x10")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2309071524_KNSCHA-189RV0027_C7471889.pdf?_gl=1*11724xm*_ga*ODg2MDE4NzU2LjE3MTA0Mjc1Njk.*_ga_98M84MKSZH*MTcxMjgzNjE4My40Ni4wLjE3MTI4MzYxODQuNTkuMC4w")
+			(description "470uF 35V 850mA@100KHz 80mΩ@100KHz ±20% SMD,D8xL10.5mm Aluminum Electrolytic Capacitors - SMD ROHS")
+			(fields
+				(field
+					(name "LCSC") "C7471889")
+				(field
+					(name "MPN") "189RV0027")
+				(field
+					(name "Package") "SMD,D8xL10.5mm")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:CP_Elec_8x10")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2309071524_KNSCHA-189RV0027_C7471889.pdf?_gl=1*11724xm*_ga*ODg2MDE4NzU2LjE3MTA0Mjc1Njk.*_ga_98M84MKSZH*MTcxMjgzNjE4My40Ni4wLjE3MTI4MzYxODQuNTkuMC4w")
+				(field
+					(name "Description") "470uF 35V 850mA@100KHz 80mΩ@100KHz ±20% SMD,D8xL10.5mm Aluminum Electrolytic Capacitors - SMD ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C7471889")
+			)
+			(property
+				(name "MPN")
+				(value "189RV0027")
+			)
+			(property
+				(name "Package")
+				(value "SMD,D8xL10.5mm")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4fae9448-1c51-4519-82ce-53e94a86f043")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C4")
+			(value "10uF")
+			(footprint "Capacitor_SMD:C_1206_3216Metric")
+			(description "50V 10uF X5R ±10% 1206 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C13585")
+				(field
+					(name "MPN") "CL31A106KBHNNNE")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Package") "1206")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_1206_3216Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "50V 10uF X5R ±10% 1206 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C13585")
+			)
+			(property
+				(name "MPN")
+				(value "CL31A106KBHNNNE")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "1206")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b2c18b44-7c81-438f-a299-8fe37b1f439a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C5")
+			(value "100nF")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C14663")
+				(field
+					(name "MPN") "CC0603KRX7R9BB104")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C14663")
+			)
+			(property
+				(name "MPN")
+				(value "CC0603KRX7R9BB104")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5b18e13c-5084-4819-bf0a-2338f46e233b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C6")
+			(value "22uF")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "6.3V 22uF X5R ±20% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C59461")
+				(field
+					(name "MPN") "CL10A226MQ8NRNC")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "6.3V 22uF X5R ±20% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C59461")
+			)
+			(property
+				(name "MPN")
+				(value "CL10A226MQ8NRNC")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e87493e2-0683-4a0a-a995-5bccff1e4f42")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C7")
+			(value "22uF")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(description "6.3V 22uF X5R ±20% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			(fields
+				(field
+					(name "LCSC") "C59461")
+				(field
+					(name "MPN") "CL10A226MQ8NRNC")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "6.3V 22uF X5R ±20% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "LCSC")
+				(value "C59461")
+			)
+			(property
+				(name "MPN")
+				(value "CL10A226MQ8NRNC")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "875c82c5-c607-45c1-aad7-efb709cd2b8f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C8")
+			(value "33uF")
+			(footprint "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder")
+			(description "Polarized capacitor, small symbol")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Polarized capacitor, small symbol")
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Polarized_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "50d5bb22-6597-4373-bff5-4cb2a4768d25")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D1")
+			(value "1N5819WS")
+			(footprint "Diode_SMD:D_SOD-323")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+			(description "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			(fields
+				(field
+					(name "LCSC") "C191023")
+				(field
+					(name "Package") "SOD-323")
+				(field
+					(name "MPN") "1N5819WS")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+				(field
+					(name "Description") "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			)
+			(libsource
+				(lib "Diode")
+				(part "1N5819WS")
+				(description "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323")
+			)
+			(property
+				(name "LCSC")
+				(value "C191023")
+			)
+			(property
+				(name "Package")
+				(value "SOD-323")
+			)
+			(property
+				(name "MPN")
+				(value "1N5819WS")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode Schottky")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "D*SOD?323*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "97243824-64b8-4025-a546-750241a9b759")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D2")
+			(value "MB6S")
+			(footprint "Package_TO_SOT_SMD:TO-269AA")
+			(datasheet "http://www.vishay.com/docs/88573/dfs.pdf")
+			(description "-55℃~+150℃ 1V@0.5A 30A 5uA 600V 800mA MBS Bridge Rectifiers ROHS")
+			(fields
+				(field
+					(name "LCSC") "C2886734")
+				(field
+					(name "MPN") "MB6S")
+				(field
+					(name "Package") "MBS")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TO-269AA")
+				(field
+					(name "Datasheet") "http://www.vishay.com/docs/88573/dfs.pdf")
+				(field
+					(name "Description") "-55℃~+150℃ 1V@0.5A 30A 5uA 600V 800mA MBS Bridge Rectifiers ROHS")
+			)
+			(libsource
+				(lib "Diode_Bridge")
+				(part "MB6S")
+				(description "Miniature Glass Passivated Single-Phase Surface Mount Bridge Rectifiers, 700V Vrms, 1.0A If, DFS SMD package")
+			)
+			(property
+				(name "LCSC")
+				(value "C2886734")
+			)
+			(property
+				(name "MPN")
+				(value "MB6S")
+			)
+			(property
+				(name "Package")
+				(value "MBS")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "rectifier acdc")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO?269AA*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2f45c7d8-e949-4ccb-a89e-d4dfcc21b213")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D3")
+			(value "WS2812B")
+			(footprint "Doorman:LED-SMD_4P-L2.0-W1.8_CY-0807")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2207041845_XINGLIGHT-XL-0807RGBC-WS2812B_C3646929.pdf")
+			(description "-40℃~+85℃ 0.35mA 0.8mm 1.8mm 120° 200mcd 2mm 3000V 4.5kHz 4V~5.5V 530nm 800Kbit/s G:525nm Water Clear SMD-4P,2x1.8mm RGB LEDs(Built-in IC) ROHS")
+			(fields
+				(field
+					(name "MPN") "XL-0807RGBC-WS2812B-S")
+				(field
+					(name "LCSC") "C41413181")
+				(field
+					(name "Package") "SMD,1.8x2mm")
+				(field
+					(name "Manufacturer_Name") "XINGLIGHT")
+				(field
+					(name "Manufacturer_Part_Number") "XL-0807RGBC-WS2812B")
+				(field
+					(name "LCSC Part") "C3646929")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Doorman:LED-SMD_4P-L2.0-W1.8_CY-0807")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2207041845_XINGLIGHT-XL-0807RGBC-WS2812B_C3646929.pdf")
+				(field
+					(name "Description") "-40℃~+85℃ 0.35mA 0.8mm 1.8mm 120° 200mcd 2mm 3000V 4.5kHz 4V~5.5V 530nm 800Kbit/s G:525nm Water Clear SMD-4P,2x1.8mm RGB LEDs(Built-in IC) ROHS")
+			)
+			(libsource
+				(lib "easyeda2kicad")
+				(part "XL-0807RGBC-WS2812B")
+				(description "")
+			)
+			(property
+				(name "MPN")
+				(value "XL-0807RGBC-WS2812B-S")
+			)
+			(property
+				(name "LCSC")
+				(value "C41413181")
+			)
+			(property
+				(name "Package")
+				(value "SMD,1.8x2mm")
+			)
+			(property
+				(name "Manufacturer_Name")
+				(value "XINGLIGHT")
+			)
+			(property
+				(name "Manufacturer_Part_Number")
+				(value "XL-0807RGBC-WS2812B")
+			)
+			(property
+				(name "LCSC Part")
+				(value "C3646929")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "457f356e-58cd-4052-9693-f5b51fb5ccef")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D4")
+			(value "Red")
+			(footprint "LED_SMD:LED_0603_1608Metric")
+			(description "25mA 无色透明透镜 -30℃~+85℃ Positive post 617nm~621nm Red 120° 55mW 0603  Light Emitting Diodes (LED) ROHS")
+			(fields
+				(field
+					(name "LCSC") "C965799")
+				(field
+					(name "MPN") "XL-1608SURC-06")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "LED_SMD:LED_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "25mA 无色透明透镜 -30℃~+85℃ Positive post 617nm~621nm Red 120° 55mW 0603  Light Emitting Diodes (LED) ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "LED")
+				(description "Light emitting diode")
+			)
+			(property
+				(name "LCSC")
+				(value "C965799")
+			)
+			(property
+				(name "MPN")
+				(value "XL-1608SURC-06")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "LED diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "LED* LED_SMD:* LED_THT:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5f06a019-2f8f-43c7-95cf-77bb9e2c8233")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D5")
+			(value "1N5819WS")
+			(footprint "Diode_SMD:D_SOD-323")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+			(description "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			(fields
+				(field
+					(name "LCSC") "C191023")
+				(field
+					(name "Package") "SOD-323")
+				(field
+					(name "MPN") "1N5819WS")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+				(field
+					(name "Description") "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			)
+			(libsource
+				(lib "Diode")
+				(part "1N5819WS")
+				(description "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323")
+			)
+			(property
+				(name "LCSC")
+				(value "C191023")
+			)
+			(property
+				(name "Package")
+				(value "SOD-323")
+			)
+			(property
+				(name "MPN")
+				(value "1N5819WS")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode Schottky")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "D*SOD?323*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "9a754817-228f-476f-b785-d4e7d9654536")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D6")
+			(value "1N5819WS")
+			(footprint "Diode_SMD:D_SOD-323")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+			(description "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			(fields
+				(field
+					(name "LCSC") "C191023")
+				(field
+					(name "Package") "SOD-323")
+				(field
+					(name "MPN") "1N5819WS")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+				(field
+					(name "Description") "-40℃~+125℃ 2A 350mA 40V 5uA@30V 600mV@200mA Independent SOD-323 Schottky Diodes ROHS")
+			)
+			(libsource
+				(lib "Diode")
+				(part "1N5819WS")
+				(description "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323")
+			)
+			(property
+				(name "LCSC")
+				(value "C191023")
+			)
+			(property
+				(name "Package")
+				(value "SOD-323")
+			)
+			(property
+				(name "MPN")
+				(value "1N5819WS")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode Schottky")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "D*SOD?323*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b6d4f726-b055-4d58-b299-de5187f1fa94")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J1")
+			(value "USB_C_Receptacle_USB2.0")
+			(footprint "Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12")
+			(datasheet "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
+			(description "5A 1 Surface Mount，Right Angle 16P Female -25℃~+85℃ Type-C SMD USB Connectors ROHS")
+			(fields
+				(field
+					(name "LCSC") "C2765186")
+				(field
+					(name "MPN") "TYPE-C 16PIN 2MD(073)")
+				(field
+					(name "Cheap Version") "C2765186")
+				(field
+					(name "Expensive Version") "C165948")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Package") "SMD")
+				(field
+					(name "Footprint") "Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12")
+				(field
+					(name "Datasheet") "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
+				(field
+					(name "Description") "5A 1 Surface Mount，Right Angle 16P Female -25℃~+85℃ Type-C SMD USB Connectors ROHS")
+			)
+			(libsource
+				(lib "Connector")
+				(part "USB_C_Receptacle_USB2.0_16P")
+				(description "USB 2.0-only 16P Type-C Receptacle connector")
+			)
+			(property
+				(name "LCSC")
+				(value "C2765186")
+			)
+			(property
+				(name "MPN")
+				(value "TYPE-C 16PIN 2MD(073)")
+			)
+			(property
+				(name "Cheap Version")
+				(value "C2765186")
+			)
+			(property
+				(name "Expensive Version")
+				(value "C165948")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "SMD")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "usb universal serial bus type-C USB2.0")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "USB*C*Receptacle*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "02531300-df2b-4667-8c13-2b0ecacb0215")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "S1")
+						)
+						(pin
+							(num "A1")
+						)
+						(pin
+							(num "A12")
+						)
+						(pin
+							(num "B1")
+						)
+						(pin
+							(num "B12")
+						)
+						(pin
+							(num "A4")
+						)
+						(pin
+							(num "A9")
+						)
+						(pin
+							(num "B4")
+						)
+						(pin
+							(num "B9")
+						)
+						(pin
+							(num "A5")
+						)
+						(pin
+							(num "B5")
+						)
+						(pin
+							(num "A7")
+						)
+						(pin
+							(num "B7")
+						)
+						(pin
+							(num "A6")
+						)
+						(pin
+							(num "B6")
+						)
+						(pin
+							(num "A8")
+						)
+						(pin
+							(num "B8")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "Terminal")
+			(footprint "Doorman:CONN-TH_9P-P2.54_KF128-2.54-9P")
+			(description "Generic screw terminal, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(fields
+				(field
+					(name "LCSC") "C918127")
+				(field
+					(name "MPN") "DB125-2.54-9P-GN-S")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Doorman:CONN-TH_9P-P2.54_KF128-2.54-9P")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic screw terminal, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x09")
+				(description "Generic screw terminal, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "LCSC")
+				(value "C918127")
+			)
+			(property
+				(name "MPN")
+				(value "DB125-2.54-9P-GN-S")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "70e9046f-dd86-4183-8d2f-35519aa0a120")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "3V3 Test Pad")
+			(footprint "TestPoint:TestPoint_Pad_D1.0mm")
+			(description "test point")
+			(fields
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2ac1a2d4-2176-4af7-88b4-95cb5edf6fd6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J4")
+			(value "TX Test Pad")
+			(footprint "TestPoint:TestPoint_Pad_D1.0mm")
+			(description "test point")
+			(fields
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f3623ce4-341f-4811-b089-a69ea4b87258")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J5")
+			(value "RX Test Pad")
+			(footprint "TestPoint:TestPoint_Pad_D1.0mm")
+			(description "test point")
+			(fields
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a2ff12c4-3072-464f-b02b-14fdfd75b0ea")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J6")
+			(value "BUS Test Pad")
+			(footprint "TestPoint:TestPoint_Pad_D1.0mm")
+			(description "test point")
+			(fields
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "993fb52d-8981-4a0c-8ecc-8a3fae334f31")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J7")
+			(value "BUS RX Test Pad")
+			(footprint "TestPoint:TestPoint_Pad_D1.0mm")
+			(description "test point")
+			(fields
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "07e1541a-bf8d-4a97-bdf0-b6d5baf7dd42")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "JP1")
+			(value "Bus power Jumper")
+			(footprint "Connector_PinHeader_1.27mm:PinHeader_1x02_P1.27mm_Vertical")
+			(description "Jumper, 2-pole, small symbol, open")
+			(fields
+				(field
+					(name "LCSC") "C2935942")
+				(field
+					(name "MPN") "DZ127R-11-02-25")
+				(field
+					(name "Footprint") "Connector_PinHeader_1.27mm:PinHeader_1x02_P1.27mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Jumper, 2-pole, small symbol, open")
+			)
+			(libsource
+				(lib "Jumper")
+				(part "Jumper_2_Small_Open")
+				(description "Jumper, 2-pole, small symbol, open")
+			)
+			(property
+				(name "LCSC")
+				(value "C2935942")
+			)
+			(property
+				(name "MPN")
+				(value "DZ127R-11-02-25")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "Jumper SPST")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Jumper* TestPoint*2Pads* TestPoint*Bridge*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ffaed15e-e8f6-4dbc-81ba-67d364155dce")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "JP2")
+			(value "SolderJumper_2_Open")
+			(footprint "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm")
+			(description "Solder Jumper, 2-pole, open")
+			(fields
+				(field
+					(name "Footprint") "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Solder Jumper, 2-pole, open")
+			)
+			(libsource
+				(lib "Jumper")
+				(part "SolderJumper_2_Open")
+				(description "Solder Jumper, 2-pole, open")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "solder jumper SPST")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SolderJumper*Open*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "52880b38-bbb8-416d-b262-49bea84e5109")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "L1")
+			(value "3.9uH")
+			(footprint "Inductor_SMD:L_Abracon_ASPI-4030S")
+			(description "2.1A 3.9uH ±20% 3A SMD,4x4x3mm  Power Inductors ROHS")
+			(fields
+				(field
+					(name "LCSC") "C96899")
+				(field
+					(name "Package") "SMD,4x4mm")
+				(field
+					(name "MPN") "SWPA4030S3R9MT")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Inductor_SMD:L_Abracon_ASPI-4030S")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "2.1A 3.9uH ±20% 3A SMD,4x4x3mm  Power Inductors ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "L")
+				(description "Inductor")
+			)
+			(property
+				(name "LCSC")
+				(value "C96899")
+			)
+			(property
+				(name "Package")
+				(value "SMD,4x4mm")
+			)
+			(property
+				(name "MPN")
+				(value "SWPA4030S3R9MT")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "inductor choke coil reactor magnetic")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Choke_* *Coil* Inductor_* L_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6243677a-61f4-42bd-9218-5496f7fcebdc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q1")
+			(value "BC817")
+			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(datasheet "https://www.onsemi.com/pub/Collateral/BC818-D.pdf")
+			(description "0.8A Ic, 45V Vce, NPN Transistor, SOT-23")
+			(fields
+				(field
+					(name "Package") "SOT-23")
+				(field
+					(name "MPN") "BC817-25")
+				(field
+					(name "LCSC") "C5184412")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet") "https://www.onsemi.com/pub/Collateral/BC818-D.pdf")
+				(field
+					(name "Description") "0.8A Ic, 45V Vce, NPN Transistor, SOT-23")
+			)
+			(libsource
+				(lib "Transistor_BJT")
+				(part "BC817")
+				(description "0.8A Ic, 45V Vce, NPN Transistor, SOT-23")
+			)
+			(property
+				(name "Package")
+				(value "SOT-23")
+			)
+			(property
+				(name "MPN")
+				(value "BC817-25")
+			)
+			(property
+				(name "LCSC")
+				(value "C5184412")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "NPN Transistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?23*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0e06fc20-93cc-4a47-b904-7d4c45bbe639")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "10K")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25804")
+				(field
+					(name "MPN") "0603WAF1002T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25804")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1002T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "618b85b8-3878-4dca-95c1-d1249ea332c0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "1K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(datasheet "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2206010216_UNI-ROYAL-Uniroyal-Elec-0402WGF1001TCE_C11702.pdf")
+			(description "62.5mW Thick Film Resistors 50V ±100ppm/℃ ±1% 1kΩ 0402  Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C11702")
+				(field
+					(name "MPN") "0402WGF1001TCE")
+				(field
+					(name "Package") "0402")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet") "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2206010216_UNI-ROYAL-Uniroyal-Elec-0402WGF1001TCE_C11702.pdf")
+				(field
+					(name "Description") "62.5mW Thick Film Resistors 50V ±100ppm/℃ ±1% 1kΩ 0402  Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C11702")
+			)
+			(property
+				(name "MPN")
+				(value "0402WGF1001TCE")
+			)
+			(property
+				(name "Package")
+				(value "0402")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "91afcc3a-96b7-4d23-aac7-05e46a2b5754")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "5.1K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf")
+			(description "62.5mW Thick Film Resistors ±100ppm/℃ ±1% 5.1kΩ 0402 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25905")
+				(field
+					(name "MPN") "0402WGF5101TCE")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Package") "0402")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf")
+				(field
+					(name "Description") "62.5mW Thick Film Resistors ±100ppm/℃ ±1% 5.1kΩ 0402 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25905")
+			)
+			(property
+				(name "MPN")
+				(value "0402WGF5101TCE")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "0402")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6dac6f3d-c48f-482d-8940-be391cafd031")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "5.1K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(datasheet "https://datasheet.lcsc.com/lcsc/2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf")
+			(description "62.5mW Thick Film Resistors ±100ppm/℃ ±1% 5.1kΩ 0402 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25905")
+				(field
+					(name "MPN") "0402WGF5101TCE")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Package") "0402")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf")
+				(field
+					(name "Description") "62.5mW Thick Film Resistors ±100ppm/℃ ±1% 5.1kΩ 0402 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25905")
+			)
+			(property
+				(name "MPN")
+				(value "0402WGF5101TCE")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "0402")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3a95807e-9ba7-436f-bc1c-cd684bfae8f7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R5")
+			(value "1M")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 1MΩ 0603  Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C22935")
+				(field
+					(name "MPN") "0603WAF1004T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 1MΩ 0603  Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C22935")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1004T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f8cfe1da-0337-4cd9-8c5b-03b9d3d1873d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R6")
+			(value "147K")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "-55℃~+155℃ 100mW 147kΩ 75V Thick Film Resistor ±1% ±100ppm/℃ 0603 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C22878")
+				(field
+					(name "MPN") "0603WAF1473T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "-55℃~+155℃ 100mW 147kΩ 75V Thick Film Resistor ±1% ±100ppm/℃ 0603 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C22878")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1473T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4e82eefb-2966-44b0-a36f-8b5d1db9bc5d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R7")
+			(value "470")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(description "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 470Ω 0603  Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C23179")
+				(field
+					(name "MPN") "0603WAF4700T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 470Ω 0603  Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C23179")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF4700T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d0eb3f65-e21c-4afe-9099-7ddbc88f0798")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R8")
+			(value "10K")
+			(footprint "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder")
+			(description "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25804")
+				(field
+					(name "MPN") "0603WAF1002T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25804")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1002T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b83af5da-4e66-4aa2-b7e1-3dd14171e814")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R9")
+			(value "150")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(description "62.5mW Thick Film Resistors 50V ±100ppm/℃ ±1% 150Ω 0402 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25082")
+				(field
+					(name "MPN") "0402WGF1500TCE")
+				(field
+					(name "Package") "0402")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "62.5mW Thick Film Resistors 50V ±100ppm/℃ ±1% 150Ω 0402 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25082")
+			)
+			(property
+				(name "MPN")
+				(value "0402WGF1500TCE")
+			)
+			(property
+				(name "Package")
+				(value "0402")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3282a159-80c2-4478-a859-db23308a1e67")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R10")
+			(value "62")
+			(footprint "Resistor_SMD:R_1206_3216Metric")
+			(description "250mW Thick Film Resistors 200V ±100ppm/℃ ±1% 62Ω 1206  Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C17971")
+				(field
+					(name "MPN") "1206W4F620JT5E")
+				(field
+					(name "Package") "1206")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_1206_3216Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "250mW Thick Film Resistors 200V ±100ppm/℃ ±1% 62Ω 1206  Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C17971")
+			)
+			(property
+				(name "MPN")
+				(value "1206W4F620JT5E")
+			)
+			(property
+				(name "Package")
+				(value "1206")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "92cd30ff-d010-4c7c-a22e-4e16bf2e0444")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R11")
+			(value "10K")
+			(footprint "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder")
+			(description "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			(fields
+				(field
+					(name "LCSC") "C25804")
+				(field
+					(name "MPN") "0603WAF1002T5E")
+				(field
+					(name "Package") "0603")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100mW Thick Film Resistors ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS")
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "LCSC")
+				(value "C25804")
+			)
+			(property
+				(name "MPN")
+				(value "0603WAF1002T5E")
+			)
+			(property
+				(name "Package")
+				(value "0603")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "exclude_from_bom")
+			)
+			(property
+				(name "dnp")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6b9b6f5f-8eea-42d0-891e-418b949f89c1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "SW1")
+			(value "Reset Button")
+			(footprint "Button_Switch_SMD:SW_SPST_B3U-1000P-B")
+			(description "1.5mm 1.6N 100,000 Cycles 12V 2.5mm 3mm 50mA Black No Round Button SMD(SMT) Tab SPST Surface Mount,Vertical Without Bracket SMD Tactile Switches ROHS")
+			(fields
+				(field
+					(name "LCSC") "C49234121")
+				(field
+					(name "MPN") "HX-B3U-1000P-1.6N")
+				(field
+					(name "Package") "SMD,2.5x3mm")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Button_Switch_SMD:SW_SPST_B3U-1000P-B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1.5mm 1.6N 100,000 Cycles 12V 2.5mm 3mm 50mA Black No Round Button SMD(SMT) Tab SPST Surface Mount,Vertical Without Bracket SMD Tactile Switches ROHS")
+			)
+			(libsource
+				(lib "Switch")
+				(part "SW_Push")
+				(description "Push button switch, generic, two pins")
+			)
+			(property
+				(name "LCSC")
+				(value "C49234121")
+			)
+			(property
+				(name "MPN")
+				(value "HX-B3U-1000P-1.6N")
+			)
+			(property
+				(name "Package")
+				(value "SMD,2.5x3mm")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "switch normally-open pushbutton push-button")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6efe0832-cbd1-4935-befc-012d6101080a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "SW2")
+			(value "Flash Button")
+			(footprint "Button_Switch_SMD:SW_SPST_B3U-1000P-B")
+			(description "1.5mm 1.6N 100,000 Cycles 12V 2.5mm 3mm 50mA Black No Round Button SMD(SMT) Tab SPST Surface Mount,Vertical Without Bracket SMD Tactile Switches ROHS")
+			(fields
+				(field
+					(name "LCSC") "C49234121")
+				(field
+					(name "MPN") "HX-B3U-1000P-1.6N")
+				(field
+					(name "Package") "SMD,2.5x3mm")
+				(field
+					(name "Height")
+				)
+				(field
+					(name "Mouser Part Number")
+				)
+				(field
+					(name "Mouser Price/Stock")
+				)
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Button_Switch_SMD:SW_SPST_B3U-1000P-B")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1.5mm 1.6N 100,000 Cycles 12V 2.5mm 3mm 50mA Black No Round Button SMD(SMT) Tab SPST Surface Mount,Vertical Without Bracket SMD Tactile Switches ROHS")
+			)
+			(libsource
+				(lib "Switch")
+				(part "SW_Push")
+				(description "Push button switch, generic, two pins")
+			)
+			(property
+				(name "LCSC")
+				(value "C49234121")
+			)
+			(property
+				(name "MPN")
+				(value "HX-B3U-1000P-1.6N")
+			)
+			(property
+				(name "Package")
+				(value "SMD,2.5x3mm")
+			)
+			(property
+				(name "Height")
+				(value "")
+			)
+			(property
+				(name "Mouser Part Number")
+				(value "")
+			)
+			(property
+				(name "Mouser Price/Stock")
+				(value "")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "switch normally-open pushbutton push-button")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d53ab537-8195-4100-b593-21c98ad74ae8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "ESP32-S3-WROOM-1")
+			(footprint "RF_Module:ESP32-S3-WROOM-1")
+			(datasheet "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf")
+			(description "RF Module, ESP32-S3 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 3.3V, onboard antenna, SMD")
+			(fields
+				(field
+					(name "LCSC") "C2913201")
+				(field
+					(name "MPN") "ESP32-S3-WROOM-1-N8R8")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Package") "SMD,25.5x18mm")
+				(field
+					(name "Footprint") "RF_Module:ESP32-S3-WROOM-1")
+				(field
+					(name "Datasheet") "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf")
+				(field
+					(name "Description") "RF Module, ESP32-S3 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 3.3V, onboard antenna, SMD")
+			)
+			(libsource
+				(lib "RF_Module")
+				(part "ESP32-S3-WROOM-1")
+				(description "RF Module, ESP32-S3 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 3.3V, onboard antenna, SMD")
+			)
+			(property
+				(name "LCSC")
+				(value "C2913201")
+			)
+			(property
+				(name "MPN")
+				(value "ESP32-S3-WROOM-1-N8R8")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Package")
+				(value "SMD,25.5x18mm")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "RF Radio BT ESP ESP32-S3 Espressif onboard PCB antenna")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "ESP32?S3?WROOM?1*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "66f41d59-e5a3-4e8f-8f6c-d365e8eefce7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "39")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "41")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "AP63203WU")
+			(footprint "Package_TO_SOT_SMD:TSOT-23-6")
+			(datasheet "https://www.diodes.com/assets/Datasheets/AP63200-AP63201-AP63203-AP63205.pdf")
+			(description "Step-down type Fixed 2A 3.3V 3.8V~32V TSOT-23-6 DC-DC Converters ROHS")
+			(fields
+				(field
+					(name "LCSC") "C780769")
+				(field
+					(name "MPN") "AP63203WU-7")
+				(field
+					(name "Package") "TSOT-23-6")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TSOT-23-6")
+				(field
+					(name "Datasheet") "https://www.diodes.com/assets/Datasheets/AP63200-AP63201-AP63203-AP63205.pdf")
+				(field
+					(name "Description") "Step-down type Fixed 2A 3.3V 3.8V~32V TSOT-23-6 DC-DC Converters ROHS")
+			)
+			(libsource
+				(lib "Regulator_Switching")
+				(part "AP63203WU")
+				(description "2A, 1.1MHz Buck DC/DC Converter, fixed 3.3V output voltage, TSOT-23-6")
+			)
+			(property
+				(name "LCSC")
+				(value "C780769")
+			)
+			(property
+				(name "MPN")
+				(value "AP63203WU-7")
+			)
+			(property
+				(name "Package")
+				(value "TSOT-23-6")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "2A Buck DC/DC")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TSOT?23*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "09680e89-ca09-42f5-828d-39da317f9c87")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "GAQY252G3S")
+			(footprint "Doorman:SOP-4_L4.4-W4.0-P2.54-LS7.0-TL")
+			(datasheet "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2308151358_SUPSiC-GAQY211G2S_C7435104.pdf")
+			(description "1.2V 40V 60mΩ 2.5A SOP-4 Solid State Relays - MOS Output (PhotoMOS) ROHS")
+			(fields
+				(field
+					(name "LCSC") "C7435106")
+				(field
+					(name "MPN") "GAQY252G3S")
+				(field
+					(name "Package") "SOP-4")
+				(field
+					(name "Price")
+				)
+				(field
+					(name "Footprint") "Doorman:SOP-4_L4.4-W4.0-P2.54-LS7.0-TL")
+				(field
+					(name "Datasheet") "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2308151358_SUPSiC-GAQY211G2S_C7435104.pdf")
+				(field
+					(name "Description") "1.2V 40V 60mΩ 2.5A SOP-4 Solid State Relays - MOS Output (PhotoMOS) ROHS")
+			)
+			(libsource
+				(lib "easyeda2kicad")
+				(part "GAQY211G2S")
+				(description "")
+			)
+			(property
+				(name "LCSC")
+				(value "C7435106")
+			)
+			(property
+				(name "MPN")
+				(value "GAQY252G3S")
+			)
+			(property
+				(name "Package")
+				(value "SOP-4")
+			)
+			(property
+				(name "Price")
+				(value "")
+			)
+			(property
+				(name "Sheetname")
+				(value "doorman")
+			)
+			(property
+				(name "Sheetfile")
+				(value "doorman.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d6ff65cd-5a60-4e43-9021-b156e4f8de87")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "Connector")
+			(part "Screw_Terminal_01x09")
+			(description "Generic screw terminal, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "TerminalBlock*:*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Screw_Terminal_01x09")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic screw terminal, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "Pin_3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "Pin_4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "Pin_5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "Pin_6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "Pin_7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "Pin_8")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "Pin_9")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "TestPoint")
+			(description "test point")
+			(footprints
+				(fp "Pin*")
+				(fp "Test*")
+			)
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "USB_C_Receptacle_USB2.0_16P")
+			(description "USB 2.0-only 16P Type-C Receptacle connector")
+			(docs "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
+			(footprints
+				(fp "USB*C*Receptacle*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "USB_C_Receptacle_USB2.0_16P")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet") "https://www.usb.org/sites/default/files/documents/usb_type-c.zip")
+				(field
+					(name "Description") "USB 2.0-only 16P Type-C Receptacle connector")
+			)
+			(pins
+				(pin
+					(num "A1")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "A4")
+					(name "VBUS")
+					(type "passive")
+				)
+				(pin
+					(num "A5")
+					(name "CC1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "A6")
+					(name "D+")
+					(type "bidirectional")
+				)
+				(pin
+					(num "A7")
+					(name "D-")
+					(type "bidirectional")
+				)
+				(pin
+					(num "A8")
+					(name "SBU1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "A9")
+					(name "VBUS")
+					(type "passive")
+				)
+				(pin
+					(num "A12")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "B1")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "B4")
+					(name "VBUS")
+					(type "passive")
+				)
+				(pin
+					(num "B5")
+					(name "CC2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "B6")
+					(name "D+")
+					(type "bidirectional")
+				)
+				(pin
+					(num "B7")
+					(name "D-")
+					(type "bidirectional")
+				)
+				(pin
+					(num "B8")
+					(name "SBU2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "B9")
+					(name "VBUS")
+					(type "passive")
+				)
+				(pin
+					(num "B12")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "S1")
+					(name "SHIELD")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C_Polarized_Small")
+			(description "Polarized capacitor, small symbol")
+			(footprints
+				(fp "CP_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C_Polarized_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Polarized capacitor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C_Small")
+			(description "Unpolarized capacitor, small symbol")
+			(footprints
+				(fp "C_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "L")
+			(description "Inductor")
+			(footprints
+				(fp "Choke_*")
+				(fp "*Coil*")
+				(fp "Inductor_*")
+				(fp "L_*")
+			)
+			(fields
+				(field
+					(name "Reference") "L")
+				(field
+					(name "Value") "L")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Inductor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "LED")
+			(description "Light emitting diode")
+			(footprints
+				(fp "LED*")
+				(fp "LED_SMD:*")
+				(fp "LED_THT:*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "LED")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Light emitting diode")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R")
+			(description "Resistor")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Diode")
+			(part "1N5819WS")
+			(description "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323")
+			(docs "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+			(footprints
+				(fp "D*SOD?323*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "1N5819WS")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-323")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf")
+				(field
+					(name "Description") "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Diode_Bridge")
+			(part "MB6S")
+			(description "Miniature Glass Passivated Single-Phase Surface Mount Bridge Rectifiers, 700V Vrms, 1.0A If, DFS SMD package")
+			(docs "http://www.vishay.com/docs/88573/dfs.pdf")
+			(footprints
+				(fp "TO?269AA*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "MB6S")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TO-269AA")
+				(field
+					(name "Datasheet") "http://www.vishay.com/docs/88573/dfs.pdf")
+				(field
+					(name "Description") "Miniature Glass Passivated Single-Phase Surface Mount Bridge Rectifiers, 700V Vrms, 1.0A If, DFS SMD package")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "+")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "-")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Jumper")
+			(part "Jumper_2_Small_Open")
+			(description "Jumper, 2-pole, small symbol, open")
+			(footprints
+				(fp "Jumper*")
+				(fp "TestPoint*2Pads*")
+				(fp "TestPoint*Bridge*")
+			)
+			(fields
+				(field
+					(name "Reference") "JP")
+				(field
+					(name "Value") "Jumper_2_Small_Open")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Jumper, 2-pole, small symbol, open")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "A")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "B")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Jumper")
+			(part "SolderJumper_2_Open")
+			(description "Solder Jumper, 2-pole, open")
+			(footprints
+				(fp "SolderJumper*Open*")
+			)
+			(fields
+				(field
+					(name "Reference") "JP")
+				(field
+					(name "Value") "SolderJumper_2_Open")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Solder Jumper, 2-pole, open")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "A")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "B")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "RF_Module")
+			(part "ESP32-S3-WROOM-1")
+			(description "RF Module, ESP32-S3 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 3.3V, onboard antenna, SMD")
+			(docs "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf")
+			(footprints
+				(fp "ESP32?S3?WROOM?1*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "ESP32-S3-WROOM-1")
+				(field
+					(name "Footprint") "RF_Module:ESP32-S3-WROOM-1")
+				(field
+					(name "Datasheet") "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf")
+				(field
+					(name "Description") "RF Module, ESP32-S3 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 3.3V, onboard antenna, SMD")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "3V3")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "EN")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "IO4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "IO5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "IO6")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "IO7")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "IO15")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "IO16")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "IO17")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "IO18")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "IO8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "IO19")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "IO20")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "IO3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "IO46")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "IO9")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "IO10")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "IO11")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "IO12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "21")
+					(name "IO13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "22")
+					(name "IO14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "23")
+					(name "IO21")
+					(type "bidirectional")
+				)
+				(pin
+					(num "24")
+					(name "IO47")
+					(type "bidirectional")
+				)
+				(pin
+					(num "25")
+					(name "IO48")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "IO45")
+					(type "bidirectional")
+				)
+				(pin
+					(num "27")
+					(name "IO0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "28")
+					(name "IO35")
+					(type "bidirectional")
+				)
+				(pin
+					(num "29")
+					(name "IO36")
+					(type "bidirectional")
+				)
+				(pin
+					(num "30")
+					(name "IO37")
+					(type "bidirectional")
+				)
+				(pin
+					(num "31")
+					(name "IO38")
+					(type "bidirectional")
+				)
+				(pin
+					(num "32")
+					(name "IO39")
+					(type "bidirectional")
+				)
+				(pin
+					(num "33")
+					(name "IO40")
+					(type "bidirectional")
+				)
+				(pin
+					(num "34")
+					(name "IO41")
+					(type "bidirectional")
+				)
+				(pin
+					(num "35")
+					(name "IO42")
+					(type "bidirectional")
+				)
+				(pin
+					(num "36")
+					(name "RXD0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "37")
+					(name "TXD0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "38")
+					(name "IO2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "39")
+					(name "IO1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "40")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "41")
+					(name "GND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Regulator_Switching")
+			(part "AP63203WU")
+			(description "2A, 1.1MHz Buck DC/DC Converter, fixed 3.3V output voltage, TSOT-23-6")
+			(docs "https://www.diodes.com/assets/Datasheets/AP63200-AP63201-AP63203-AP63205.pdf")
+			(footprints
+				(fp "TSOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "AP63203WU")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TSOT-23-6")
+				(field
+					(name "Datasheet") "https://www.diodes.com/assets/Datasheets/AP63200-AP63201-AP63203-AP63205.pdf")
+				(field
+					(name "Description") "2A, 1.1MHz Buck DC/DC Converter, fixed 3.3V output voltage, TSOT-23-6")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "FB")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "EN")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "IN")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "5")
+					(name "SW")
+					(type "output")
+				)
+				(pin
+					(num "6")
+					(name "BST")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Switch")
+			(part "SW_Push")
+			(description "Push button switch, generic, two pins")
+			(fields
+				(field
+					(name "Reference") "SW")
+				(field
+					(name "Value") "SW_Push")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Push button switch, generic, two pins")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Transistor_BJT")
+			(part "BC817")
+			(description "0.8A Ic, 45V Vce, NPN Transistor, SOT-23")
+			(docs "https://www.onsemi.com/pub/Collateral/BC818-D.pdf")
+			(footprints
+				(fp "SOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "BC817")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet") "https://www.onsemi.com/pub/Collateral/BC818-D.pdf")
+				(field
+					(name "Description") "0.8A Ic, 45V Vce, NPN Transistor, SOT-23")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "B")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "E")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "C")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "easyeda2kicad")
+			(part "GAQY211G2S")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "GAQY211G2S")
+				(field
+					(name "Footprint") "easyeda2kicad:SOP-4_L4.4-W4.0-P2.54-LS7.0-TL")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+				(field
+					(name "LCSC Part") "C7435104")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "output")
+				)
+				(pin
+					(num "3")
+					(name "3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "4")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "easyeda2kicad")
+			(part "XL-0807RGBC-WS2812B")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "XL-0807RGBC-WS2812B")
+				(field
+					(name "Footprint") "easyeda2kicad:LED-SMD_4P-L2.0-W1.8_CY-0807")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+				(field
+					(name "LCSC Part") "C3646929")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VDD")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "DOUT")
+					(type "output")
+				)
+				(pin
+					(num "3")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "DIN")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "Connector")
+			(uri "${KICAD10_SYMBOL_DIR}/Connector.kicad_sym")
+		)
+		(library
+			(logical "Device")
+			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
+		)
+		(library
+			(logical "Diode")
+			(uri "${KICAD10_SYMBOL_DIR}/Diode.kicad_sym")
+		)
+		(library
+			(logical "Diode_Bridge")
+			(uri "${KICAD10_SYMBOL_DIR}/Diode_Bridge.kicad_sym")
+		)
+		(library
+			(logical "Jumper")
+			(uri "${KICAD10_SYMBOL_DIR}/Jumper.kicad_sym")
+		)
+		(library
+			(logical "RF_Module")
+			(uri "${KICAD10_SYMBOL_DIR}/RF_Module.kicad_sym")
+		)
+		(library
+			(logical "Regulator_Switching")
+			(uri "${KICAD10_SYMBOL_DIR}/Regulator_Switching.kicad_sym")
+		)
+		(library
+			(logical "Switch")
+			(uri "${KICAD10_SYMBOL_DIR}/Switch.kicad_sym")
+		)
+		(library
+			(logical "Transistor_BJT")
+			(uri "${KICAD10_SYMBOL_DIR}/Transistor_BJT.kicad_sym")
+		)
+		(library
+			(logical "easyeda2kicad")
+			(uri "${KIPRJMOD}/symbols/easyeda2kicad.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "+3.3V")
+			(class "Default")
+			(node
+				(ref "C2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "1")
+				(pinfunction "VDD_1")
+				(pintype "input")
+			)
+			(node
+				(ref "J2")
+				(pin "5")
+				(pinfunction "Pin_5_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "3V3_2")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "FB_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "2")
+			(name "+5V")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "A4")
+				(pinfunction "VBUS_A4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "A9")
+				(pinfunction "VBUS_A9")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "B4")
+				(pinfunction "VBUS_B4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "B9")
+				(pinfunction "VBUS_B9")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "+24V Bus")
+			(class "+24V Bus")
+			(node
+				(ref "D2")
+				(pin "3")
+				(pinfunction "+_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "JP1")
+				(pin "2")
+				(pinfunction "B_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "3")
+				(pinfunction "C_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "4")
+			(name "/EN")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "EN_3")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "5")
+			(name "/FLASH")
+			(class "Default")
+			(node
+				(ref "SW2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "27")
+				(pinfunction "IO0_27")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "6")
+			(name "/RXD")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "36")
+				(pinfunction "RXD0_36")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "7")
+			(name "/TXD")
+			(class "Default")
+			(node
+				(ref "J4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "37")
+				(pinfunction "TXD0_37")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "8")
+			(name "ADC_IN")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "IO7_7")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "9")
+			(name "BUS_ANA")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "17")
+				(pinfunction "IO9_17")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "18")
+				(pinfunction "IO10_18")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "10")
+			(name "BUS_TX")
+			(class "Default")
+			(node
+				(ref "R2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "IO8_12")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "11")
+			(name "BUS_WIRE1")
+			(class "+24V Bus")
+			(node
+				(ref "D2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "JP2")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "12")
+			(name "BUS_WIRE2")
+			(class "+24V Bus")
+			(node
+				(ref "D2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "13")
+			(name "GND")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C7")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "4")
+				(pinfunction "-_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "3")
+				(pinfunction "GND_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "D4")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "A1")
+				(pinfunction "GND_A1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "A12")
+				(pinfunction "GND_A12")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "B1")
+				(pinfunction "GND_B1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "B12")
+				(pinfunction "GND_B12")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "S1")
+				(pinfunction "SHIELD_S1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q1")
+				(pin "2")
+				(pinfunction "E_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R11")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U1")
+				(pin "40")
+				(pinfunction "GND_40")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "41")
+				(pinfunction "GND_41")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "GND_4")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "14")
+			(name "IO40")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "6")
+				(pinfunction "Pin_6_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "33")
+				(pinfunction "IO40_33")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "15")
+			(name "IO41")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "7")
+				(pinfunction "Pin_7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "34")
+				(pinfunction "IO41_34")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "16")
+			(name "LED_RED")
+			(class "Default")
+			(node
+				(ref "R7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "39")
+				(pinfunction "IO1_39")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "17")
+			(name "LED_RGB")
+			(class "Default")
+			(node
+				(ref "D3")
+				(pin "4")
+				(pinfunction "DIN_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "38")
+				(pinfunction "IO2_38")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "18")
+			(name "Net-(D1-K)")
+			(class "Default")
+			(node
+				(ref "C3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D5")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D6")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "EN_2")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "IN_3")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "19")
+			(name "Net-(D4-A)")
+			(class "Default")
+			(node
+				(ref "D4")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "20")
+			(name "Net-(D6-A)")
+			(class "Default")
+			(node
+				(ref "D6")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R10")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "21")
+			(name "Net-(J1-CC1)")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "A5")
+				(pinfunction "CC1_A5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R3")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "22")
+			(name "Net-(J1-CC2)")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "B5")
+				(pinfunction "CC2_B5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "23")
+			(name "Net-(JP1-A)")
+			(class "Default")
+			(node
+				(ref "JP1")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R10")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "24")
+			(name "Net-(JP2-B)")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "JP2")
+				(pin "2")
+				(pinfunction "B_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "25")
+			(name "Net-(Q1-B)")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "1")
+				(pinfunction "B_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R2")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "26")
+			(name "Net-(R9-Pad1)")
+			(class "Default")
+			(node
+				(ref "R9")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "27")
+			(name "Net-(U2-BST)")
+			(class "Default")
+			(node
+				(ref "C5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "BST_6")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "28")
+			(name "Net-(U2-SW)")
+			(class "Default")
+			(node
+				(ref "C5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "L1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "SW_5")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "29")
+			(name "RELAY_WIRE1")
+			(class "RELAY")
+			(node
+				(ref "J2")
+				(pin "9")
+				(pinfunction "Pin_9_9")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "30")
+			(name "RELAY_WIRE2")
+			(class "RELAY")
+			(node
+				(ref "J2")
+				(pin "8")
+				(pinfunction "Pin_8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "31")
+			(name "SSR")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "35")
+				(pinfunction "IO42_35")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "32")
+			(name "USB_D+")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "A6")
+				(pinfunction "D+_A6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J1")
+				(pin "B6")
+				(pinfunction "D+_B6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "14")
+				(pinfunction "IO20_14")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "33")
+			(name "USB_D-")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "A7")
+				(pinfunction "D-_A7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "J1")
+				(pin "B7")
+				(pinfunction "D-_B7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "IO19_13")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "34")
+			(name "VCC")
+			(class "Default")
+			(node
+				(ref "D5")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "35")
+			(name "unconnected-(D3-DOUT-Pad2)")
+			(class "Default")
+			(node
+				(ref "D3")
+				(pin "2")
+				(pinfunction "DOUT_2")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "36")
+			(name "unconnected-(J1-SBU1-PadA8)")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "A8")
+				(pinfunction "SBU1_A8")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "37")
+			(name "unconnected-(J1-SBU2-PadB8)")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "B8")
+				(pinfunction "SBU2_B8")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "38")
+			(name "unconnected-(U1-IO3-Pad15)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "15")
+				(pinfunction "IO3_15")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "39")
+			(name "unconnected-(U1-IO4-Pad4)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "IO4_4")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "40")
+			(name "unconnected-(U1-IO5-Pad5)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "IO5_5")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "41")
+			(name "unconnected-(U1-IO6-Pad6)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "IO6_6")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "42")
+			(name "unconnected-(U1-IO11-Pad19)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "19")
+				(pinfunction "IO11_19")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "43")
+			(name "unconnected-(U1-IO12-Pad20)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "20")
+				(pinfunction "IO12_20")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "44")
+			(name "unconnected-(U1-IO13-Pad21)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "21")
+				(pinfunction "IO13_21")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "45")
+			(name "unconnected-(U1-IO14-Pad22)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "22")
+				(pinfunction "IO14_22")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "46")
+			(name "unconnected-(U1-IO15-Pad8)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "IO15_8")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "47")
+			(name "unconnected-(U1-IO16-Pad9)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "9")
+				(pinfunction "IO16_9")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "48")
+			(name "unconnected-(U1-IO17-Pad10)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "10")
+				(pinfunction "IO17_10")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "49")
+			(name "unconnected-(U1-IO18-Pad11)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "11")
+				(pinfunction "IO18_11")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "50")
+			(name "unconnected-(U1-IO21-Pad23)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "23")
+				(pinfunction "IO21_23")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "51")
+			(name "unconnected-(U1-IO35-Pad28)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "28")
+				(pinfunction "IO35_28")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "52")
+			(name "unconnected-(U1-IO36-Pad29)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "29")
+				(pinfunction "IO36_29")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "53")
+			(name "unconnected-(U1-IO37-Pad30)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "30")
+				(pinfunction "IO37_30")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "54")
+			(name "unconnected-(U1-IO38-Pad31)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "31")
+				(pinfunction "IO38_31")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "55")
+			(name "unconnected-(U1-IO39-Pad32)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "32")
+				(pinfunction "IO39_32")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "56")
+			(name "unconnected-(U1-IO45-Pad26)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "26")
+				(pinfunction "IO45_26")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "57")
+			(name "unconnected-(U1-IO46-Pad16)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "16")
+				(pinfunction "IO46_16")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "58")
+			(name "unconnected-(U1-IO47-Pad24)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "24")
+				(pinfunction "IO47_24")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "59")
+			(name "unconnected-(U1-IO48-Pad25)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "25")
+				(pinfunction "IO48_25")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+	)
+)
