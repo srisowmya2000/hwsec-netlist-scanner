@@ -102,6 +102,12 @@ KNOWN_PINS = {
         "nRPIBOOT": "Forces USB boot (lets the eMMC be reflashed)",
         "EEPROM_nWP": "Boot EEPROM write-protect",
     },
+    # tinyAVR 2-series (matched as a substring of the part value)
+    "ATtiny3226": {
+        "PA0": "UPDI programming/debug pin",
+        "PB0": "I2C SCL",
+        "PB1": "I2C SDA",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -151,7 +157,8 @@ def nice_net(name):
 
 def meaning_of(node, components):
     part = components.get(node["ref"], {}).get("value", "")
-    for key, meaning in KNOWN_PINS.get(part, {}).items():
+    pins = next((p for chip, p in KNOWN_PINS.items() if chip in part), {})
+    for key, meaning in pins.items():
         if key in node["function"]:
             return meaning
     return None
@@ -161,15 +168,17 @@ def meaning_of(node, components):
 # 4. Rules - each one returns a list of findings
 # ---------------------------------------------------------------------------
 
-PROG_PIN = re.compile(r"\b(ICSP\w*|PGC\d?|PGD\d?|SWDIO|SWCLK|TCK|TMS|TDI|TDO|nTRST|MCLR)\b", re.I)
+PROG_PIN = re.compile(r"\b(ICSP\w*|PGC\d?|PGD\d?|SWDIO|SWCLK|TCK|TMS|TDI|TDO|nTRST|MCLR|UPDI|PDI_?DATA)\b", re.I)
 
 
 def rule_debug_ports(components, nets):
     findings = []
-    pattern = re.compile(r"UART|_TX|_RX|TXD|RXD|SWD|SWCLK|SWDIO|JTAG|TCK|TMS|TDI|TDO|CONSOLE|DEBUG", re.I)
+    pattern = re.compile(r"UART|_TX|_RX|TXD|RXD|SWD|SWCLK|SWDIO|JTAG|TCK|TMS|TDI|TDO|UPDI|CONSOLE|DEBUG", re.I)
     for name, nodes in nets.items():
-        meanings = [m for m in (meaning_of(n, components) for n in nodes) if m and "UART" in m]
+        meanings = [m for m in (meaning_of(n, components) for n in nodes) if m and re.search(r"UART|UPDI|debug", m)]
         prog = [f"{n['ref']}.{pin_name(n)}" for n in nodes if PROG_PIN.search(pin_name(n))]
+        if re.search(r"UPDI|ICSP|SWD|JTAG", short(name), re.I) or any("programming" in m for m in meanings):
+            prog = prog or [f"{n['ref']}.{pin_name(n)}" for n in nodes if not is_exposed(n["ref"])]
         if not (pattern.search(name) or meanings or prog):
             continue
         if name.startswith("unconnected"):
@@ -245,11 +254,15 @@ def rule_exposed_buses(components, nets):
     headers = defaultdict(list)
     pattern = re.compile(r"(^|[_.])(MOSI|MISO|SCLK|SCK|CS|SDA\d?|SCL\d?)($|[_.])", re.I)
     for name, nodes in nets.items():
-        if not pattern.search(short(name)):
+        # Bus signal either by net name, or by what the chip pin is (e.g. ATtiny PB1 = I2C SDA)
+        bus_meaning = next((m for m in (meaning_of(n, components) for n in nodes)
+                            if m and re.search(r"I2C|SPI", m)), None)
+        if not (pattern.search(short(name)) or bus_meaning):
             continue
+        label = short(name) if pattern.search(short(name)) else f"{bus_meaning} ({short(name)})"
         for n in nodes:
             if is_exposed(n["ref"]):
-                headers[n["ref"]].append(short(name))
+                headers[n["ref"]].append(label)
     return [("INFO", f"{ref} ({components.get(ref, {}).get('value', '')}) exposes bus signals: {', '.join(sorted(sigs))}",
              "Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.")
             for ref, sigs in headers.items()]
@@ -273,7 +286,7 @@ def rule_usb_esd(components, nets):
 
 
 DIGITAL_HINTS = re.compile(r"GPIO|UART|TXD|RXD|_TX|_RX|MOSI|MISO|SCLK|SDA|SCL|USB|JTAG|SWD|BOOT|nRST|RESET"
-                           r"|ICSP|MCLR|\bRB\d|\bGP\d|\bTCK|\bTMS|\bTDI|\bTDO", re.I)
+                           r"|ICSP|MCLR|\bRB\d|\bGP\d|\bTCK|\bTMS|\bTDI|\bTDO|UPDI|\bP[A-F]\d\b", re.I)
 
 
 def digital_signals(nets):
@@ -341,12 +354,61 @@ def short_list(items, limit=6):
     return ", ".join(items[:limit]) + (f" (+{len(items) - limit} more)" if len(items) > limit else "")
 
 
+# ---- Mains (high-voltage) awareness -------------------------------------------
+
+MAINS_NAME = re.compile(r"(\b|_)(1[0-2]\d|2[2-4]\d)\s?V(AC)?(\b|_)|MAINS|\bLIVE|NEUTRAL|\bVAC\b|\bAC_?[LN]\b", re.I)
+
+
+def is_relay(ref):
+    return ref_prefix(ref) == "K"
+
+
+def is_coil_pin(node):
+    return bool(re.fullmatch(r"A[12]|COIL\w*|[+-]", pin_name(node), re.I))
+
+
+def is_triac(ref, components):
+    t = part_text(ref, components)
+    return "TRIAC" in t or bool(re.search(r"\bBT[AB]?\d{2,3}|\bBT1\d{2}|OFF-STATE VOLTAGE", t))
+
+
+def mains_nets(components, nets):
+    """Nets that carry mains voltage: named like mains, PSU AC inputs, relay contacts,
+    triac main terminals - then spread to every pin of a connector that touches them."""
+    found = set()
+    for name, nodes in nets.items():
+        if is_ground(name) or is_power_net(name) or name.startswith("unconnected"):
+            continue
+        if MAINS_NAME.search(short(name)):
+            found.add(name)
+            continue
+        for n in nodes:
+            if (re.match(r"^AC", pin_name(n), re.I) and n["type"] == "power_in") \
+                    or (is_relay(n["ref"]) and not is_coil_pin(n)) \
+                    or (is_triac(n["ref"], components) and pin_name(n).upper() not in ("G", "GATE")):
+                found.add(name)
+                break
+    by_ref = nets_by_ref(nets)
+    changed = True
+    while changed:                       # a connector with one mains pin is a mains connector
+        changed = False
+        for ref, ref_nets in by_ref.items():
+            if is_exposed(ref) and ref_nets & found:
+                for net in ref_nets - found:
+                    if not (is_ground(net) or is_power_net(net) or net.startswith("unconnected")):
+                        found.add(net)
+                        changed = True
+    return found
+
+
 def interface_points(components, nets):
     """Where signals enter/leave the board: connector pins, or (for a sub-module
-    with no connectors) named nets that dangle off the sheet."""
+    with no connectors) named nets that dangle off the sheet. Mains nets are
+    left to the mains rule."""
     points = defaultdict(list)          # label -> [net names]
+    mains = mains_nets(components, nets)
     for name, nodes in nets.items():
-        if name.startswith("unconnected") or is_ground(name) or is_power_net(name):
+        if name.startswith("unconnected") or is_ground(name) or is_power_net(name) or name in mains:
             continue
         for n in nodes:
             mechanical = re.match(r"^(MP|SH|SHIELD|MH)\d*$", pin_name(n), re.I)
@@ -476,8 +538,9 @@ def rule_power_input(components, nets):
 
 def rule_decoupling(components, nets):
     findings = []
+    mains = mains_nets(components, nets)    # mains inputs need fuses/MOVs, not 100nF caps
     for name, nodes in nets.items():
-        if is_ground(name) or name.startswith("unconnected"):
+        if is_ground(name) or name.startswith("unconnected") or name in mains:
             continue
         supplied = sorted({n["ref"] for n in nodes
                            if ref_prefix(n["ref"]) not in SERIES_PREFIXES + ("J", "P", "TP")
@@ -497,6 +560,116 @@ def rule_decoupling(components, nets):
             findings.append(("MEDIUM", f"Supply {nice_net(name)} to {short_list(supplied)} has no decoupling capacitor",
                              "Supply glitches and noise reach the chip unfiltered (easier fault injection). "
                              "Add a 100nF cap close to each supply pin."))
+    return findings
+
+
+def connector_name(ref, components):
+    v = components.get(ref, {}).get("value", "")
+    return f"{v} ({ref})" if v and not re.match(r"^(Conn|PRG|Screw_Terminal)", v, re.I) else ref
+
+
+def rule_mains(components, nets):
+    """Mains entry protection, isolation, and which mains loads the firmware controls (cyber-physical)."""
+    mains = mains_nets(components, nets)
+    if not mains:
+        return []
+    findings = []
+    by_ref = nets_by_ref(nets)
+    connectors = sorted({n["ref"] for net in mains for n in nets[net] if is_exposed(n["ref"])})
+
+    # 1. Mains entry: connector named like a mains input, or sharing a net with a fuse.
+    def on_fuse_net(ref):
+        return any(is_fuse(n["ref"], components) for net in by_ref[ref] for n in nets[net])
+    entry = [c for c in connectors
+             if re.search(r"(\d{3}V|MAINS|AC|LINE).*IN|IN.*(\d{3}V|MAINS|AC)", components[c]["value"], re.I)]
+    entry = entry or [c for c in connectors if on_fuse_net(c)]
+    entry_nets = {net for c in entry for net in by_ref[c]}
+    for net in list(entry_nets):            # look one fuse beyond the connector too
+        for n in nets[net]:
+            if is_fuse(n["ref"], components):
+                entry_nets |= by_ref[n["ref"]]
+    near = {n["ref"] for net in entry_nets for n in nets[net]}
+    fuses = sorted(r for r in near if is_fuse(r, components))
+    surge = sorted(r for r in near if is_protection(r, components) or
+                   re.search(r"VARISTOR|\bMOV\b|S\d+K\d+", part_text(r, components)))
+    where = ", ".join(connector_name(c, components) for c in entry) or "mains"
+    if entry:
+        findings.append(("OK", f"Mains input {where} is fused ({short_list(fuses)})", "") if fuses else
+                        ("MEDIUM", f"Mains input {where} has no fuse",
+                         "A fault or deliberate short becomes a fire risk. Add a fuse right at the mains entry."))
+        findings.append(("OK", f"Mains input {where} has surge protection ({short_list(surge)})", "") if surge else
+                        ("LOW", f"Mains input {where} has no surge protection (MOV/TVS)",
+                         "Mains surges can destroy the electronics (denial of service). Add a varistor or TVS."))
+
+    # 2. Isolation between mains and the low-voltage logic.
+    isolated_psu = sorted(r for r in components if "ISOLATED" in part_text(r, components)
+                          and any(re.match(r"^AC", pin_name(n), re.I) for net in by_ref[r] for n in nets[net] if n["ref"] == r))
+    optos = sorted(r for r in components if re.search(r"OPTO|PC817|MOC30|MOC31|TLP\d|6N13|H11", part_text(r, components)))
+    if isolated_psu or optos:
+        parts = ([f"isolated supply {short_list(isolated_psu)}"] if isolated_psu else []) + \
+                ([f"optocouplers {short_list(optos)}"] if optos else [])
+        findings.append(("OK", "Logic is isolated from mains by " + " and ".join(parts), ""))
+    else:
+        findings.append(("MEDIUM", "No isolated supply or optocouplers found between mains and the logic",
+                         "A mains fault (or a probe on the low-voltage side) can put mains voltage on the logic "
+                         "and connectors. Use an isolated PSU and optocouplers/relays as the barrier."))
+
+    # 3. Who switches the mains loads: firmware (MCU-driven relays/triacs) or hardware interlocks.
+    # Shared live/neutral wires touch everything, so only follow each connector's own wires.
+    rails = {net for net in mains if MAINS_NAME.search(short(net))
+             or any(re.match(r"^AC", pin_name(n), re.I) and n["type"] == "power_in" for n in nets[net])}
+
+    def coil_nets(k):
+        return {net for net in by_ref[k] for n in nets[net] if n["ref"] == k and is_coil_pin(n)}
+    interlock_relays = {k for k in components if is_relay(k) and coil_nets(k) and coil_nets(k) <= mains}
+    switch_inputs, loads, gated, ungated = [], [], [], []
+    interlock_name = {}                      # interlock relay -> the switch connector driving it
+    for c in connectors:
+        if c in entry:
+            continue
+        own = [net for net in by_ref[c] if net not in rails]
+        coils = sorted({n["ref"] for net in own for n in nets[net]
+                        if n["ref"] in interlock_relays and is_coil_pin(n)})
+        if coils:
+            switch_inputs.append(f"{connector_name(c, components)} -> {short_list(coils, 3)}")
+            for k in coils:
+                interlock_name[k] = connector_name(c, components)
+    for c in connectors:
+        if c in entry or any(c in s for s in switch_inputs):
+            continue
+        own = [net for net in by_ref[c] if net not in rails]
+        drivers = sorted({n["ref"] for net in own for n in nets[net]
+                          if ((is_relay(n["ref"]) and not is_coil_pin(n) and n["ref"] not in interlock_relays)
+                              or is_triac(n["ref"], components))})
+        if not drivers:
+            continue
+        # Is the driver's supply side fed through an interlock relay's contacts?
+        guards = sorted({n["ref"] for d in drivers for net in by_ref[d] - set(own) - rails for n in nets[net]
+                         if n["ref"] in interlock_relays and not is_coil_pin(n)}
+                        | {n["ref"] for net in own for n in nets[net]
+                           if n["ref"] in interlock_relays and not is_coil_pin(n)})
+        name = f"{connector_name(c, components)} via {short_list(drivers, 3)}"
+        loads.append(name)
+        if guards:
+            gated.append(f"{name}, gated by " + ", ".join(interlock_name.get(g, g) for g in guards))
+        else:
+            ungated.append(name)
+    if loads:
+        msg = "Firmware-controlled mains loads: " + "; ".join(loads)
+        if switch_inputs:
+            findings.append(("OK", "Hardware interlocks that work without firmware: " + "; ".join(switch_inputs), ""))
+            if gated:
+                findings.append(("OK", "Loads blocked in hardware by an interlock: " + "; ".join(gated), ""))
+            if ungated:
+                findings.append(("INFO", "Loads switched by firmware alone (no interlock in their path): "
+                                 + "; ".join(ungated),
+                                 "Confirm none of these can create a dangerous state (e.g. motor or drain running "
+                                 "with the door open) if the firmware misbehaves."))
+        else:
+            findings.append(("MEDIUM", msg + " - no hardware interlocks found",
+                             "If the firmware is buggy or compromised it can drive these loads unsafely. "
+                             "Add hardware interlocks (door switch, water-level switch, thermal fuse) in series "
+                             "with the dangerous loads."))
     return findings
 
 
@@ -574,6 +747,7 @@ ANALOG_RULES = [
     ("Signal input/output protection", rule_signal_protection),
     ("Power input protection", rule_power_input),
     ("Supply decoupling (glitch resistance)", rule_decoupling),
+    ("Mains & actuator safety (cyber-physical)", rule_mains),
     ("Clock / crystal", rule_clock),
     ("Trimmers and adjustable parts", rule_trimmers),
 ]
@@ -645,6 +819,14 @@ THREATS = {
         access=BOARD, cia="CI",
         stride="Tampering, Elevation of privilege",
         cwe="CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)"),
+    "Mains & actuator safety (cyber-physical)": dict(
+        attack="On a mains appliance a firmware compromise becomes a physical one: malicious or buggy "
+               "firmware (e.g. reflashed through an exposed programming port or a connected Wi-Fi module) "
+               "can run the heater dry, unlock the door mid-cycle or stall the motor. Weak mains-entry "
+               "protection also lets surges destroy the device.",
+        access=BOARD, cia="IA",
+        stride="Tampering, Denial of service",
+        cwe="CWE-693 (protection mechanism failure), CWE-1384 (physical/environmental conditions)"),
     "Clock / crystal": dict(
         attack="Clock glitching: inject a short or fast clock edge so the chip mis-executes instructions. "
                "Turning a crystal trimmer shifts the device's timing.",
@@ -783,6 +965,10 @@ def main():
         sys.exit(f"Error: file not found: {sys.argv[1]}")
     except (ValueError, IndexError) as e:
         sys.exit(f"Error: could not read {sys.argv[1]}: {e}")
+    if not components or not nets:
+        sys.exit(f"Error: {sys.argv[1]} has no components or nets, so nothing can be checked.\n"
+                 "The export probably failed - e.g. KiCad couldn't find the project's symbol libraries. "
+                 "Open the schematic in KiCad, fix any missing symbols, and export the netlist again.")
     print(f"Loaded {len(components)} components and {len(nets)} nets")
 
     digital = digital_signals(nets)

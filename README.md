@@ -25,7 +25,7 @@ python3 circuit.py examples/pic_programmer.net
 
 | Check | Looks for |
 |---|---|
-| Debug interfaces | UART consoles, JTAG/SWD, PIC ICSP pins reaching a header or test point |
+| Debug interfaces | UART consoles, JTAG/SWD, PIC ICSP and AVR UPDI pins reaching a header or test point |
 | Boot-mode pins | Boot/strap pins that a switch or connector can drive |
 | Write protection | Floating, unconnected or externally reachable EEPROM/flash write-protect pins |
 | Power test points | Supply rails exposed on test points (voltage-glitching access) |
@@ -39,6 +39,7 @@ python3 circuit.py examples/pic_programmer.net
 | Signal input/output protection | Connector pins wired straight into chip pins, or with no clamp diodes/TVS |
 | Power input protection | Power entry without fuse, reverse-polarity diode or TVS (and tells power inputs from outputs) |
 | Supply decoupling | Chip supply pins with no decoupling capacitor (easier fault injection) |
+| Mains & actuator safety | For mains appliances: fuse and surge protection at the mains input, isolation between mains and logic, and which loads (heater, motor, door lock...) the firmware controls vs. which are blocked by hardware interlocks |
 | Clock / crystal | Oscillator lines reachable from outside, tunable crystals |
 | Trimmers | Internal calibration parts that could be tampered with (vs. front-panel controls) |
 
@@ -79,6 +80,7 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `modul.net` | Video (PAL encoder) module | KiCad demo project |
 | `pic_programmer.net` | JDM COM84 PIC programmer | KiCad demo project |
 | `sonde_xilinx.net` | Xilinx "Parallel Cable III" JTAG programming cable | KiCad demo project ("sonde xilinx") |
+| `mygenwashy.net` | MyGenWashy washing machine controller (230 V, ATtiny3226) | [mayermakes/MyGenWashy](https://github.com/mayermakes/MyGenWashy), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 
 ## License
 
