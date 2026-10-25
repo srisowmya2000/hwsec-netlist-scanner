@@ -81,4 +81,4 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 
 ## License
 
-The scanner code (`circuit.py`) is released under the [MIT License](LICENSE). The example netlists are not covered by this license; see the credits above.
+Copyright (c) 2026 Sri Sowmya Nemani. All rights reserved. The scanner code (`circuit.py`) is shared for viewing; please ask before reusing it. The example netlists belong to their original authors; see the credits above.
