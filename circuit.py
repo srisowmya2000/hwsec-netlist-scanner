@@ -1,0 +1,800 @@
+#!/usr/bin/env python3
+"""
+circuit.py - a tiny hardware-security checker for KiCad netlists.
+
+Usage:
+    python3 circuit.py path/to/board.net
+
+It reads a KiCad netlist (File -> Export -> Netlist, "KiCad" format),
+builds a list of components and nets, then runs simple security rules.
+No extra libraries needed - just Python 3.8+.
+"""
+
+import re
+import sys
+import textwrap
+from collections import defaultdict
+
+# ---------------------------------------------------------------------------
+# 1. Parse the netlist (KiCad netlists are "S-expressions": nested brackets)
+# ---------------------------------------------------------------------------
+
+def tokenize(text):
+    # Matches "(", ")", quoted strings, or plain words
+    return re.findall(r'\(|\)|"(?:[^"\\]|\\.)*"|[^\s()"]+', text)
+
+
+def parse(tokens):
+    stack = [[]]
+    for tok in tokens:
+        if tok == "(":
+            stack.append([])
+        elif tok == ")":
+            done = stack.pop()
+            stack[-1].append(done)
+        else:
+            stack[-1].append(tok[1:-1] if tok.startswith('"') else tok)
+    return stack[0][0]
+
+
+def find(node, key):
+    """Return all child lists that start with `key`."""
+    return [c for c in node if isinstance(c, list) and c and c[0] == key]
+
+
+def value_of(node, key, default=""):
+    hits = find(node, key)
+    return hits[0][1] if hits and len(hits[0]) > 1 else default
+
+
+def load_netlist(path):
+    with open(path, encoding="utf-8") as f:
+        tree = parse(tokenize(f.read()))
+
+    comp_section = find(tree, "components")
+    net_section = find(tree, "nets")
+    if not comp_section or not net_section:
+        raise ValueError("not a KiCad netlist (missing 'components' or 'nets' section). "
+                         "Export it with File -> Export -> Netlist, KiCad format.")
+
+    components = {}
+    for comp in find(comp_section[0], "comp"):
+        ref = value_of(comp, "ref")
+        lib = find(comp, "libsource")
+        sheet = ""
+        for prop in find(comp, "property"):
+            if value_of(prop, "name") == "Sheetname":
+                sheet = value_of(prop, "value")
+        components[ref] = {
+            "ref": ref,
+            "value": value_of(comp, "value"),
+            "part": value_of(lib[0], "part") if lib else "",
+            "description": value_of(lib[0], "description") if lib else "",
+            "sheet": sheet,
+        }
+
+    nets = {}
+    for net in find(net_section[0], "net"):
+        name = value_of(net, "name")
+        nodes = []
+        for n in find(net, "node"):
+            nodes.append({
+                "ref": value_of(n, "ref"),
+                "pin": value_of(n, "pin"),
+                "function": value_of(n, "pinfunction"),
+                "type": value_of(n, "pintype"),   # input / output / power_in / passive ...
+            })
+        nets[name] = nodes
+
+    return components, nets
+
+
+# ---------------------------------------------------------------------------
+# 2. Small knowledge base: pins whose job isn't obvious from the net name
+#    (add your own chips here as the project grows)
+# ---------------------------------------------------------------------------
+
+KNOWN_PINS = {
+    # part value             pin-function contains -> meaning
+    "ComputeModule5-CM5": {
+        "GPIO14_": "UART0 TX (Linux/bootloader debug console)",
+        "GPIO15_": "UART0 RX (Linux/bootloader debug console)",
+        "nRPIBOOT": "Forces USB boot (lets the eMMC be reflashed)",
+        "EEPROM_nWP": "Boot EEPROM write-protect",
+    },
+}
+
+# ---------------------------------------------------------------------------
+# 3. Helper checks
+# ---------------------------------------------------------------------------
+
+# Headers, connectors, test points. ("X" is left out: KiCad uses it for crystals.)
+EXPOSED_PREFIXES = ("J", "P", "CN", "TP", "USB")
+SWITCH_PREFIXES = ("SW", "S")
+ESD_PARTS = ("RCLAMP", "TPD", "PUSB", "ESD", "TVS", "PESD", "USBLC")
+
+
+def ref_prefix(ref):
+    m = re.match(r"[A-Za-z]+", ref or "")
+    return m.group(0).upper() if m else ""
+
+
+def is_exposed(ref):
+    return ref_prefix(ref) in EXPOSED_PREFIXES
+
+
+def is_switch(ref):
+    return ref_prefix(ref) in SWITCH_PREFIXES
+
+
+def is_power_net(name):
+    n = short(name).upper()
+    return (n.startswith("+") or "VBUS" in n or n.startswith("VCC")
+            or n.startswith("VDD") or n.endswith("V") or "_3V3" in n or "BATT" in n)
+
+
+def short(name):
+    return name.split("/")[-1].replace("{slash}", "/")
+
+
+def nice_net(name):
+    """Turn KiCad auto-names like 'Net-(U20-VCC)' into 'U20 VCC pin'."""
+    m = re.match(r"^Net-\((\w+)-(.+)\)$", name)
+    if not m:
+        return short(name)
+    pin = m.group(2).replace("{slash}", "/")
+    return f"{m.group(1)} pad {pin[3:]}" if pin.startswith("Pad") else f"{m.group(1)} {pin} pin"
+
+
+def meaning_of(node, components):
+    part = components.get(node["ref"], {}).get("value", "")
+    for key, meaning in KNOWN_PINS.get(part, {}).items():
+        if key in node["function"]:
+            return meaning
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 4. Rules - each one returns a list of findings
+# ---------------------------------------------------------------------------
+
+PROG_PIN = re.compile(r"\b(ICSP\w*|PGC\d?|PGD\d?|SWDIO|SWCLK|TCK|TMS|TDI|TDO|nTRST|MCLR)\b", re.I)
+
+
+def rule_debug_ports(components, nets):
+    findings = []
+    pattern = re.compile(r"UART|_TX|_RX|TXD|RXD|SWD|SWCLK|SWDIO|JTAG|TCK|TMS|TDI|TDO|CONSOLE|DEBUG", re.I)
+    for name, nodes in nets.items():
+        meanings = [m for m in (meaning_of(n, components) for n in nodes) if m and "UART" in m]
+        prog = [f"{n['ref']}.{pin_name(n)}" for n in nodes if PROG_PIN.search(pin_name(n))]
+        if not (pattern.search(name) or meanings or prog):
+            continue
+        if name.startswith("unconnected"):
+            continue
+        exposed = [n["ref"] for n in nodes if is_exposed(n["ref"])]
+        if meanings:
+            label = meanings[0]
+        elif prog:
+            label = "programming/debug pin " + ", ".join(prog)
+        else:
+            label = "debug-looking signal"
+        if exposed:
+            fix = ("Anyone with access can read out or reprogram the chip. Remove the header/pad on production "
+                   "boards and enable code/read protection." if prog else
+                   "Remove the header/pad on production boards or disable the console in firmware.")
+            findings.append(("HIGH", f"Debug interface {short(name)} ({label}) reaches {', '.join(exposed)}", fix))
+        else:
+            findings.append(("OK", f"{short(name)} ({label}) is not routed to any header or test point", ""))
+    return findings
+
+
+def rule_boot_pins(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        boot_node = next((n for n in nodes if re.search(r"BOOT|STRAP", n["function"] + name, re.I)), None)
+        if not boot_node or name.startswith("unconnected"):
+            continue
+        reach = [n["ref"] for n in nodes if is_exposed(n["ref"]) or is_switch(n["ref"])]
+        label = meaning_of(boot_node, components) or "boot-mode pin"
+        if reach:
+            findings.append(("MEDIUM", f"Boot pin {short(name)} ({label}) can be driven from {', '.join(reach)}",
+                             "Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot."))
+    return findings
+
+
+def rule_write_protect(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        wp_pins = [n for n in nodes if re.fullmatch(r"N?WP|WRITE_PROT\w*", pin_name(n), re.I)]
+        if not (re.search(r"N?WP\b|WRITE_PROT", short(name), re.I) or wp_pins):
+            continue
+        if name.startswith("unconnected"):
+            pin = f"{wp_pins[0]['ref']}.{pin_name(wp_pins[0])}" if wp_pins else short(name)
+            findings.append(("MEDIUM", f"Write-protect pin {pin} is left unconnected",
+                             "Most EEPROMs/flash then default to writable, so anyone on the bus can overwrite them. "
+                             "Tie WP high if the contents must be protected."))
+            continue
+        others = [n["ref"] for n in nodes if not n["ref"].startswith(("Module", "U"))]
+        exposed = [r for r in others if is_exposed(r)]
+        if not others:
+            findings.append(("HIGH", f"Write-protect {short(name)} is floating", "Tie it to a defined level."))
+        elif exposed:
+            findings.append(("MEDIUM", f"Write-protect {short(name)} reachable from {', '.join(exposed)}",
+                             "Someone could change the protection state from outside."))
+        else:
+            findings.append(("OK", f"Write-protect {short(name)} is tied via {', '.join(others)}", ""))
+    return findings
+
+
+def rule_power_testpoints(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        if not is_power_net(name):
+            continue
+        tps = [n["ref"] for n in nodes if ref_prefix(n["ref"]) == "TP"]
+        if tps:
+            findings.append(("LOW", f"Power rail {short(name)} exposed on test point(s) {', '.join(tps)}",
+                             "Easy access for voltage-glitch attacks. Consider removing or covering on production boards."))
+    return findings
+
+
+def rule_exposed_buses(components, nets):
+    headers = defaultdict(list)
+    pattern = re.compile(r"(^|[_.])(MOSI|MISO|SCLK|SCK|CS|SDA\d?|SCL\d?)($|[_.])", re.I)
+    for name, nodes in nets.items():
+        if not pattern.search(short(name)):
+            continue
+        for n in nodes:
+            if is_exposed(n["ref"]):
+                headers[n["ref"]].append(short(name))
+    return [("INFO", f"{ref} ({components.get(ref, {}).get('value', '')}) exposes bus signals: {', '.join(sorted(sigs))}",
+             "Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.")
+            for ref, sigs in headers.items()]
+
+
+def rule_usb_esd(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        if not re.search(r"USB.*D_?[NP]$", short(name), re.I):
+            continue
+        if not any(is_exposed(n["ref"]) for n in nodes):
+            continue
+        protected = [n["ref"] for n in nodes
+                     if any(p in components.get(n["ref"], {}).get("value", "").upper() for p in ESD_PARTS)]
+        if protected:
+            findings.append(("OK", f"USB line {short(name)} has ESD protection ({', '.join(protected)})", ""))
+        else:
+            findings.append(("MEDIUM", f"USB line {short(name)} goes to a connector with no ESD protection",
+                             "Add a TVS/ESD diode array close to the connector."))
+    return findings
+
+
+DIGITAL_HINTS = re.compile(r"GPIO|UART|TXD|RXD|_TX|_RX|MOSI|MISO|SCLK|SDA|SCL|USB|JTAG|SWD|BOOT|nRST|RESET"
+                           r"|ICSP|MCLR|\bRB\d|\bGP\d", re.I)
+
+
+def digital_signals(nets):
+    """Return the names of nets that look like digital interfaces (by net name or chip pin name)."""
+    return sorted({short(name) for name, nodes in nets.items()
+                   if not name.startswith("unconnected")
+                   and (DIGITAL_HINTS.search(short(name)) or any(DIGITAL_HINTS.search(pin_name(n)) for n in nodes))})
+
+
+# ---------------------------------------------------------------------------
+# 4b. Analog rules - these work on any board, digital or not
+# ---------------------------------------------------------------------------
+
+PROTECTION_PARTS = ESD_PARTS + ("ZENER", "SMBJ", "SMAJ", "SMF", "BAT54", "BAV99", "1N4", "SS1", "SS3")
+SERIES_PREFIXES = ("R", "C", "L", "FB", "F")
+# Supply pin names like VCC, VDD_IO, AVDD, V+ (but not e.g. "Vsw", a switching pin).
+POWER_PIN = re.compile(r"^(A|D|P)?(VCC|VDD|VEE|VIN|VBAT|VS|V\+|V-)(A|IO|Q)?(?![A-Za-z])", re.I)
+
+
+def part_text(ref, components):
+    c = components.get(ref, {})
+    return " ".join((c.get("value", ""), c.get("part", ""), c.get("description", ""))).upper()
+
+
+def is_ground(name):
+    return bool(re.search(r"GND|VSS|^0$", short(name), re.I))
+
+
+def is_led(ref, components):
+    t = part_text(ref, components)
+    return "LED" in t or bool(re.search(r"\b(RED|GREEN|BLUE|YELLOW|WHITE|AMBER|ORANGE)\b", t))
+
+
+def is_protection(ref, components):
+    if is_led(ref, components):
+        return False
+    return ref_prefix(ref) in ("D", "TVS", "ESD") or any(p in part_text(ref, components) for p in PROTECTION_PARTS)
+
+
+def is_fuse(ref, components):
+    t = part_text(ref, components)
+    return ref_prefix(ref) in ("F", "PTC") or "FUSE" in t or "POLYFUSE" in t or "PTC" in t
+
+
+def is_active_pin(node):
+    """A pin on a chip/transistor that actually drives or reads the signal."""
+    t = node["type"]
+    return t != "" and not t.startswith("passive") and "no_connect" not in t
+
+
+def nets_by_ref(nets):
+    index = defaultdict(set)
+    for name, nodes in nets.items():
+        for n in nodes:
+            index[n["ref"]].add(name)
+    return index
+
+
+def pin_name(node):
+    return re.sub(r"_\d+$", "", node["function"]) or node["pin"]
+
+
+def short_list(items, limit=6):
+    items = sorted(set(items), key=lambda s: (ref_prefix(s), int(re.sub(r"\D", "", s) or 0), s))
+    return ", ".join(items[:limit]) + (f" (+{len(items) - limit} more)" if len(items) > limit else "")
+
+
+def interface_points(components, nets):
+    """Where signals enter/leave the board: connector pins, or (for a sub-module
+    with no connectors) named nets that dangle off the sheet."""
+    points = defaultdict(list)          # label -> [net names]
+    for name, nodes in nets.items():
+        if name.startswith("unconnected") or is_ground(name) or is_power_net(name):
+            continue
+        for n in nodes:
+            if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP":
+                points[n["ref"]].append(name)
+    if points:
+        return points, False
+    for name, nodes in nets.items():
+        if (not name.startswith(("Net-", "unconnected")) and not is_ground(name)
+                and not is_power_net(name) and len(nodes) == 1):
+            points[f"port {short(name)}"].append(name)
+    return points, True
+
+
+def protection_near(net, nets, components, by_ref, skip_ref):
+    """Protection parts on this net, or one series part away from it."""
+    found = [n["ref"] for n in nets[net] if n["ref"] != skip_ref and is_protection(n["ref"], components)]
+    for n in nets[net]:
+        if ref_prefix(n["ref"]) in SERIES_PREFIXES:
+            for other in by_ref[n["ref"]] - {net}:
+                if not is_ground(other):
+                    found += [m["ref"] for m in nets[other] if is_protection(m["ref"], components)]
+    return found
+
+
+def rule_signal_protection(components, nets):
+    findings = []
+    by_ref = nets_by_ref(nets)
+    points, is_module = interface_points(components, nets)
+    module_low = []
+    for label, net_names in points.items():
+        direct, series, clamps = [], [], []
+        for net in net_names:
+            others = [n for n in nets[net] if n["ref"] != label]
+            direct += [f"{n['ref']}.{pin_name(n)}" for n in others
+                       if is_active_pin(n) and n["type"] != "power_in" and not is_exposed(n["ref"])]
+            series += [n["ref"] for n in others if ref_prefix(n["ref"]) in SERIES_PREFIXES]
+            clamps += protection_near(net, nets, components, by_ref, label)
+        name = label if is_module else f"{label} ({components.get(label, {}).get('value', '')})"
+        if clamps:
+            findings.append(("OK", f"{name} signals have clamp/ESD protection ({short_list(clamps)})", ""))
+        elif direct:
+            findings.append(("MEDIUM", f"{name} is wired straight into chip pins {short_list(direct)}",
+                             "Noise, ESD or an injected signal hits the chip directly. Add a series resistor "
+                             "and clamp diodes/TVS at the connector."))
+        elif series and is_module:
+            module_low.append((short(label), series))
+        elif series:
+            findings.append(("LOW", f"{name} passes through {short_list(series)} only - no clamp diodes",
+                             "The series part limits current but won't stop ESD or overvoltage. "
+                             "Add clamp diodes or a TVS at the connector."))
+    if module_low:
+        ports = [p.replace("port ", "") for p, _ in module_low]
+        parts = [r for _, s in module_low for r in s]
+        findings.append(("LOW", f"Module ports {short_list(ports, 8)} go through {short_list(parts)} with no clamp diodes",
+                         "Fine if the parent board protects its connectors; otherwise add clamps here."))
+    return findings
+
+
+def rule_power_input(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        if not is_power_net(name) or is_ground(name):
+            continue
+        entry = [n["ref"] for n in nodes if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP"]
+        if not entry:
+            continue
+        fuses = [n["ref"] for n in nodes if is_fuse(n["ref"], components)]
+        diodes = [n["ref"] for n in nodes if is_protection(n["ref"], components)]
+        chips = sorted({n["ref"] for n in nodes if is_active_pin(n) and not is_exposed(n["ref"])})
+        # On-board parts that produce this rail: regulator outputs, or a transistor switching it.
+        sources = sorted({n["ref"] for n in nodes if not is_exposed(n["ref"])
+                          and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q")})
+        # A connector whose pins are "power_in" draws power from us, so this rail is an output.
+        connector_draws = all(n["type"] == "power_in" for n in nodes
+                              if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP")
+        if connector_draws and not sources:
+            via = [n["ref"] for n in nodes if ref_prefix(n["ref"]) in ("L", "FB", "R")]
+            findings.append(("OK", f"Power output {short(name)} to {short_list(entry)} is generated on the board"
+                             + (f" (via {short_list(via)})" if via else ""), ""))
+            continue
+        if sources:
+            # The board makes this rail and sends it OUT to the connector.
+            if all(ref_prefix(s) in ("U", "Q") for s in sources):
+                findings.append(("OK", f"Power output {short(name)} to {short_list(entry)} comes through "
+                                 f"{short_list(sources)} (switch/regulator, can limit a short)", ""))
+            else:
+                loads = [c for c in chips if c not in sources]
+                findings.append(("LOW", f"Rail {short(name)} (made by {short_list(sources)}) is brought out on "
+                                 f"{short_list(entry)}" + (f" and also feeds {short_list(loads)}" if loads else ""),
+                                 "A short or injected voltage on that pin hits the rail directly. "
+                                 "Consider a PTC, series resistor or load switch on connector power pins."))
+            continue
+        where = f"{short(name)} from {short_list(entry)}"
+        if fuses or diodes:
+            findings.append(("OK", f"Power input {where} has protection ({short_list(fuses + diodes)})", ""))
+        elif chips:
+            findings.append(("MEDIUM", f"Power input {where} feeds {short_list(chips)} directly - "
+                             "no fuse, reverse-polarity diode or TVS",
+                             "A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. "
+                             "Add a series diode/P-FET, a TVS and a fuse or PTC."))
+        else:
+            findings.append(("LOW", f"Power input {where} has no fuse, reverse-polarity diode or TVS",
+                             "Add reverse-polarity and overvoltage protection at the power entry."))
+    return findings
+
+
+def rule_decoupling(components, nets):
+    findings = []
+    for name, nodes in nets.items():
+        if is_ground(name) or name.startswith("unconnected"):
+            continue
+        supplied = sorted({n["ref"] for n in nodes
+                           if ref_prefix(n["ref"]) not in SERIES_PREFIXES + ("J", "P", "TP")
+                           and (n["type"] == "power_in" or POWER_PIN.match(pin_name(n)))})
+        if not supplied:
+            continue
+        caps = [n["ref"] for n in nodes if ref_prefix(n["ref"]) == "C"]
+        filters = [n["ref"] for n in nodes if ref_prefix(n["ref"]) in ("L", "FB")]
+        if caps:
+            extra = f" and filter {short_list(filters)}" if filters else ""
+            findings.append(("OK", f"Supply {nice_net(name)} to {short_list(supplied)} is decoupled by "
+                             f"{short_list(caps)}{extra}", ""))
+        elif all(ref_prefix(s) == "MODULE" for s in supplied):
+            findings.append(("LOW", f"Supply {nice_net(name)} to {short_list(supplied)} has no decoupling capacitor",
+                             "Modules usually carry their own caps, but a 100nF here makes glitching harder."))
+        else:
+            findings.append(("MEDIUM", f"Supply {nice_net(name)} to {short_list(supplied)} has no decoupling capacitor",
+                             "Supply glitches and noise reach the chip unfiltered (easier fault injection). "
+                             "Add a 100nF cap close to each supply pin."))
+    return findings
+
+
+def is_crystal(ref, components):
+    t = part_text(ref, components)
+    return (ref_prefix(ref) in ("X", "Y", "XTAL", "OSC", "XO")
+            and ("HZ" in t or "CRYSTAL" in t or "XTAL" in t or "OSC" in t or "RESONATOR" in t))
+
+
+def is_trimmer(ref, components):
+    t = part_text(ref, components)
+    return ref_prefix(ref) in ("RV", "VR", "POT", "CV", "VC", "TC", "TRIM") or "TRIM" in t or " POT" in f" {t}"
+
+
+def rule_clock(components, nets):
+    findings = []
+    by_ref = nets_by_ref(nets)
+    for ref in sorted(r for r in components if is_crystal(r, components)):
+        clock_nets = [n for n in by_ref[ref] if not is_ground(n)]
+        nodes = [n for net in clock_nets for n in nets[net] if n["ref"] != ref]
+        exposed = [n["ref"] for n in nodes if is_exposed(n["ref"])]
+        trims = [n["ref"] for n in nodes if is_trimmer(n["ref"], components)]
+        chips = sorted({n["ref"] for n in nodes if is_active_pin(n)})
+        name = f"Crystal {ref} ({components[ref]['value']})" + (f" for {short_list(chips)}" if chips else "")
+        if exposed:
+            findings.append(("MEDIUM", f"{name} - clock line reaches {short_list(exposed)}",
+                             "An attacker could inject a faster/glitched clock. Keep oscillator traces off connectors and test points."))
+        else:
+            tuned = f" (frequency tunable via {short_list(trims)} - see Trimmers)" if trims else ""
+            findings.append(("OK", f"{name} is not reachable from any connector or test point{tuned}", ""))
+    return findings
+
+
+def rule_trimmers(components, nets):
+    trims = [r for r in components if is_trimmer(r, components)]
+    internal = [r for r in trims if re.search(r"\d", components[r]["value"])]
+    panel = [r for r in trims if r not in internal]
+
+    # Note which trimmers tune a crystal (they shift the board's timing).
+    by_ref = nets_by_ref(nets)
+    tunes = {}
+    for x in (r for r in components if is_crystal(r, components)):
+        for net in by_ref[x]:
+            if not is_ground(net):
+                for n in nets[net]:
+                    if n["ref"] in internal:
+                        tunes[n["ref"]] = x
+
+    def describe(r):
+        extra = f", tunes crystal {tunes[r]}" if r in tunes else ""
+        return f"{r} ({components[r]['value']}{extra})"
+
+    findings = []
+    if internal:
+        findings.append(("INFO", "Internal trimmers " +
+                         ", ".join(describe(r) for r in sorted(internal)) +
+                         " set calibration and can be turned by anyone who opens the case",
+                         "Seal them with lacquer/tamper paint, or swap for fixed parts after calibration."))
+    if panel:
+        names = sorted({components[r]["value"] for r in panel})
+        findings.append(("OK", f"{len(panel)} front-panel controls ({', '.join(names)}) - user-adjustable by design", ""))
+    return findings
+
+
+DIGITAL_RULES = [
+    ("Debug interfaces", rule_debug_ports),
+    ("Boot-mode pins", rule_boot_pins),
+    ("Write protection", rule_write_protect),
+    ("Power test points", rule_power_testpoints),
+    ("Exposed SPI/I2C buses", rule_exposed_buses),
+    ("USB ESD protection", rule_usb_esd),
+]
+
+ANALOG_RULES = [
+    ("Signal input/output protection", rule_signal_protection),
+    ("Power input protection", rule_power_input),
+    ("Supply decoupling (glitch resistance)", rule_decoupling),
+    ("Clock / crystal", rule_clock),
+    ("Trimmers and adjustable parts", rule_trimmers),
+]
+
+# ---------------------------------------------------------------------------
+# 5. Report
+# ---------------------------------------------------------------------------
+
+ORDER = {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "INFO": 3, "OK": 4}
+WEIGHT = {"HIGH": 10, "MEDIUM": 5, "LOW": 2, "INFO": 0.5, "OK": 0}
+
+# Attacker access levels, from easiest to hardest
+EXTERNAL = "External - just plug something into a connector, no need to open the case"
+BOARD = "Board access - case opened, probes or wires on the PCB"
+
+# Cybersecurity view of each rule: how an attacker uses it, what it costs, and
+# where it sits in common frameworks (STRIDE threat categories, MITRE CWE IDs).
+THREATS = {
+    "Debug interfaces": dict(
+        attack="Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys and "
+               "passwords, get a root shell, or flash modified firmware (e.g. a backdoor).",
+        access=BOARD, cia="CIA",
+        stride="Information disclosure, Tampering, Elevation of privilege",
+        cwe="CWE-1191 (debug interface with improper access control), CWE-1263 (physical access)"),
+    "Boot-mode pins": dict(
+        attack="Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping the normal "
+               "boot chain to read the storage or load attacker firmware.",
+        access=BOARD, cia="CI",
+        stride="Tampering, Elevation of privilege, Information disclosure",
+        cwe="CWE-1263 (improper physical access control)"),
+    "Write protection": dict(
+        attack="Rewrite the boot EEPROM or config memory over its bus to change boot settings, plant "
+               "persistent malicious config, or brick the device.",
+        access=BOARD, cia="IA",
+        stride="Tampering, Denial of service",
+        cwe="CWE-1233 (security-sensitive hardware control without lock protection)"),
+    "Power test points": dict(
+        attack="Voltage glitching: dip the supply for nanoseconds at the right moment so the CPU skips an "
+               "instruction - e.g. a signature check, read-out-protection check or password compare.",
+        access=BOARD, cia="CI",
+        stride="Tampering, Elevation of privilege",
+        cwe="CWE-1247 (no protection against voltage/clock glitches), CWE-1332 (fault -> instruction skip)"),
+    "Exposed SPI/I2C buses": dict(
+        attack="Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data or keys in "
+               "an EEPROM, or impersonate a peripheral.",
+        access=EXTERNAL, cia="CI",
+        stride="Information disclosure, Spoofing, Tampering",
+        cwe="CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)"),
+    "USB ESD protection": dict(
+        attack="Discharge ESD or a surge device ('USB killer') into the port to damage the chip behind it.",
+        access=EXTERNAL, cia="A",
+        stride="Denial of service",
+        cwe="CWE-1384 (improper handling of physical/environmental conditions)"),
+    "Signal input/output protection": dict(
+        attack="Push ESD, overvoltage or crafted signals into a connector to damage or latch up the chip, "
+               "or cause faults that change its behaviour. Unprotected outputs can also be tapped.",
+        access=EXTERNAL, cia="IA",
+        stride="Denial of service, Tampering",
+        cwe="CWE-1384 (improper handling of physical/environmental conditions)"),
+    "Power input protection": dict(
+        attack="Reverse the plug, apply overvoltage or a surge on the power input to destroy the board. "
+               "A controllable bench supply on that input also makes voltage glitching easy.",
+        access=EXTERNAL, cia="IA",
+        stride="Denial of service, Tampering",
+        cwe="CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)"),
+    "Supply decoupling (glitch resistance)": dict(
+        attack="Without local capacitors, supply glitches and EM pulses reach the chip unfiltered, so fault "
+               "injection works more reliably.",
+        access=BOARD, cia="CI",
+        stride="Tampering, Elevation of privilege",
+        cwe="CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)"),
+    "Clock / crystal": dict(
+        attack="Clock glitching: inject a short or fast clock edge so the chip mis-executes instructions. "
+               "Turning a crystal trimmer shifts the device's timing.",
+        access=BOARD, cia="I",
+        stride="Tampering",
+        cwe="CWE-1247 (no protection against voltage/clock glitches)"),
+    "Trimmers and adjustable parts": dict(
+        attack="Physical tampering: turning a calibration part quietly shifts gain, thresholds, voltages or "
+               "frequency without leaving obvious traces.",
+        access=BOARD, cia="IA",
+        stride="Tampering",
+        cwe="CWE-1263 (improper physical access control)"),
+}
+
+# On analog-only boards there is no processor or firmware to attack, so some
+# threats look different. These replace the default text for those boards.
+ANALOG_THREATS = {
+    "Clock / crystal": dict(
+        attack="No processor here to glitch. The risk is tampering: turning a crystal trimmer shifts the "
+               "oscillator frequency (e.g. colour or carrier timing), degrading or breaking the output.",
+        cia="IA", stride="Tampering, Denial of service"),
+    "Supply decoupling (glitch resistance)": dict(
+        attack="Noise or a surge injected on the supply couples into the analog signal path, distorting "
+               "or disrupting the output.",
+        cia="IA", stride="Tampering, Denial of service"),
+    "Signal input/output protection": dict(
+        attack="Push ESD or overvoltage into an input/output to damage or latch up the chip, or inject "
+               "an unwanted signal. Unbuffered outputs can also be tapped to monitor the signal.",
+        cia="CIA", stride="Denial of service, Tampering, Information disclosure"),
+}
+
+PARENT = "Via parent board - these are module ports, not connectors; exposure depends on that board"
+ACCESS_LEVELS = (EXTERNAL, PARENT, BOARD)
+
+CIA_NAMES = {"C": "Confidentiality", "I": "Integrity", "A": "Availability"}
+
+
+def threat_for(title, ctx):
+    """THREATS entry adjusted for this board (analog-only? sub-module?)."""
+    t = dict(THREATS.get(title, {}))
+    if not t:
+        return t
+    if ctx["analog"]:
+        t.update(ANALOG_THREATS.get(title, {}))
+    if ctx["module"] and t.get("access") == EXTERNAL:
+        t["access"] = PARENT
+    return t
+
+
+def wrap(label, text, indent=6):
+    pad = " " * indent
+    return textwrap.fill(text, width=100, initial_indent=f"{pad}{label:<10}: ",
+                         subsequent_indent=pad + " " * 12)
+
+
+def print_threat(title, ctx):
+    t = threat_for(title, ctx)
+    if not t:
+        return
+    print("   Cybersecurity view:")
+    print(wrap("Attack", t["attack"]))
+    print(wrap("Attacker", t["access"]))
+    print(wrap("Impact", ", ".join(CIA_NAMES[c] for c in t["cia"])))
+    print(wrap("STRIDE", t["stride"]))
+    print(wrap("CWE", t["cwe"]))
+
+
+def print_assessment(results, ctx):
+    """results: list of (rule title, level, msg, fix)."""
+    issues = [r for r in results if r[1] not in ("OK",)]
+    print("######## SECURITY ASSESSMENT ########\n")
+
+    score = sum(WEIGHT[r[1]] for r in issues)
+    worst = min((ORDER[r[1]] for r in issues), default=ORDER["OK"])
+    rating = {0: "HIGH", 1: "MEDIUM", 2: "LOW"}.get(worst, "MINIMAL")
+    print(f"Overall risk: {rating}   (score {score:g} - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)\n")
+
+    print("Who can exploit it (by attacker access):")
+    for access in ACCESS_LEVELS:
+        mine = [r for r in issues if threat_for(r[0], ctx).get("access") == access]
+        if access == PARENT and not mine:
+            continue
+        hits = [r for r in mine if r[1] != "INFO"]
+        infos = len(mine) - len(hits)
+        print(f"   {access.split(' - ')[0]:<16}: {len(hits)} issue(s)" +
+              (f" + {infos} info" if infos else "") +
+              (f"  [{', '.join(sorted({r[0] for r in mine}))}]" if mine else ""))
+    print()
+
+    print("What's at risk (CIA triad):")
+    for c, name in CIA_NAMES.items():
+        areas = sorted({r[0] for r in issues if r[1] != "INFO" and c in threat_for(r[0], ctx).get("cia", "")})
+        print(f"   {name:<16}: " + (", ".join(areas) if areas else "no issues found"))
+    print()
+
+    print("Fix first (highest risk):")
+    top = sorted((r for r in issues if r[1] in ("HIGH", "MEDIUM")), key=lambda r: ORDER[r[1]])
+    seen = set()
+    n = 0
+    for title, level, msg, fix in top:
+        key = (title, fix)
+        if key in seen:
+            continue
+        seen.add(key)
+        n += 1
+        print(textwrap.fill(f"{n}. [{level}] {msg}", width=100, initial_indent="   ", subsequent_indent="      "))
+        if fix:
+            print(textwrap.fill(f"-> {fix}", width=100, initial_indent="      ", subsequent_indent="         "))
+        if n == 5:
+            break
+    if n == 0:
+        print("   Nothing urgent - only low-risk or informational items.")
+    print()
+
+    print("Scope / limits:")
+    if ctx["analog"]:
+        unseen = ("the enclosure, PCB layout, or the parent board this module plugs into" if ctx["module"]
+                  else "the enclosure or PCB layout")
+        print(textwrap.fill(f"This is a netlist-only review of an analog board (no firmware to attack). It can't "
+                            f"see {unseen}. Treat findings as places to check on the physical board.",
+                            width=100, initial_indent="   ", subsequent_indent="   ") + "\n")
+    else:
+        print("   This is a netlist-only review. It can't see firmware settings (secure boot, read-out")
+        print("   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places")
+        print("   to check, and confirm them against the firmware and the physical board.\n")
+
+
+def main():
+    if len(sys.argv) != 2:
+        print(__doc__)
+        sys.exit(1)
+
+    try:
+        components, nets = load_netlist(sys.argv[1])
+    except FileNotFoundError:
+        sys.exit(f"Error: file not found: {sys.argv[1]}")
+    except (ValueError, IndexError) as e:
+        sys.exit(f"Error: could not read {sys.argv[1]}: {e}")
+    print(f"Loaded {len(components)} components and {len(nets)} nets")
+
+    digital = digital_signals(nets)
+    if digital:
+        print(f"Board profile: {len(digital)} digital-looking signals found.\n")
+    else:
+        print("Board profile: no digital interfaces detected (looks analog-only).")
+        print("               Digital checks will mostly say 'nothing found' - see the analog checks.\n")
+
+    ctx = {"analog": not digital, "module": interface_points(components, nets)[1]}
+    counts = defaultdict(int)
+    results = []
+    for section, rules in (("DIGITAL CHECKS", DIGITAL_RULES), ("ANALOG CHECKS", ANALOG_RULES)):
+        print(f"######## {section} ########\n")
+        for title, rule in rules:
+            findings = sorted(rule(components, nets), key=lambda f: ORDER[f[0]])
+            print(f"== {title} ==")
+            if not findings:
+                print("   nothing found")
+            for level, msg, fix in findings:
+                counts[level] += 1
+                results.append((title, level, msg, fix))
+                print(f"   [{level:6}] {msg}")
+                if fix:
+                    print(f"            -> {fix}")
+            if any(f[0] != "OK" for f in findings):
+                print_threat(title, ctx)
+            print()
+
+    print_assessment(results, ctx)
+
+    if counts:
+        print("Summary: " + ", ".join(f"{k}={counts[k]}" for k in ORDER if counts[k]))
+    else:
+        print("Summary: no security findings.")
+
+
+if __name__ == "__main__":
+    main()
