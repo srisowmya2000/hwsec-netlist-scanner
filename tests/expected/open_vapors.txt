@@ -29,6 +29,12 @@ Board profile: 9 digital-looking signals found.
       CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
                   transmission)
 
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
 == Boot-mode pins ==
    nothing found
 

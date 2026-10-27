@@ -46,6 +46,12 @@ Board profile: 8 digital-looking signals found.
       CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
                   transmission)
 
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
 == Boot-mode pins ==
    [MEDIUM] Boot pin U1 BOOT0 pin (Boot-mode pin: high at reset = ROM bootloader (firmware can be read or reflashed over UART/USB)) can be driven from SW1
             -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.

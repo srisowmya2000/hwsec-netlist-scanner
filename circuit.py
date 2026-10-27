@@ -177,6 +177,10 @@ KNOWN_PINS = {
         "GPIO1": "UART0 RX (default debug console)",
     },
     # Nordic nRF52 series (Bluetooth LE)
+    "nRF91": {
+        "SWDCLK": "SWD clock (programming/debug port)",
+        "SWDIO": "SWD data (programming/debug port)",
+    },
     "nRF52": {
         "SWDCLK": "SWD clock (programming/debug port)",
         "SWDIO": "SWD data (programming/debug port)",
@@ -249,6 +253,9 @@ def is_power_net(name):
     # Status/sense signals named after a rail (e.g. VCC_SENSE, PWR_GOOD) are not rails.
     if re.search(r"SENSE|ERR|DETECT|GOOD|_EN\b|\bPG\b", n):
         return False
+    # Signals named after their voltage level (UART_RX_3V3, SPI_CLK_3V3, NCS_3G_3V3) are not rails.
+    if re.search(r"(^|_)(N?CS|UART|TXD?|RXD?|SPI|CLK|SCK|MISO|MOSI|SDA|SCL|DATA|IRQ|INT|RST|RESET)(_|$)", n):
+        return False
     return (n.startswith("+") or "VBUS" in n or n.startswith("VCC")
             or n.startswith("VDD") or n.endswith("V") or "_3V3" in n or "BATT" in n)
 
@@ -266,14 +273,44 @@ def nice_net(name):
     return f"{m.group(1)} pad {pin[3:]}" if pin.startswith("Pad") else f"{m.group(1)} {pin} pin"
 
 
+# Cellular modems by model: Quectel, SIMCom, u-blox, Telit, Sierra, Nordic nRF91, Sequans, Sony Altair.
+CELL_MODEL = re.compile(
+    r"\b(SIM(5\d{3}|7\d{3}|8\d{2}|9\d{2})\w*|A76\d\d\w*|BG(7\d|9\d|600L?)\w*|BC(6[068]|9[25])\w*|"
+    r"EC2[015]\w*|EG(2[15]|9[15]|915)\w*|M95|M66|UC(15|20)|RM5\d\d\w*|EM0[56]\w*|"
+    r"SARA-\w+|LARA-\w+|LENA-\w+|TOBY-\w+|UL865\w*|[LM]E910\w*|HL78\d\d\w*|WP76\d\d\w*|"
+    r"NRF91\d\d\w*|GM02S\w*|ALT1250\w*)\b", re.I)
+CELL_WORDS = re.compile(r"\b(CELLULAR|LTE|GSM|NB-?IOT|CAT-?M1?)\b.*\bMODULE\b|\bMODEM\b", re.I)
+
+
+def is_cellular(ref, components):
+    c = components.get(ref, {})
+    return (ref_prefix(ref) not in EXPOSED_PREFIXES
+            and bool(CELL_MODEL.search(f"{c.get('value', '')} {c.get('part', '')}")
+                     or CELL_WORDS.search(c.get("description", ""))))
+
+
+# Service pins that every modem family has under similar names.
+MODEM_PINS = [
+    (r"USB_D[PMN+-]", "Modem USB port (AT commands, diagnostics and firmware update: a programming/debug port)"),
+    (r"DBG_?(TXD|RXD)|(TXD|RXD)_?DBG|DEBUG_?(TX|RX)D?", "Modem debug UART (debug console)"),
+    (r"USB_BOOT|BOOT_CFG\d?", "Boot-mode pin: forces the modem into firmware download mode (modem firmware can be replaced)"),
+    (r"(MAIN_|UART1?_)?(TXD|RXD)|C10[34]/(TXD|RXD)", "Modem AT command UART (send SMS, change APN, read SIM and network data)"),
+]
+
+
 def meaning_of(node, components):
-    part = components.get(node["ref"], {}).get("value", "")
-    pins = next((p for chip, p in KNOWN_PINS.items() if chip in part), {})
+    part = components.get(node["ref"], {}).get("value", "").upper()
+    pins = next((p for chip, p in KNOWN_PINS.items() if chip.upper() in part), {})
     for key, meaning in pins.items():
         # "GPIO1" must not match "GPIO10", so a key ending in a digit can't be followed by one.
         tail = r"(?!\d)" if key[-1].isdigit() else ""
         if re.search(re.escape(key) + tail, node["function"]):
             return meaning
+    if is_cellular(node["ref"], components):
+        name = pin_name(node)
+        for pattern, meaning in MODEM_PINS:
+            if re.fullmatch(pattern, name, re.I):
+                return meaning
     return None
 
 
@@ -282,6 +319,10 @@ def meaning_of(node, components):
 # ---------------------------------------------------------------------------
 
 PROG_PIN = re.compile(r"\b(ICSP\w*|PGC\d?|PGD\d?|SWDIO|SWCLK|TCK|TMS|TDI|TDO|nTRST|MCLR|UPDI|PDI_?DATA)\b", re.I)
+
+
+# Connectors that are a board's normal interface to its host (e.g. a module's "Host" header).
+HOST_CONNECTOR = re.compile(r"\b(HOST|MAIN|MAINBOARD|EXT|EXTERNAL|INTERFACE|UEXT|MIKRO_?BUS)\b", re.I)
 
 
 def rule_debug_ports(components, nets):
@@ -304,7 +345,15 @@ def rule_debug_ports(components, nets):
             label = "programming/debug pin " + ", ".join(prog)
         else:
             label = "debug-looking signal"
-        if exposed:
+        # A UART that only goes to the board's host/main connector is usually the intended link, not a console.
+        host_link = (not meanings and not prog and exposed
+                     and all(HOST_CONNECTOR.search(components.get(r, {}).get("value", "")) for r in exposed))
+        if host_link:
+            findings.append(("INFO", f"UART {nice_net(name)} goes to the host interface "
+                             f"{', '.join(connector_name(r, components) for r in exposed)}",
+                             "This looks like the intended link to the main board, not a debug port. Make sure the "
+                             "firmware offers no console or command shell on it without authentication."))
+        elif exposed:
             fix = ("Anyone with access can read out or reprogram the chip. Remove the header/pad on production "
                    "boards and enable code/read protection." if prog else
                    "Remove the header/pad on production boards or disable the console in firmware.")
@@ -342,9 +391,15 @@ def rule_wireless(components, nets):
     """Radios (or headers for radio modules) give a remote attack surface."""
     radios = defaultdict(set)              # part/header -> signals it uses
     for ref, comp in components.items():
-        if WIRELESS.search(f"{comp['value']} {comp['part']} {comp['description']}"):
+        if WIRELESS.search(f"{comp['value']} {comp['part']} {comp['description']}") \
+                and not is_cellular(ref, components) \
+                and not (ref_prefix(ref) in ("AE", "ANT") or "ANTENNA" in f"{comp['value']} {comp['part']}".upper()):
+            # modems have their own check; antennas are passive parts, not radios
             radios[ref]
     for name, nodes in nets.items():
+        # A chip select or enable named after a radio (nCS_WIFI, BT_EN) doesn't make a header a radio link.
+        if re.search(r"(^|_)(N?CS|EN|RST|RESET|PWR|IRQ|INT|LED)(_|$)", short(name), re.I):
+            continue
         if WIRELESS.search(short(name).replace("-", " ").replace("_", " ")):
             for n in nodes:
                 if is_exposed(n["ref"]) or n["ref"] in radios:
@@ -359,11 +414,66 @@ def rule_wireless(components, nets):
     return findings
 
 
+TWO_G_ONLY = re.compile(r"\b(SIM8\d\d\w*|SIM9\d\d\w*|M95|M66)\b", re.I)
+
+
+def rule_cellular(components, nets):
+    """Cellular modems: the device can be reached from anywhere, not just within radio range."""
+    findings = []
+    for ref in sorted(r for r in components if is_cellular(r, components)):
+        comp = components[ref]
+        findings.append(("MEDIUM", f"Cellular modem {ref} ({comp['value']}) puts the device on the mobile network: "
+                         "reachable from anywhere, not just within radio range",
+                         "Use a private APN or carrier firewall so the device has no open ports on the internet, "
+                         "use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated."))
+        if TWO_G_ONLY.search(f"{comp['value']} {comp['part']}"):
+            findings.append(("LOW", f"{ref} ({comp['value']}) is 2G-only: 2G doesn't authenticate the network, so a "
+                             "fake base station can intercept or inject traffic",
+                             "Use end-to-end encryption (TLS) for everything. For new designs pick an LTE-M/NB-IoT "
+                             "modem; 2G networks are also being switched off."))
+    return findings
+
+
+SIM_DATA_PIN = re.compile(r"U?SIM\d?_?(DATA|IO|I/O)", re.I)
+SOLDERED_SIM = re.compile(r"\bE?SIM\b|\bSIM[-_]|UICC|MFF2", re.I)
+
+
+def rule_sim(components, nets):
+    """Removable SIM cards can be pulled out and used elsewhere; soldered eSIMs can't."""
+    findings = []
+    by_ref = nets_by_ref(nets)
+    for modem in sorted(r for r in components if is_cellular(r, components)):
+        data_nets = sorted({net for net in by_ref[modem] for x in nets[net]
+                            if x["ref"] == modem and SIM_DATA_PIN.fullmatch(pin_name(x))})
+        near = set()
+        for net in data_nets:
+            refs = {x["ref"] for x in nets[net]} - {modem}
+            for r in list(refs):                 # look through a series resistor (usually 22R)
+                if ref_prefix(r) == "R":
+                    refs |= {x["ref"] for other in by_ref[r] - {net} if not is_ground(other) for x in nets[other]}
+            near |= refs - {modem}
+        holders = sorted(r for r in near if is_exposed(r) and ref_prefix(r) != "TP")
+        soldered = sorted(r for r in near if not is_exposed(r) and not is_cellular(r, components)
+                          and SOLDERED_SIM.search(part_text(r, components)))
+        if holders:
+            findings.append(("LOW", f"SIM card holder {short_list(holders)} for {modem} takes a removable SIM: it can be "
+                             "taken out and used in another device" +
+                             (f" (a soldered eSIM {short_list(soldered)} is also fitted)" if soldered else ""),
+                             "Someone could use the data plan, or talk to your backend as this device if it trusts the "
+                             "SIM. Prefer a soldered eSIM/MFF2, set a SIM PIN, and ask the carrier to lock the SIM "
+                             "to this device's IMEI."))
+        elif soldered:
+            findings.append(("OK", f"{modem} uses a soldered SIM/eSIM ({short_list(soldered)}), which can't simply "
+                             "be pulled out", ""))
+    return findings
+
+
 def rule_boot_pins(components, nets):
     findings = []
     for name, nodes in nets.items():
-        boot_node = next((n for n in nodes if re.search(r"BOOT|STRAP", n["function"] + name, re.I)
-                          or "Boot-mode" in (meaning_of(n, components) or "")), None)
+        # Prefer the chip pin that is the boot pin (it carries the description) over a test pad on the same net.
+        boot_node = next((n for n in nodes if "Boot-mode" in (meaning_of(n, components) or "")), None) \
+            or next((n for n in nodes if re.search(r"BOOT|STRAP", n["function"] + name, re.I)), None)
         if not boot_node or name.startswith("unconnected"):
             continue
         reach = [n["ref"] for n in nodes if is_exposed(n["ref"]) or is_switch(n["ref"])]
@@ -387,7 +497,8 @@ def rule_boot_pins(components, nets):
 def rule_write_protect(components, nets):
     findings = []
     for name, nodes in nets.items():
-        wp_pins = [n for n in nodes if re.fullmatch(r"N?WP|WRITE_PROT\w*", pin_name(n), re.I)]
+        # Pin names may carry KiCad overbar markup, e.g. "~{WP}" or "~{WP}/IO2".
+        wp_pins = [n for n in nodes if re.match(r"N?WP\b|WRITE_PROT", re.sub(r"[~{}]", "", pin_name(n)), re.I)]
         if not (re.search(r"N?WP\b|WRITE_PROT", short(name), re.I) or wp_pins):
             continue
         if name.startswith("unconnected"):
@@ -398,7 +509,12 @@ def rule_write_protect(components, nets):
             continue
         others = [n["ref"] for n in nodes if not n["ref"].startswith(("Module", "U"))]
         exposed = [r for r in others if is_exposed(r)]
-        if not others:
+        memories = {n["ref"] for n in wp_pins}
+        drivers = sorted({n["ref"] for n in nodes if n["ref"].startswith(("Module", "U")) and n["ref"] not in memories})
+        if not others and memories and drivers:
+            findings.append(("OK", f"Write-protect {short(name)} is driven by {short_list(drivers)} "
+                             "(set by firmware)", ""))
+        elif not others:
             findings.append(("HIGH", f"Write-protect {short(name)} is floating", "Tie it to a defined level."))
         elif exposed:
             findings.append(("MEDIUM", f"Write-protect {short(name)} reachable from {', '.join(exposed)}",
@@ -994,6 +1110,8 @@ def rule_trimmers(components, nets):
 DIGITAL_RULES = [
     ("Debug interfaces", rule_debug_ports),
     ("Wireless interfaces (remote attack surface)", rule_wireless),
+    ("Cellular modem (remote attack surface)", rule_cellular),
+    ("SIM card", rule_sim),
     ("Boot-mode pins", rule_boot_pins),
     ("Write protection", rule_write_protect),
     ("Power test points", rule_power_testpoints),
@@ -1036,6 +1154,21 @@ THREATS = {
         access="Remote - within radio range, no physical access needed", cia="CIA",
         stride="Spoofing, Tampering, Information disclosure, Elevation of privilege",
         cwe="CWE-306 (missing authentication for critical function), CWE-319 (cleartext transmission)"),
+    "Cellular modem (remote attack surface)": dict(
+        attack="Reach the device from anywhere through the mobile network - no physical access or radio range "
+               "needed: probe services on its IP address, send SMS commands, or (on 2G) run a fake base station "
+               "to intercept and inject traffic.",
+        access="Cellular - from anywhere over the mobile network (internet, SMS), no physical access needed",
+        cia="CIA",
+        stride="Spoofing, Tampering, Information disclosure, Denial of service, Elevation of privilege",
+        cwe="CWE-306 (missing authentication for critical function), CWE-319 (cleartext transmission), "
+            "CWE-923 (communication channel to an unverified endpoint)"),
+    "SIM card": dict(
+        attack="Take the SIM out and put it in a phone or modem: use the device's data plan, or connect to the "
+               "backend as if you were this device when the backend trusts the SIM as its identity.",
+        access=BOARD, cia="CIA",
+        stride="Spoofing, Information disclosure",
+        cwe="CWE-1263 (improper physical access control), CWE-290 (authentication bypass by spoofing)"),
     "Boot-mode pins": dict(
         attack="Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping the normal "
                "boot chain to read the storage or load attacker firmware.",
@@ -1124,7 +1257,8 @@ ANALOG_THREATS = {
 
 PARENT = "Via parent board - these are module ports, not connectors; exposure depends on that board"
 REMOTE = "Remote - within radio range, no physical access needed"
-ACCESS_LEVELS = (REMOTE, EXTERNAL, PARENT, BOARD)
+CELLULAR = "Cellular - from anywhere over the mobile network (internet, SMS), no physical access needed"
+ACCESS_LEVELS = (CELLULAR, REMOTE, EXTERNAL, PARENT, BOARD)
 
 CIA_NAMES = {"C": "Confidentiality", "I": "Integrity", "A": "Availability"}
 
@@ -1164,7 +1298,7 @@ def assess(results, ctx):
     by_access = []
     for access in ACCESS_LEVELS:
         mine = [r for r in issues if threat_for(r[0], ctx).get("access") == access]
-        if access in (PARENT, REMOTE) and not mine:
+        if access in (PARENT, REMOTE, CELLULAR) and not mine:
             continue
         hits = [r for r in mine if r[1] != "INFO"]
         by_access.append({"access": access, "label": access.split(" - ")[0], "issues": len(hits),

@@ -1,0 +1,266 @@
+Loaded 239 components and 241 nets
+Board profile: 32 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface C3_USB_N (USB D+ of the built-in USB-Serial/JTAG (programming and debug port)) reaches J17
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface C3_USB_P (USB D- of the built-in USB-Serial/JTAG (programming and debug port)) reaches J17
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface ESP32-C3-RX-PROG (UART0 RX (ROM bootloader / debug console)) reaches J17
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface ESP32-C3-TX-PROG (UART0 TX (ROM bootloader / debug console)) reaches J17
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface CLICK_RX (debug-looking signal) reaches J7, J8
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface CLICK_TX (debug-looking signal) reaches J7, J8
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface SWCLK (SWD clock (programming/debug port)) reaches J10, J12, TP4
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface SWDIO (SWD data (programming/debug port)) reaches J10, J12, TP5
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [OK    ] MICRO_RX (debug-looking signal) is not routed to any header or test point
+   [OK    ] MICRO_TX (debug-looking signal) is not routed to any header or test point
+   [OK    ] U8 RXD pin (debug-looking signal) is not routed to any header or test point
+   [OK    ] U8 TXD pin (debug-looking signal) is not routed to any header or test point
+   [OK    ] P0.05/USB_UART_RX (debug-looking signal) is not routed to any header or test point
+   [OK    ] P0.06/USB_UART_TX (debug-looking signal) is not routed to any header or test point
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header J17 (02x04) talks to the board over UART (ESP32-C3-RX-PROG, ESP32-C3-TX-PROG)
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   [MEDIUM] Wireless module/header U15 (ESP32-C3-MINI-1-N4) talks to the board over UART (ESP32-C3-RX-PROG, ESP32-C3-TX-PROG)
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Cellular modem (remote attack surface) ==
+   [MEDIUM] Cellular modem U3 (NRF9160-SICA-R7) puts the device on the mobile network: reachable from anywhere, not just within radio range
+            -> Use a private APN or carrier firewall so the device has no open ports on the internet, use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   Cybersecurity view:
+      Attack    : Reach the device from anywhere through the mobile network - no physical access or
+                  radio range needed: probe services on its IP address, send SMS commands, or (on
+                  2G) run a fake base station to intercept and inject traffic.
+      Attacker  : Cellular - from anywhere over the mobile network (internet, SMS), no physical
+                  access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Denial of service, Elevation of
+                  privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission), CWE-923 (communication channel to an unverified endpoint)
+
+== SIM card ==
+   [LOW   ] SIM card holder J13 for U3 takes a removable SIM: it can be taken out and used in another device (a soldered eSIM U19 is also fitted)
+            -> Someone could use the data plan, or talk to your backend as this device if it trusts the SIM. Prefer a soldered eSIM/MFF2, set a SIM PIN, and ask the carrier to lock the SIM to this device's IMEI.
+   Cybersecurity view:
+      Attack    : Take the SIM out and put it in a phone or modem: use the device's data plan, or
+                  connect to the backend as if you were this device when the backend trusts the SIM
+                  as its identity.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Information disclosure
+      CWE       : CWE-1263 (improper physical access control), CWE-290 (authentication bypass by
+                  spoofing)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin C3_IO9 (Boot-mode strap: held low at reset = download mode (firmware can be reflashed)) can be driven from J17, SW4
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   [OK    ] Write-protect FLASH_WP is driven by U3 (set by firmware)
+
+== Power test points ==
+   [LOW   ] Power rail HI_5V exposed on test point(s) TP9
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   Cybersecurity view:
+      Attack    : Voltage glitching: dip the supply for nanoseconds at the right moment so the CPU
+                  skips an instruction - e.g. a signature check, read-out-protection check or
+                  password compare.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (no protection against voltage/clock glitches), CWE-1332 (fault ->
+                  instruction skip)
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J1 (Conn_01x08_Female) exposes bus signals: CLICK_MISO, CLICK_MOSI, CLICK_SCK
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J2 (Conn_01x08_Female) exposes bus signals: CLICK_MISO, CLICK_MOSI, CLICK_SCK
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J3 (QWIIC) exposes bus signals: CLICK_QWIIC_SCL, CLICK_QWIIC_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J6 (QWIIC) exposes bus signals: CLICK_QWIIC_SCL, CLICK_QWIIC_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J7 (Conn_01x08_Female) exposes bus signals: CLICK_QWIIC_SCL, CLICK_QWIIC_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J8 (Conn_01x08_Female) exposes bus signals: CLICK_QWIIC_SCL, CLICK_QWIIC_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J16 (Conn_02x05_Odd_Even) is wired straight into chip pins U15.IO0, U15.IO1, U15.IO2, U15.IO3, U15.IO4, U15.IO5 (+4 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J17 (02x04) is wired straight into chip pins U15.EN, U15.RXD0, U15.TXD0, U15.IO9, U15.IO18, U15.IO19 (+1 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J5 (Conn_01x03_Pin) is wired straight into chip pins U11.C, U16.EN, U18.C, U3.P0.13/AIN0
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J10 (Conn_ARM_JTAG_SWD_10) is wired straight into chip pins U3.SWDCLK, U3.SWDIO, U13.IN
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J12 (20021122-00010T4LF) is wired straight into chip pins U3.SWDCLK, U3.SWDIO, U13.IN
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (Conn_01x08_Female) is wired straight into chip pins U12.CLK, U12.DI(IO0), U12.DO(IO1), U3.P0.09, U3.P0.21, U3.P0.22 (+3 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J2 (Conn_01x08_Female) is wired straight into chip pins U12.CLK, U12.DI(IO0), U12.DO(IO1), U3.P0.00, U3.P0.11, U3.P0.21 (+3 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J3 (QWIIC) is wired straight into chip pins U5.SCK, U5.SDI, U7.SCL, U7.SDA, U9.SCL/SPC, U9.SDA/SDI/SDO (+2 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J6 (QWIIC) is wired straight into chip pins U5.SCK, U5.SDI, U7.SCL, U7.SDA, U9.SCL/SPC, U9.SDA/SDI/SDO (+2 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J7 (Conn_01x08_Female) is wired straight into chip pins U5.SCK, U5.SDI, U7.SCL, U7.SDA, U9.SCL/SPC, U9.SDA/SDI/SDO (+4 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J8 (Conn_01x08_Female) is wired straight into chip pins U5.SCK, U5.SDI, U7.SCL, U7.SDA, U9.SCL/SPC, U9.SDA/SDI/SDO (+4 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J11 (DX07S016JA1R1500) is wired straight into chip pins U8.D+, U8.D-
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J13 (104224-0820) is wired straight into chip pins U3.SIM_CLK, U3.SIM_IO, U3.SIM_RST, U19.CLK, U19.I/O, U19.RST
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J15 (u.FL) passes through C14, L2 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J14 (u.FL) passes through C28, L4 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J4 (BAT_CHG_ALT) passes through C7, R14, R84 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [OK    ] J9 (Screw_Terminal_01x02) signals have clamp/ESD protection (D9, D14)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output USB_5V to J11 is generated on the board (via R88)
+
+== Supply decoupling (glitch resistance) ==
+   [MEDIUM] Supply U3 VIO pin to U3 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [MEDIUM] Supply U6 SW pin to U6 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [MEDIUM] Supply U12 VCC pin to U12 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [MEDIUM] Supply U15 3V3 pin to U15 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [MEDIUM] Supply SIM_VCC to U3 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [OK    ] Supply BME280_3V3 to U5 is decoupled by C53, C54
+   [OK    ] Supply NRF_VDD1 to U3 is decoupled by C22, C23, C50
+   [OK    ] Supply NRF_VDD2 to U3 is decoupled by C20, C21, C48
+   [OK    ] Supply NRF_VDD_GPIO to U3 is decoupled by C24, C51
+   [OK    ] Supply 5V_BOOST_IN to U1 is decoupled by C55 and filter L6
+   [OK    ] Supply 5V_BOOST_OUT to U1 is decoupled by C35
+   [OK    ] Supply LMR_IN to U4 is decoupled by C34, C41, C42
+   [OK    ] Supply 3V3 to U11, U16, U18 is decoupled by C13, C30, C31, C43, C44
+   [OK    ] Supply BAT to U2 is decoupled by C7
+   [OK    ] Supply U3 IO_SUPPLY pin to U3 is decoupled by C25
+   [OK    ] Supply U7 VCC pin to U7 is decoupled by C37
+   [OK    ] Supply U8 VDD pin to U8 is decoupled by C17, C18
+   [OK    ] Supply U8 VREGIN pin to U8 is decoupled by C9, C10
+   [OK    ] Supply U9 VDD pin to U9 is decoupled by C11, C45
+   [OK    ] Supply U10 VDD pin to U10 is decoupled by C12
+   [OK    ] Supply U19 VCC pin to U19 is decoupled by C46
+   [OK    ] Supply VBAT to U2 is decoupled by C16
+   [OK    ] Supply VSYS to U6 is decoupled by C5
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   [OK    ] Crystal Y1 (32.768) for U10 is not reachable from any connector or test point
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 203 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Cellular        : 1 issue(s)  [Cellular modem (remote attack surface)]
+   Remote          : 2 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 16 issue(s) + 6 info  [Exposed SPI/I2C buses, Signal input/output protection]
+   Board access    : 16 issue(s)  [Boot-mode pins, Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance)]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Integrity       : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, Power test points, SIM card, Signal input/output protection, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Availability    : Cellular modem (remote attack surface), Debug interfaces, SIM card, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface C3_USB_N (USB D+ of the built-in USB-Serial/JTAG (programming and debug
+      port)) reaches J17
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [HIGH] Debug interface ESP32-C3-RX-PROG (UART0 RX (ROM bootloader / debug console)) reaches
+      J17
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   3. [MEDIUM] Wireless module/header J17 (02x04) talks to the board over UART (ESP32-C3-RX-PROG,
+      ESP32-C3-TX-PROG)
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+   4. [MEDIUM] Cellular modem U3 (NRF9160-SICA-R7) puts the device on the mobile network: reachable
+      from anywhere, not just within radio range
+      -> Use a private APN or carrier firewall so the device has no open ports on the internet, use
+         TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   5. [MEDIUM] Boot pin C3_IO9 (Boot-mode strap: held low at reset = download mode (firmware can be
+      reflashed)) can be driven from J17, SW4
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=8, MEDIUM=22, LOW=5, INFO=6, OK=28

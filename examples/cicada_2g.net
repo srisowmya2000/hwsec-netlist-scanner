@@ -1,0 +1,8332 @@
+(export
+	(version "E")
+	(design
+		(source "Cicada-GSM-HW/design/source/kicad/cicada-2g/P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+		(date "2026-10-26T19:34:58")
+		(tool "Eeschema 10.0.7")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "Ciacada 2G")
+				(company "Alexey Zaytsev / Okra Solar")
+				(rev "2.0")
+				(date "2020-05-15")
+				(source "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "C1")
+			(value "0.1uF 50v X5R")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "MPN") "0603B104K500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C30926")
+				(field
+					(name "SRC_USD_Q1000") "0.0036")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0603B104K500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C30926")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0036")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c9a48aa")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C2")
+			(value "33pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG330J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1562")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG330J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1562")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca7f470")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C3")
+			(value "33pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG330J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1562")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG330J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1562")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cabddad")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C4")
+			(value "33pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG330J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1562")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG330J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1562")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cabb711")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C5")
+			(value "1000uF 10v")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+			(fields
+				(field
+					(name "MPN") "GR108M010F12RR0VL4FP0")
+				(field
+					(name "Manufacturer") "Dongguan Chengxing Elec")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C3299")
+				(field
+					(name "SRC_USD_Q1000") "0.0171")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "CP_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "GR108M010F12RR0VL4FP0")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Dongguan Chengxing Elec")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C3299")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0171")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d9f0735")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C6")
+			(value "DNP")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000")
+				)
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d0eeb0f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C7")
+			(value "DNP")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005db5a274")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C8")
+			(value "DNP")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005dac93a3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C9")
+			(value "DNP")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000")
+				)
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cfa48d8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C10")
+			(value "DNP 1000uF 10v")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+			(fields
+				(field
+					(name "MPN") "GR108M010F12RR0VL4FP0")
+				(field
+					(name "Manufacturer") "Dongguan Chengxing Elec")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C3299")
+				(field
+					(name "SRC_USD_Q1000") "0.0171")
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "CP_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "GR108M010F12RR0VL4FP0")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Dongguan Chengxing Elec")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C3299")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0171")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d9d367d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C11")
+			(value "1000uF 10v")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+			(fields
+				(field
+					(name "MPN") "GR108M010F12RR0VL4FP0")
+				(field
+					(name "Manufacturer") "Dongguan Chengxing Elec")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C3299")
+				(field
+					(name "SRC_USD_Q1000") "0.0171")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "CP_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "GR108M010F12RR0VL4FP0")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Dongguan Chengxing Elec")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C3299")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0171")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d9c3c82")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C12")
+			(value "1000uF 10v")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+			(fields
+				(field
+					(name "MPN") "GR108M010F12RR0VL4FP0")
+				(field
+					(name "Manufacturer") "Dongguan Chengxing Elec")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C3299")
+				(field
+					(name "SRC_USD_Q1000") "0.0171")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "CP_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "GR108M010F12RR0VL4FP0")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Dongguan Chengxing Elec")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C3299")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0171")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005da572f6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C14")
+			(value "1000uF 10v")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+			(fields
+				(field
+					(name "MPN") "GR108M010F12RR0VL4FP0")
+				(field
+					(name "Manufacturer") "Dongguan Chengxing Elec")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C3299")
+				(field
+					(name "SRC_USD_Q1000") "0.0171")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "CP_Small")
+				(description "Polarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "GR108M010F12RR0VL4FP0")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Dongguan Chengxing Elec")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C3299")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0171")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d041a9b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C16")
+			(value "33pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG330J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1562")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG330J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1562")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cbfb4ad")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C17")
+			(value "100pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG101J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1546")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG101J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1546")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cbfb4b7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C18")
+			(value "0.1uF 50v X5R")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "MPN") "0603B104K500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C30926")
+				(field
+					(name "SRC_USD_Q1000") "0.0036")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0603B104K500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C30926")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0036")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005caa2da1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C19")
+			(value "22uF 16v X5R")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C98190")
+				(field
+					(name "SRC_USD_Q1000") "0.0352")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C98190")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0352")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cc93bc5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C20")
+			(value "100pF C0G")
+			(footprint "Capacitor_SMD:C_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "0402CG101J500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C1546")
+				(field
+					(name "SRC_USD_Q1000") "0.0015")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0402CG101J500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C1546")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0015")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c923e33")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C21")
+			(value "0.1uF 50v X5R")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "MPN") "0603B104K500NT")
+				(field
+					(name "Manufacturer") "Guangdong Fenghua Advanced Tech")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C30926")
+				(field
+					(name "SRC_USD_Q1000") "0.0036")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "0603B104K500NT")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Fenghua Advanced Tech")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C30926")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0036")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005caa5daf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C22")
+			(value "22uF 16v X5R")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+			(fields
+				(field
+					(name "MPN") "CL21A226MOQNNNE")
+				(field
+					(name "Manufacturer") "Samsung")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C98190")
+				(field
+					(name "SRC_USD_Q1000") "0.0352")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0805_2012Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C_Small")
+				(description "Unpolarized capacitor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "CL21A226MOQNNNE")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samsung")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C98190")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0352")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "capacitor cap")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cc92ee7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D1")
+			(value "TVS")
+			(footprint "Diode_SMD:D_SOD-523")
+			(fields
+				(field
+					(name "Manufacturer") "Tak Cheong")
+				(field
+					(name "MPN") "ESD5Z3V3")
+				(field
+					(name "SRCPN") "C129213")
+				(field
+					(name "SOURCE") "lscs")
+				(field
+					(name "SRC_USD_Q1000") "0.0110")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Zener_ALT")
+				(description "Zener diode, filled shape")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Tak Cheong")
+			)
+			(property
+				(name "MPN")
+				(value "ESD5Z3V3")
+			)
+			(property
+				(name "SRCPN")
+				(value "C129213")
+			)
+			(property
+				(name "SOURCE")
+				(value "lscs")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0110")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca965e0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D2")
+			(value "TVS")
+			(footprint "Diode_SMD:D_SOD-523")
+			(fields
+				(field
+					(name "Manufacturer") "Tak Cheong")
+				(field
+					(name "MPN") "ESD5Z3V3")
+				(field
+					(name "SRCPN") "C129213")
+				(field
+					(name "SOURCE") "lscs")
+				(field
+					(name "SRC_USD_Q1000") "0.0110")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Zener_ALT")
+				(description "Zener diode, filled shape")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Tak Cheong")
+			)
+			(property
+				(name "MPN")
+				(value "ESD5Z3V3")
+			)
+			(property
+				(name "SRCPN")
+				(value "C129213")
+			)
+			(property
+				(name "SOURCE")
+				(value "lscs")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0110")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005caa4231")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D3")
+			(value "TVS")
+			(footprint "Diode_SMD:D_SOD-523")
+			(fields
+				(field
+					(name "Manufacturer") "Tak Cheong")
+				(field
+					(name "MPN") "ESD5Z3V3")
+				(field
+					(name "SRCPN") "C129213")
+				(field
+					(name "SOURCE") "lscs")
+				(field
+					(name "SRC_USD_Q1000") "0.0110")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_SOD-523")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Zener_ALT")
+				(description "Zener diode, filled shape")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Tak Cheong")
+			)
+			(property
+				(name "MPN")
+				(value "ESD5Z3V3")
+			)
+			(property
+				(name "SRCPN")
+				(value "C129213")
+			)
+			(property
+				(name "SOURCE")
+				(value "lscs")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0110")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005caa4695")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D4")
+			(value "LED_B")
+			(footprint "Diode_SMD:D_0603_1608Metric")
+			(fields
+				(field
+					(name "MPN") "ORH-B36G")
+				(field
+					(name "Manufacturer") "Orient")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C193191")
+				(field
+					(name "SRC_USD_Q1000") "0.0048")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "LED_ALT")
+				(description "Light emitting diode, filled shape")
+			)
+			(property
+				(name "MPN")
+				(value "ORH-B36G")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Orient")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C193191")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0048")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "LED diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "LED* LED_SMD:* LED_THT:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca724c2")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D5")
+			(value "SS14")
+			(footprint "Diode_SMD:D_SMA")
+			(fields
+				(field
+					(name "MPN") "SS14F")
+				(field
+					(name "Manufacturer") "MDD")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C64880")
+				(field
+					(name "SRC_USD_Q1000") "0.0080")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_SMA")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Small_ALT")
+				(description "Diode, small symbol, filled shape")
+			)
+			(property
+				(name "MPN")
+				(value "SS14F")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MDD")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C64880")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0080")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005da09083")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D6")
+			(value "TVS")
+			(footprint "Diode_SMD:D_0402_1005Metric")
+			(fields
+				(field
+					(name "Manufacturer") "Murata Electronics")
+				(field
+					(name "SOURCE") "lscs")
+				(field
+					(name "SRCPN") "C86141")
+				(field
+					(name "SRC_USD_Q1000") "0.0396")
+				(field
+					(name "MPN") "LXES15AAA1-153")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_TVS_ALT")
+				(description "Bidirectional transient-voltage-suppression diode, filled shape")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata Electronics")
+			)
+			(property
+				(name "SOURCE")
+				(value "lscs")
+			)
+			(property
+				(name "SRCPN")
+				(value "C86141")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0396")
+			)
+			(property
+				(name "MPN")
+				(value "LXES15AAA1-153")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode TVS thyrector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d1ab9d9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D10")
+			(value "SS14")
+			(footprint "Diode_SMD:D_SMA")
+			(fields
+				(field
+					(name "Manufacturer") "MDD")
+				(field
+					(name "MPN") "SS14F")
+				(field
+					(name "SRCPN") "C64880")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRC_USD_Q1000") "0.0080")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Diode_SMD:D_SMA")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "D_Schottky_Small_ALT")
+				(description "Schottky diode, small symbol, filled shape")
+			)
+			(property
+				(name "Manufacturer")
+				(value "MDD")
+			)
+			(property
+				(name "MPN")
+				(value "SS14F")
+			)
+			(property
+				(name "SRCPN")
+				(value "C64880")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0080")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "diode Schottky")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TO-???* *_Diode_* *SingleDiode* D_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005db55dc0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "FID1")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc01d4")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "FID2")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc0c7a")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "FID3")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc0fa0")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "FID4")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc1358")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "FID5")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc15d5")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "FID6")
+			(value "Fiducial")
+			(footprint "Fiducial:Fiducial_1mm_Mask2mm")
+			(fields
+				(field
+					(name "Footprint") "Fiducial:Fiducial_1mm_Mask2mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "Fiducial")
+				(description "Fiducial Marker")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fiducial marker")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Fiducial*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efc18f6")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "H1")
+			(value "MountingHole_Pad")
+			(footprint "MountingHole:MountingHole_3.2mm_M3_ISO14580_Pad")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3_ISO14580_Pad")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole_Pad")
+				(description "Mounting Hole with connection")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*Pad*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca5a765")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "H2")
+			(value "MountingHole_Pad")
+			(footprint "MountingHole:MountingHole_3.2mm_M3_ISO14580_Pad")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "MountingHole:MountingHole_3.2mm_M3_ISO14580_Pad")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Mechanical")
+				(part "MountingHole_Pad")
+				(description "Mounting Hole with connection")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "mounting hole")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "MountingHole*Pad*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca842db")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "Host")
+			(footprint "cicada-footprints:PinSocket_2x08_P2.54mm_Vertical_padded")
+			(description "Generic 2x10 2.54mm Female")
+			(fields
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "Manufacturer") "Boom Precision Elec")
+				(field
+					(name "SRCPN") "C30867")
+				(field
+					(name "SRC_USD_Q1000") "0.0695")
+				(field
+					(name "MPN") "C30867")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "cicada-footprints:PinSocket_2x08_P2.54mm_Vertical_padded")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic 2x10 2.54mm Female")
+			)
+			(libsource
+				(lib "connector")
+				(part "Conn_02x8_Odd_Even_Side_padding")
+				(description "Generic connector, double row, 02x10, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Boom Precision Elec")
+			)
+			(property
+				(name "SRCPN")
+				(value "C30867")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0695")
+			)
+			(property
+				(name "MPN")
+				(value "C30867")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_2x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c247a9e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "16")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "USB_OTG")
+			(footprint "cicada-footprints:ZX62D-B-5PA8")
+			(datasheet "~")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0461")
+				(field
+					(name "MPN") "A01SB141B1-067")
+				(field
+					(name "Manufacturer") "Jing Extension of the Electronic")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C10418")
+				(field
+					(name "SMT/THT") "THT")
+				(field
+					(name "Footprint") "cicada-footprints:ZX62D-B-5PA8")
+				(field
+					(name "Datasheet") "~")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "USB_OTG")
+				(description "USB mini/micro connector")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0461")
+			)
+			(property
+				(name "MPN")
+				(value "A01SB141B1-067")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Jing Extension of the Electronic")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C10418")
+			)
+			(property
+				(name "SMT/THT")
+				(value "THT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "connector USB")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "USB*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d371029")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J4")
+			(value "U.FL")
+			(footprint "cicada-footprints:U.FL_Molex_MCRF_73412-0110_Vertical")
+			(datasheet "~")
+			(description "U.FL, 50R,6gHz")
+			(fields
+				(field
+					(name "MPN") "U.FL-R-SMT-1(80)")
+				(field
+					(name "Manufacturer") "Hirose")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C88374")
+				(field
+					(name "SRC_USD_Q1000")
+				)
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "cicada-footprints:U.FL_Molex_MCRF_73412-0110_Vertical")
+				(field
+					(name "Datasheet") "~")
+				(field
+					(name "Description") "U.FL, 50R,6gHz")
+			)
+			(libsource
+				(lib "Connector")
+				(part "Conn_Coaxial")
+				(description "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)")
+			)
+			(property
+				(name "MPN")
+				(value "U.FL-R-SMT-1(80)")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Hirose")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C88374")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "BNC SMA SMB SMC coaxial connector CINCH RCA")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "*BNC* *SMA* *SMB* *SMC* *Cinch*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d1dd125")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J5")
+			(value "DNP U.FL")
+			(footprint "cicada-footprints:U.FL_Molex_MCRF_73412-0110_Vertical")
+			(datasheet "~")
+			(fields
+				(field
+					(name "MPN") "U.FL-R-SMT-1(80)")
+				(field
+					(name "Manufacturer") "Hirose")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C88374")
+				(field
+					(name "SRC_USD_Q1000")
+				)
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "cicada-footprints:U.FL_Molex_MCRF_73412-0110_Vertical")
+				(field
+					(name "Datasheet") "~")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Conn_Coaxial")
+				(description "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)")
+			)
+			(property
+				(name "MPN")
+				(value "U.FL-R-SMT-1(80)")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Hirose")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C88374")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "BNC SMA SMB SMC coaxial connector CINCH RCA")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "*BNC* *SMA* *SMB* *SMC* *Cinch*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d0f0a9c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "L4")
+			(value "3.3uH 2A")
+			(footprint "cicada-footprints:L_4030_Handsoldering")
+			(fields
+				(field
+					(name "MPN") "FPI0403F-3R3M")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C304284")
+				(field
+					(name "Manufacturer") "TAITEC")
+				(field
+					(name "SRC_USD_Q1000") "0.0113")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Alternate MPN 1") "CD43YP0403-3R3M")
+				(field
+					(name "Alternate Manufacturer 1") "YJYCOIN")
+				(field
+					(name "Footprint") "cicada-footprints:L_4030_Handsoldering")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "L_Small")
+				(description "Inductor, small symbol")
+			)
+			(property
+				(name "MPN")
+				(value "FPI0403F-3R3M")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C304284")
+			)
+			(property
+				(name "Manufacturer")
+				(value "TAITEC")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0113")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Alternate MPN 1")
+				(value "CD43YP0403-3R3M")
+			)
+			(property
+				(name "Alternate Manufacturer 1")
+				(value "YJYCOIN")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "inductor choke coil reactor magnetic")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Choke_* *Coil* Inductor_* L_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d01679a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "LOGO1")
+			(value "SYM_Hot_Small")
+			(footprint "cicada-footprints:okra_logo_copper_2")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "cicada-footprints:okra_logo_copper_2")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Graphic")
+				(part "SYM_Hot_Small")
+				(description "Hot surface warning symbol, small")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "symbol logo hot surface warning heat")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cea13d2")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "P1")
+			(value "SK-C793")
+			(footprint "cicada-footprints:SK-C793")
+			(fields
+				(field
+					(name "MPN") "SK-C793")
+				(field
+					(name "Manufacturer") "Shenzhen Shengkai Electronics")
+				(field
+					(name "SOURCE") "Tobao")
+				(field
+					(name "SRCPN") "https://item.taobao.com/item.htm?id=563346633219")
+				(field
+					(name "SRC_USD_Q1000") "0.14")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "cicada-footprints:SK-C793")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "SK-C793")
+				(part "SK-C793")
+				(description "")
+			)
+			(property
+				(name "MPN")
+				(value "SK-C793")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Shenzhen Shengkai Electronics")
+			)
+			(property
+				(name "SOURCE")
+				(value "Tobao")
+			)
+			(property
+				(name "SRCPN")
+				(value "https://item.taobao.com/item.htm?id=563346633219")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.14")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca5d109")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "PCB1")
+			(value "P-1000010 Bare PCB")
+			(fields
+				(field
+					(name "DNP") "DNP")
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Okra_misc")
+				(part "PCB")
+				(description "")
+			)
+			(property
+				(name "DNP")
+				(value "DNP")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005efa2b8b")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "Q1")
+			(value "2N7002")
+			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(datasheet "https://datasheet.lcsc.com/szlcsc/Guangdong-Hottech-2N7002_C181082.pdf")
+			(fields
+				(field
+					(name "Manufacturer") "Guangdong Hottech")
+				(field
+					(name "MPN") "2N7002")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C181082")
+				(field
+					(name "SRC_USD_Q1000") "0.0074")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/szlcsc/Guangdong-Hottech-2N7002_C181082.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Transistor_FET")
+				(part "2N7002")
+				(description "0.115A Id, 60V Vds, N-Channel MOSFET, SOT-23")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Guangdong Hottech")
+			)
+			(property
+				(name "MPN")
+				(value "2N7002")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C181082")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0074")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "N-Channel Switching MOSFET")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?23*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d9812c8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "150k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "DNP")
+				)
+				(field
+					(name "SRC_USD_Q1000") "0.0013")
+				(field
+					(name "MPN") "RC0402JR-07150KL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C137919")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "DNP")
+				(value "")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0013")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402JR-07150KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C137919")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca1b669")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "86.6k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.00079")
+				(field
+					(name "MPN") "RC0402FR-0786K6L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C477807")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.00079")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0786K6L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C477807")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca1c873")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "330R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-07330RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C105875")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07330RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C105875")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005db4b14d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "330R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-07330RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C105875")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-07330RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C105875")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005dac1a05")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R7")
+			(value "22R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-0722RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C114765")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0722RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C114765")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca72278")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R8")
+			(value "22R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-0722RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C114765")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0722RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C114765")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca74d70")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R9")
+			(value "22R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-0722RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C114765")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0722RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C114765")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca750f4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R10")
+			(value "1K")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0003")
+				(field
+					(name "MPN") "RC0402JR-071KL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C105637")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0003")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402JR-071KL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C105637")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005ca6da64")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R12")
+			(value "0R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-070RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C106231")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-070RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C106231")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d0ef7f5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R13")
+			(value "0R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "MPN") "RC0402FR-070RL")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C106231")
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-070RL")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C106231")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d94b048")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R14")
+			(value "6.98k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0019")
+				(field
+					(name "MPN") "RC0402FR-076K98L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C137944")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0019")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-076K98L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C137944")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005da1aaa4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R19")
+			(value "40.2k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-0740K2L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C137983")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0740K2L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C137983")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c16b3e0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R22")
+			(value "40.2k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0004")
+				(field
+					(name "MPN") "RC0402FR-0740K2L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C137983")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0004")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-0740K2L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C137983")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c9fce6c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R23")
+			(value "6.98k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "SRC_USD_Q1000") "0.0019")
+				(field
+					(name "MPN") "RC0402FR-076K98L")
+				(field
+					(name "Manufacturer") "YAGEO")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C137944")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R_Small")
+				(description "Resistor, small symbol")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0019")
+			)
+			(property
+				(name "MPN")
+				(value "RC0402FR-076K98L")
+			)
+			(property
+				(name "Manufacturer")
+				(value "YAGEO")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C137944")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005c2c8e5e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP1")
+			(value "TestPoint")
+			(footprint "TestPoint:TestPoint_Pad_D1.5mm")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d96e138")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP2")
+			(value "TestPoint")
+			(footprint "TestPoint:TestPoint_Pad_D1.5mm")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005dad99c8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP3")
+			(value "TestPoint")
+			(footprint "TestPoint:TestPoint_Pad_D1.5mm")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005dadc161")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP4")
+			(value "TestPoint")
+			(footprint "TestPoint:TestPoint_Pad_D1.5mm")
+			(fields
+				(field
+					(name "SMT/THT") "N/A")
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Pad_D1.5mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "SMT/THT")
+				(value "N/A")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005dadd563")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "74LVC1G17")
+			(footprint "Package_TO_SOT_SMD:SOT-353_SC-70-5")
+			(datasheet "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+			(fields
+				(field
+					(name "MPN") "74LVC1G17GW")
+				(field
+					(name "Manufacturer") "NXP Semicon")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C124293")
+				(field
+					(name "SRC_USD_Q1000") "0.0185")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-353_SC-70-5")
+				(field
+					(name "Datasheet") "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "74lvc1g17")
+				(part "74LVC1G17")
+				(description "Single Schmitt Buffer Gate, Low-Voltage CMOS")
+			)
+			(property
+				(name "MPN")
+				(value "74LVC1G17GW")
+			)
+			(property
+				(name "Manufacturer")
+				(value "NXP Semicon")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C124293")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0185")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "Single Gate Buff Schmitt LVC CMOS")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT* SG-*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005db3688c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "USBLC6-2SC6")
+			(footprint "Package_TO_SOT_SMD:SOT-23-6")
+			(datasheet "http://www2.st.com/resource/en/datasheet/CD00050750.pdf")
+			(fields
+				(field
+					(name "Manufacturer") "Yenji Elec")
+				(field
+					(name "MPN") "USBLC6-2SC6")
+				(field
+					(name "SRCPN") "C323793")
+				(field
+					(name "SRC_USD_Q1000") "0.0440")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet") "http://www2.st.com/resource/en/datasheet/CD00050750.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Power_Protection")
+				(part "USBLC6-2SC6")
+				(description "Bidirectional ESD Protection Diode, SOT-23-6")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yenji Elec")
+			)
+			(property
+				(name "MPN")
+				(value "USBLC6-2SC6")
+			)
+			(property
+				(name "SRCPN")
+				(value "C323793")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0440")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "usb ethernet")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT?23*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005d57d413")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "M3406-ADJ")
+			(footprint "Package_TO_SOT_SMD:TSOT-23-5")
+			(datasheet "https://datasheet.lcsc.com/szlcsc/1901171812_hengjiaxing-HX3406_C296282.pdf")
+			(fields
+				(field
+					(name "MPN") "M3406-ADJ")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C83224")
+				(field
+					(name "Manufacturer") "XI'AN Aerosemi Tech")
+				(field
+					(name "SRC_USD_Q1000") "0.0285")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TSOT-23-5")
+				(field
+					(name "Datasheet") "https://datasheet.lcsc.com/szlcsc/1901171812_hengjiaxing-HX3406_C296282.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Regulator_Switching")
+				(part "LTC3406ES5")
+				(description "600mA Synchronous Step-Down Regulator, 1.5MHz, Adjustable Output Voltage, Burst Mode, ThinSOT-23")
+			)
+			(property
+				(name "MPN")
+				(value "M3406-ADJ")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C83224")
+			)
+			(property
+				(name "Manufacturer")
+				(value "XI'AN Aerosemi Tech")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0285")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "Regulator step-down")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TSOT?23*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cfbfaa6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U4")
+			(value "SIM800C (ordinary version)")
+			(footprint "RF_GSM:SIMCom_SIM800C")
+			(datasheet "http://simcom.ee/documents/SIM800C/SIM800C_Hardware_Design_V1.05.pdf")
+			(fields
+				(field
+					(name "MPN") "SIM800C")
+				(field
+					(name "Manufacturer") "Simcom")
+				(field
+					(name "SOURCE") "Tobao")
+				(field
+					(name "SRCPN") "https://item.taobao.com/item.htm?id=45289949668")
+				(field
+					(name "SRC_USD_Q1000") "2.24")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "RF_GSM:SIMCom_SIM800C")
+				(field
+					(name "Datasheet") "http://simcom.ee/documents/SIM800C/SIM800C_Hardware_Design_V1.05.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "RF_GSM")
+				(part "SIM800C")
+				(description "GSM Quad-Band Communication Module, GPRS, Audio Engine, AT Command Set, Bluetooth is Optional")
+			)
+			(property
+				(name "MPN")
+				(value "SIM800C")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Simcom")
+			)
+			(property
+				(name "SOURCE")
+				(value "Tobao")
+			)
+			(property
+				(name "SRCPN")
+				(value "https://item.taobao.com/item.htm?id=45289949668")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "2.24")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "GSM GPRS Quad-Band SMS")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SIMCom*SIM800C*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005cb6cf25")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "39")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "42")
+						)
+						(pin
+							(num "41")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U5")
+			(value "74LVC1G17")
+			(footprint "Package_TO_SOT_SMD:SOT-353_SC-70-5")
+			(datasheet "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+			(fields
+				(field
+					(name "MPN") "74LVC1G17GW")
+				(field
+					(name "Manufacturer") "NXP Semicon")
+				(field
+					(name "SOURCE") "lcsc")
+				(field
+					(name "SRCPN") "C124293")
+				(field
+					(name "SRC_USD_Q1000") "0.0185")
+				(field
+					(name "SMT/THT") "SMT")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-353_SC-70-5")
+				(field
+					(name "Datasheet") "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "74lvc1g17")
+				(part "74LVC1G17")
+				(description "Single Schmitt Buffer Gate, Low-Voltage CMOS")
+			)
+			(property
+				(name "MPN")
+				(value "74LVC1G17GW")
+			)
+			(property
+				(name "Manufacturer")
+				(value "NXP Semicon")
+			)
+			(property
+				(name "SOURCE")
+				(value "lcsc")
+			)
+			(property
+				(name "SRCPN")
+				(value "C124293")
+			)
+			(property
+				(name "SRC_USD_Q1000")
+				(value "0.0185")
+			)
+			(property
+				(name "SMT/THT")
+				(value "SMT")
+			)
+			(property
+				(name "Sheetname")
+				(value "P-1000010_Okra Cicada 2G PCBA")
+			)
+			(property
+				(name "Sheetfile")
+				(value "P-1000010_Okra Cicada 2G PCBA.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "Single Gate Buff Schmitt LVC CMOS")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "SOT* SG-*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00005db36cb4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "74lvc1g17")
+			(part "74LVC1G17")
+			(description "Single Schmitt Buffer Gate, Low-Voltage CMOS")
+			(docs "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+			(footprints
+				(fp "SOT*")
+				(fp "SG-*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "74LVC1G17")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet") "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf")
+				(field
+					(name "Description") "Single Schmitt Buffer Gate, Low-Voltage CMOS")
+			)
+			(pins
+				(pin
+					(num "2")
+					(name "")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "output")
+				)
+				(pin
+					(num "5")
+					(name "VCC")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "Conn_Coaxial")
+			(description "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)")
+			(docs "~")
+			(footprints
+				(fp "*BNC*")
+				(fp "*SMA*")
+				(fp "*SMB*")
+				(fp "*SMC*")
+				(fp "*Cinch*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_Coaxial")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet") "~")
+				(field
+					(name "Description") "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "In")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Ext")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "TestPoint")
+			(description "test point")
+			(footprints
+				(fp "Pin*")
+				(fp "Test*")
+			)
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "USB_OTG")
+			(description "USB mini/micro connector")
+			(docs "~")
+			(footprints
+				(fp "USB*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "USB_OTG")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet") "~")
+				(field
+					(name "Description") "USB mini/micro connector")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VBUS")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "D-")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "D+")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "ID")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "6")
+					(name "Shield")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C")
+			(description "Unpolarized capacitor")
+			(footprints
+				(fp "C_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "CP_Small")
+			(description "Polarized capacitor, small symbol")
+			(footprints
+				(fp "CP_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "CP_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Polarized capacitor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "C_Small")
+			(description "Unpolarized capacitor, small symbol")
+			(footprints
+				(fp "C_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Unpolarized capacitor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_Schottky_Small_ALT")
+			(description "Schottky diode, small symbol, filled shape")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_Schottky_Small_ALT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Schottky diode, small symbol, filled shape")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_Small_ALT")
+			(description "Diode, small symbol, filled shape")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_Small_ALT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Diode, small symbol, filled shape")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_TVS_ALT")
+			(description "Bidirectional transient-voltage-suppression diode, filled shape")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_TVS_ALT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Bidirectional transient-voltage-suppression diode, filled shape")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "A1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "D_Zener_ALT")
+			(description "Zener diode, filled shape")
+			(footprints
+				(fp "TO-???*")
+				(fp "*_Diode_*")
+				(fp "*SingleDiode*")
+				(fp "D_*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "D_Zener_ALT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Zener diode, filled shape")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "LED_ALT")
+			(description "Light emitting diode, filled shape")
+			(footprints
+				(fp "LED*")
+				(fp "LED_SMD:*")
+				(fp "LED_THT:*")
+			)
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "LED_ALT")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Light emitting diode, filled shape")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "A")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "L_Small")
+			(description "Inductor, small symbol")
+			(footprints
+				(fp "Choke_*")
+				(fp "*Coil*")
+				(fp "Inductor_*")
+				(fp "L_*")
+			)
+			(fields
+				(field
+					(name "Reference") "L")
+				(field
+					(name "Value") "L_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Inductor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R")
+			(description "Resistor")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R_Small")
+			(description "Resistor, small symbol")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor, small symbol")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Graphic")
+			(part "SYM_Hot_Small")
+			(description "Hot surface warning symbol, small")
+			(fields
+				(field
+					(name "Reference") "#SYM")
+				(field
+					(name "Value") "SYM_Hot_Small")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Hot surface warning symbol, small")
+			)
+		)
+		(libpart
+			(lib "Mechanical")
+			(part "Fiducial")
+			(description "Fiducial Marker")
+			(footprints
+				(fp "Fiducial*")
+			)
+			(fields
+				(field
+					(name "Reference") "FID")
+				(field
+					(name "Value") "Fiducial")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Fiducial Marker")
+			)
+		)
+		(libpart
+			(lib "Mechanical")
+			(part "MountingHole_Pad")
+			(description "Mounting Hole with connection")
+			(footprints
+				(fp "MountingHole*Pad*")
+			)
+			(fields
+				(field
+					(name "Reference") "H")
+				(field
+					(name "Value") "MountingHole_Pad")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Mounting Hole with connection")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "input")
+				)
+			)
+		)
+		(libpart
+			(lib "Okra_misc")
+			(part "PCB")
+			(fields
+				(field
+					(name "Reference") "PCB")
+				(field
+					(name "Value") "PCB")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+		)
+		(libpart
+			(lib "Power_Protection")
+			(part "USBLC6-2SC6")
+			(description "Bidirectional ESD Protection Diode, SOT-23-6")
+			(docs "http://www2.st.com/resource/en/datasheet/CD00050750.pdf")
+			(footprints
+				(fp "SOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "USBLC6-2SC6")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet") "http://www2.st.com/resource/en/datasheet/CD00050750.pdf")
+				(field
+					(name "Description") "Bidirectional ESD Protection Diode, SOT-23-6")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "IO1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "IO2")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "IO2")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "VBUS")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "IO1")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "RF_GSM")
+			(part "SIM800C")
+			(description "GSM Quad-Band Communication Module, GPRS, Audio Engine, AT Command Set, Bluetooth is Optional")
+			(docs "http://simcom.ee/documents/SIM800C/SIM800C_Hardware_Design_V1.05.pdf")
+			(footprints
+				(fp "SIMCom*SIM800C*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "SIM800C")
+				(field
+					(name "Footprint") "RF_GSM:SIMCom_SIM800C")
+				(field
+					(name "Datasheet") "http://simcom.ee/documents/SIM800C/SIM800C_Hardware_Design_V1.05.pdf")
+				(field
+					(name "Description") "GSM Quad-Band Communication Module, GPRS, Audio Engine, AT Command Set, Bluetooth is Optional")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "UART1_TXD")
+					(type "output")
+				)
+				(pin
+					(num "2")
+					(name "UART1_RXD")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "UART1_RTS")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "UART1_CTS")
+					(type "output")
+				)
+				(pin
+					(num "5")
+					(name "UART1_DCD")
+					(type "output")
+				)
+				(pin
+					(num "6")
+					(name "UART1_DTR")
+					(type "input")
+				)
+				(pin
+					(num "7")
+					(name "UART1_RI")
+					(type "output")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "MICP")
+					(type "input")
+				)
+				(pin
+					(num "10")
+					(name "MICN")
+					(type "input")
+				)
+				(pin
+					(num "11")
+					(name "SPKP")
+					(type "output")
+				)
+				(pin
+					(num "12")
+					(name "SPKN")
+					(type "output")
+				)
+				(pin
+					(num "13")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "SIM_DET")
+					(type "input")
+				)
+				(pin
+					(num "15")
+					(name "SIM_DATA")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "SIM_CLK")
+					(type "output")
+				)
+				(pin
+					(num "17")
+					(name "SIM_RST")
+					(type "output")
+				)
+				(pin
+					(num "18")
+					(name "SIM_VDD")
+					(type "power_out")
+				)
+				(pin
+					(num "19")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "20")
+					(name "BT_ANT")
+					(type "passive")
+				)
+				(pin
+					(num "21")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "22")
+					(name "UART2_TXD")
+					(type "output")
+				)
+				(pin
+					(num "23")
+					(name "UART2_RXD")
+					(type "input")
+				)
+				(pin
+					(num "24")
+					(name "USB_VBUS")
+					(type "input")
+				)
+				(pin
+					(num "25")
+					(name "USB_DP")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "USB_DM")
+					(type "bidirectional")
+				)
+				(pin
+					(num "27")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "28")
+					(name "VRTC")
+					(type "power_in")
+				)
+				(pin
+					(num "29")
+					(name "RF_SYNC")
+					(type "output")
+				)
+				(pin
+					(num "30")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "31")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "32")
+					(name "GSM_ANT")
+					(type "passive")
+				)
+				(pin
+					(num "33")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "34")
+					(name "VBAT")
+					(type "power_in")
+				)
+				(pin
+					(num "35")
+					(name "VBAT")
+					(type "passive")
+				)
+				(pin
+					(num "36")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "37")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "38")
+					(name "ADC")
+					(type "input")
+				)
+				(pin
+					(num "39")
+					(name "~{PWRKEY}")
+					(type "input")
+				)
+				(pin
+					(num "40")
+					(name "VDD_EXT")
+					(type "power_out")
+				)
+				(pin
+					(num "41")
+					(name "NETLIGHT")
+					(type "output")
+				)
+				(pin
+					(num "42")
+					(name "STATUS")
+					(type "output")
+				)
+			)
+		)
+		(libpart
+			(lib "Regulator_Switching")
+			(part "LTC3406ES5")
+			(description "600mA Synchronous Step-Down Regulator, 1.5MHz, Adjustable Output Voltage, Burst Mode, ThinSOT-23")
+			(docs "https://www.analog.com/media/en/technical-documentation/data-sheets/3406b12fs.pdf")
+			(footprints
+				(fp "TSOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "LTC3406ES5")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:TSOT-23-5")
+				(field
+					(name "Datasheet") "https://www.analog.com/media/en/technical-documentation/data-sheets/3406b12fs.pdf")
+				(field
+					(name "Description") "600mA Synchronous Step-Down Regulator, 1.5MHz, Adjustable Output Voltage, Burst Mode, ThinSOT-23")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "RUN")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "SW")
+					(type "output")
+				)
+				(pin
+					(num "4")
+					(name "VIN")
+					(type "power_in")
+				)
+				(pin
+					(num "5")
+					(name "VOUT")
+					(type "power_out")
+				)
+			)
+		)
+		(libpart
+			(lib "SK-C793")
+			(part "SK-C793")
+			(fields
+				(field
+					(name "Reference") "P")
+				(field
+					(name "Value") "SK-C793")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VCC")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "RST")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "CLK")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "6")
+					(name "VPP")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "I/O")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "input")
+				)
+				(pin
+					(num "9")
+					(name "GND")
+					(type "input")
+				)
+				(pin
+					(num "10")
+					(name "GND")
+					(type "input")
+				)
+				(pin
+					(num "11")
+					(name "GND")
+					(type "input")
+				)
+			)
+		)
+		(libpart
+			(lib "Transistor_FET")
+			(part "2N7002")
+			(description "0.115A Id, 60V Vds, N-Channel MOSFET, SOT-23")
+			(docs "https://www.fairchildsemi.com/datasheets/2N/2N7002.pdf")
+			(footprints
+				(fp "SOT?23*")
+			)
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "2N7002")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet") "https://www.fairchildsemi.com/datasheets/2N/2N7002.pdf")
+				(field
+					(name "Description") "0.115A Id, 60V Vds, N-Channel MOSFET, SOT-23")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "S")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "D")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "connector")
+			(part "Conn_02x8_Odd_Even_Side_padding")
+			(description "Generic connector, double row, 02x10, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_2x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_02x8_Odd_Even_Side_padding")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, double row, 02x10, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "Pin_3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "Pin_4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "Pin_5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "Pin_6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "Pin_7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "Pin_8")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "Pin_9")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "Pin_10")
+					(type "passive")
+				)
+				(pin
+					(num "11")
+					(name "Pin_11")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "Pin_12")
+					(type "passive")
+				)
+				(pin
+					(num "13")
+					(name "Pin_13")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "Pin_14")
+					(type "passive")
+				)
+				(pin
+					(num "15")
+					(name "Pin_15")
+					(type "passive")
+				)
+				(pin
+					(num "16")
+					(name "Pin_16")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "74lvc1g17")
+			(uri "${KIPRJMOD}/../lib/symbols/74lvc1g17.lib")
+		)
+		(library
+			(logical "Connector")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Connector.lib")
+		)
+		(library
+			(logical "Device")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Device.lib")
+		)
+		(library
+			(logical "Graphic")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Graphic.lib")
+		)
+		(library
+			(logical "Mechanical")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Mechanical.lib")
+		)
+		(library
+			(logical "Power_Protection")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Power_Protection.lib")
+		)
+		(library
+			(logical "RF_GSM")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs/kicad-symbols/RF_GSM.lib")
+		)
+		(library
+			(logical "Regulator_Switching")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Regulator_Switching.lib")
+		)
+		(library
+			(logical "SK-C793")
+			(uri "${KIPRJMOD}/../lib/symbols/SK-C793.lib")
+		)
+		(library
+			(logical "Transistor_FET")
+			(uri "${KIPRJMOD}/../../../../../kicad-libs//kicad-symbols/Transistor_FET.lib")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "/2v8")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "40")
+				(pinfunction "VDD_EXT_40")
+				(pintype "power_out")
+			)
+			(node
+				(ref "U5")
+				(pin "5")
+				(pinfunction "VCC_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "/3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "VCC_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "/5v")
+			(class "Default")
+			(node
+				(ref "C10")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C18")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C19")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C5")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D10")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "5")
+				(pinfunction "Pin_5_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "VIN_4")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "4")
+			(name "/D_N")
+			(class "Default")
+			(node
+				(ref "J3")
+				(pin "2")
+				(pinfunction "D-_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "IO1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "IO1_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "26")
+				(pinfunction "USB_DM_26")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "5")
+			(name "/D_P")
+			(class "Default")
+			(node
+				(ref "J3")
+				(pin "3")
+				(pinfunction "D+_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "IO2_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "IO2_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "25")
+				(pinfunction "USB_DP_25")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "6")
+			(name "/FB")
+			(class "Default")
+			(node
+				(ref "C20")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R19")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R23")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "5")
+				(pinfunction "VOUT_5")
+				(pintype "power_out")
+			)
+		)
+		(net
+			(code "7")
+			(name "/MAIN_ANT")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J5")
+				(pin "1")
+				(pinfunction "In_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R12")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "32")
+				(pinfunction "GSM_ANT_32")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "8")
+			(name "/POWER")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "8")
+				(pinfunction "Pin_8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "R14")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R22")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "RUN_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "9")
+			(name "/SIM_CLK")
+			(class "Default")
+			(node
+				(ref "C3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "16")
+				(pinfunction "SIM_CLK_16")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "10")
+			(name "/SIM_IO")
+			(class "Default")
+			(node
+				(ref "C4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "15")
+				(pinfunction "SIM_DATA_15")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "11")
+			(name "/SIM_RST")
+			(class "Default")
+			(node
+				(ref "C2")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "17")
+				(pinfunction "SIM_RST_17")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "12")
+			(name "/SIM_VCC")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "P1")
+				(pin "1")
+				(pinfunction "VCC_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "18")
+				(pinfunction "SIM_VDD_18")
+				(pintype "power_out")
+			)
+		)
+		(net
+			(code "13")
+			(name "/SPI_CLK_3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "10")
+				(pinfunction "Pin_10_10")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "14")
+			(name "/SPI_MISO_3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "9")
+				(pinfunction "Pin_9_9")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "15")
+			(name "/SPI_MOSI_3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "11")
+				(pinfunction "Pin_11_11")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "16")
+			(name "/UART_RX_2v8")
+			(class "Default")
+			(node
+				(ref "C7")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "2")
+				(pinfunction "UART1_RXD_2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "17")
+			(name "/UART_RX_3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "12")
+				(pinfunction "Pin_12_12")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "18")
+			(name "/UART_TX_2v8")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "2")
+				(pintype "input")
+			)
+			(node
+				(ref "U4")
+				(pin "1")
+				(pinfunction "UART1_TXD_1")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "19")
+			(name "/UART_TX_3v3")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "13")
+				(pinfunction "Pin_13_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "20")
+			(name "/VBUS")
+			(class "Default")
+			(node
+				(ref "D10")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D5")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "1")
+				(pinfunction "VBUS_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "VBUS_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "24")
+				(pinfunction "USB_VBUS_24")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "21")
+			(name "/VER_1")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "22")
+			(name "/VER_2")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "23")
+			(name "/V_BATT")
+			(class "Default")
+			(node
+				(ref "C11")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C12")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C14")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C16")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C17")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C20")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C21")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D4")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "L4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R19")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "28")
+				(pinfunction "VRTC_28")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "34")
+				(pinfunction "VBAT_34")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "35")
+				(pinfunction "VBAT_35")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "24")
+			(name "/nCS_3G_3v3")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "15")
+				(pinfunction "Pin_15_15")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "25")
+			(name "/nCS_WIFI")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "14")
+				(pinfunction "Pin_14_14")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "26")
+			(name "/nRST")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "16")
+				(pinfunction "Pin_16_16")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "27")
+			(name "GND")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C10")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C11")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C12")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C14")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C16")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C17")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C18")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C19")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C21")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C22")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C5")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C6")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C7")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C8")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C9")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D6")
+				(pin "2")
+				(pinfunction "A2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "6")
+				(pinfunction "Pin_6_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "7")
+				(pinfunction "Pin_7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "5")
+				(pinfunction "GND_5")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J3")
+				(pin "6")
+				(pinfunction "Shield_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "2")
+				(pinfunction "Ext_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J5")
+				(pin "2")
+				(pinfunction "Ext_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "P1")
+				(pin "10")
+				(pinfunction "GND_10")
+				(pintype "input")
+			)
+			(node
+				(ref "P1")
+				(pin "11")
+				(pinfunction "GND_11")
+				(pintype "input")
+			)
+			(node
+				(ref "P1")
+				(pin "5")
+				(pinfunction "GND_5")
+				(pintype "power_in")
+			)
+			(node
+				(ref "P1")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "input")
+			)
+			(node
+				(ref "P1")
+				(pin "9")
+				(pinfunction "GND_9")
+				(pintype "input")
+			)
+			(node
+				(ref "Q1")
+				(pin "2")
+				(pinfunction "S_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R13")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R22")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R23")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "GND_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "13")
+				(pinfunction "GND_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "19")
+				(pinfunction "GND_19")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "21")
+				(pinfunction "GND_21")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "27")
+				(pinfunction "GND_27")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "30")
+				(pinfunction "GND_30")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "31")
+				(pinfunction "GND_31")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "33")
+				(pinfunction "GND_33")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "36")
+				(pinfunction "GND_36")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "37")
+				(pinfunction "GND_37")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U5")
+				(pin "3")
+				(pinfunction "GND_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "28")
+			(name "Net-(D1-K)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "P1")
+				(pin "2")
+				(pinfunction "RST_2")
+				(pintype "input")
+			)
+			(node
+				(ref "R7")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "29")
+			(name "Net-(D2-K)")
+			(class "Default")
+			(node
+				(ref "D2")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "P1")
+				(pin "7")
+				(pinfunction "I/O_7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R8")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "30")
+			(name "Net-(D3-K)")
+			(class "Default")
+			(node
+				(ref "D3")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "P1")
+				(pin "3")
+				(pinfunction "CLK_3")
+				(pintype "input")
+			)
+			(node
+				(ref "R9")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "31")
+			(name "Net-(D4-K)")
+			(class "Default")
+			(node
+				(ref "D4")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R10")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "32")
+			(name "Net-(D5-K)")
+			(class "Default")
+			(node
+				(ref "D5")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R14")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "33")
+			(name "Net-(D6-A1)")
+			(class "Default")
+			(node
+				(ref "C9")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D6")
+				(pin "1")
+				(pinfunction "A1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "1")
+				(pinfunction "In_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R12")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "34")
+			(name "Net-(Q1-D)")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "3")
+				(pinfunction "D_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R10")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "35")
+			(name "Net-(Q1-G)")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "1")
+				(pinfunction "G_1")
+				(pintype "input")
+			)
+			(node
+				(ref "U4")
+				(pin "41")
+				(pinfunction "NETLIGHT_41")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "36")
+			(name "Net-(R3-Pad1)")
+			(class "Default")
+			(node
+				(ref "R3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "4")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "37")
+			(name "Net-(R4-Pad2)")
+			(class "Default")
+			(node
+				(ref "R4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "4")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "38")
+			(name "Net-(U3-SW)")
+			(class "Default")
+			(node
+				(ref "L4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "SW_3")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "39")
+			(name "Net-(U4-STATUS)")
+			(class "Default")
+			(node
+				(ref "TP1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "42")
+				(pinfunction "STATUS_42")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "40")
+			(name "Net-(U4-~{PWRKEY})")
+			(class "Default")
+			(node
+				(ref "R13")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "39")
+				(pinfunction "~{PWRKEY}_39")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "41")
+			(name "unconnected-(H1-Pad1)")
+			(class "Default")
+			(node
+				(ref "H1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "42")
+			(name "unconnected-(H2-Pad1)")
+			(class "Default")
+			(node
+				(ref "H2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "43")
+			(name "unconnected-(J3-ID-Pad4)")
+			(class "Default")
+			(node
+				(ref "J3")
+				(pin "4")
+				(pinfunction "ID_4")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "44")
+			(name "unconnected-(P1-VPP-Pad6)")
+			(class "Default")
+			(node
+				(ref "P1")
+				(pin "6")
+				(pinfunction "VPP_6")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "45")
+			(name "unconnected-(U4-ADC-Pad38)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "38")
+				(pinfunction "ADC_38")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "46")
+			(name "unconnected-(U4-BT_ANT-Pad20)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "20")
+				(pinfunction "BT_ANT_20")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "47")
+			(name "unconnected-(U4-MICN-Pad10)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "10")
+				(pinfunction "MICN_10")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "48")
+			(name "unconnected-(U4-MICP-Pad9)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "9")
+				(pinfunction "MICP_9")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "49")
+			(name "unconnected-(U4-RF_SYNC-Pad29)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "29")
+				(pinfunction "RF_SYNC_29")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "50")
+			(name "unconnected-(U4-SIM_DET-Pad14)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "14")
+				(pinfunction "SIM_DET_14")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "51")
+			(name "unconnected-(U4-SPKN-Pad12)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "12")
+				(pinfunction "SPKN_12")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "52")
+			(name "unconnected-(U4-SPKP-Pad11)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "11")
+				(pinfunction "SPKP_11")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "53")
+			(name "unconnected-(U4-UART1_CTS-Pad4)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "4")
+				(pinfunction "UART1_CTS_4")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "54")
+			(name "unconnected-(U4-UART1_DCD-Pad5)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "5")
+				(pinfunction "UART1_DCD_5")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "55")
+			(name "unconnected-(U4-UART1_DTR-Pad6)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "6")
+				(pinfunction "UART1_DTR_6")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "56")
+			(name "unconnected-(U4-UART1_RI-Pad7)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "7")
+				(pinfunction "UART1_RI_7")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "57")
+			(name "unconnected-(U4-UART1_RTS-Pad3)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "3")
+				(pinfunction "UART1_RTS_3")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "58")
+			(name "unconnected-(U4-UART2_RXD-Pad23)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "23")
+				(pinfunction "UART2_RXD_23")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "59")
+			(name "unconnected-(U4-UART2_TXD-Pad22)")
+			(class "Default")
+			(node
+				(ref "U4")
+				(pin "22")
+				(pinfunction "UART2_TXD_22")
+				(pintype "output+no_connect")
+			)
+		)
+	)
+)

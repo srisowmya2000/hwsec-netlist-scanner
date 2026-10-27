@@ -26,6 +26,7 @@ Try it on the included examples (run from the project folder):
 python3 circuit.py examples/mygenwashy.net      # washing machine
 python3 circuit.py examples/doorman.net         # smart door opener
 python3 circuit.py examples/espgaggia.net       # espresso machine (heater appliance)
+python3 circuit.py examples/cicada_2g.net       # 2G cellular IoT module
 python3 circuit.py examples/pic_programmer.net
 ```
 
@@ -58,6 +59,7 @@ On most boards the scanner works from net and pin names alone. For these chips i
 | ATmega328P, ATmega32U4 | ISP programming pins, RESET/debugWIRE, UART |
 | ATtiny 2-series | UPDI, I2C |
 | Raspberry Pi Compute Module 5 | UART console, nRPIBOOT, boot EEPROM write-protect |
+| Cellular modems: Quectel (BG95/96, BC66/95, EC25, EG25, M95), SIMCom (SIM800/900, SIM7000/7020/7080/7600, A7670), u-blox (SARA, LARA, LENA, TOBY), Telit, Sierra, Nordic nRF91, Sequans GM02S | Modem USB port, debug UART, AT-command UART, USB_BOOT/BOOT_CFG download-mode pins, SIM card lines |
 | Plug-in dev boards (ESP32 DevKitC, NodeMCU, Wemos D1 mini, Arduino, Pico, Blue Pill, Feather, XIAO) | Built-in USB programming port; their own 3.3V regulator and decoupling |
 
 To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to match, then pin name → what that pin does. Descriptions containing "programming", "debug" or "UART" are treated as debug ports, and "Boot-mode" marks a boot pin.
@@ -70,6 +72,8 @@ To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to m
 |---|---|
 | Debug interfaces | UART consoles, JTAG/SWD, PIC ICSP and AVR UPDI/ISP pins or programming headers reaching the outside |
 | Wireless interfaces | Bluetooth, Wi-Fi, LoRa, Zigbee and similar modules or headers: a remote attack surface |
+| Cellular modem | Modems that put the device on the mobile network, reachable from anywhere (not just radio range). Warns about 2G-only modems (no network authentication, fake base stations) |
+| SIM card | Removable SIM card holders (the SIM can be taken out and used elsewhere) vs. soldered eSIMs |
 | Boot-mode pins | Boot/strap pins that a switch or connector can drive |
 | Write protection | Floating, unconnected or externally reachable EEPROM/flash write-protect pins |
 | Power test points | Supply rails exposed on test points (voltage-glitching access) |
@@ -96,6 +100,9 @@ The report ends with a **security assessment**: overall risk rating, findings by
 | `mygenwashy.net` | Washing machine controller (230 V, ATtiny3226) | **HIGH** | Exposed UPDI programming port; unprotected sensor and I²C pins; mains side well protected, with hardware interlocks |
 | `doorman.net` | Smart door intercom / door opener (ESP32-S3, Wi-Fi) | **HIGH** | USB-C is a built-in JTAG/programming port; UART console on test pads; boot button; Wi-Fi/BLE remote surface; door-opener relay driven by firmware alone |
 | `satellite_tracker.net` | Desktop satellite tracker base board (ESP32-C6, Wi-Fi/BLE) | **HIGH** | Auto-programming header (UART + DTR/RTS drive reset and the boot pin); USB-C is a built-in JTAG/programming port; Wi-Fi/BLE remote surface; sensor connectors wired straight into the chip |
+| `elixir.net` | Golioth Elixir cellular IoT device (nRF9160 LTE-M, ESP32-C3 Wi-Fi/BLE, GPS) | **HIGH** | SWD and ESP32-C3 programming headers; cellular + Wi-Fi/BLE remote surface; removable nano-SIM slot next to the soldered eSIM |
+| `cicada_2g.net` | EnAccess Cicada 2G IoT module (SIM800C) | **HIGH** | Modem USB port on a connector; 2G-only modem (fake base stations); removable SIM |
+| `cicada_4g.net` | EnAccess Cicada 4G IoT module (SIM7600) | **HIGH** | Modem USB port on a connector; modem boot pin (BOOT_CFG0) on a test pad; removable SIM |
 | `espgaggia.net` | Espresso machine controller (230 V, ESP32 DevKitC, Wi-Fi) | **HIGH** | Dev board with a USB programming port; boiler heater on an external SSR driven by firmware alone; pump and valve switched by SSRs with no hardware interlock |
 | `open_vapors.net` | Reflow oven controller (ATmega32U4, Bluetooth) | **HIGH** | AVR ISP programming header; Bluetooth module header (remote attack surface); heater SSR driven by firmware with no hardware cutoff |
 | `pic_programmer.net` | PIC programmer | **HIGH** | Programming pins on the sockets (by design); EEPROM write-protect unconnected; serial data line unclamped |
@@ -131,6 +138,15 @@ An oven controller you can talk to over Bluetooth.
 - **Remote attack surface (MEDIUM):** a Bluetooth module header (JP1) is wired to the microcontroller's UART. Anyone in radio range can send it commands, so the firmware must authenticate and validate them.
 - **Programming header (HIGH):** the AVR ISP header (ISP1) lets anyone with the case open read out or replace the firmware.
 - **Cyber-physical risk (MEDIUM):** the firmware switches the heater through an external solid-state relay (JP4), and there is no hardware cutoff on the board. Hacked or crashed firmware could leave the heater on. A thermal fuse in the heater path would stop that.
+
+### Case study: cellular IoT (Cicada and Elixir)
+
+A cellular modem changes who can attack a device: Wi-Fi and Bluetooth need someone nearby, but a modem is reachable from anywhere through the mobile network.
+
+- **Modem USB port on a connector (HIGH):** on both Cicada boards the SIM800C/SIM7600 USB lines go straight to the USB connector. That port gives AT commands, modem diagnostics and modem firmware updates to anyone who plugs in.
+- **Modem boot pin on a test pad (MEDIUM, Cicada 4G):** the SIM7600's BOOT_CFG0 is on TP1. Shorting it at power-up puts the modem in download mode, so its firmware can be replaced.
+- **2G-only modem (LOW, Cicada 2G):** 2G phones never check that the cell tower is real, so a cheap fake base station can intercept or inject traffic. 2G networks are also being switched off.
+- **Removable SIM (LOW):** both Cicada boards use a SIM card holder. Elixir has a soldered eSIM, but also a nano-SIM slot on the same lines. A SIM taken out can use the data plan, or impersonate the device if the backend trusts the SIM.
 
 ### Case study: espresso machine (espgaggia)
 
@@ -215,6 +231,8 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `mygenwashy.net` | MyGenWashy washing machine controller (230 V, ATtiny3226) | [mayermakes/MyGenWashy](https://github.com/mayermakes/MyGenWashy), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 | `doorman.net` | Doorman S3 door intercom gateway, Rev 1.6.1 | [AzonInc/Doorman](https://github.com/AzonInc/Doorman), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 | `satellite_tracker.net` | Desktop Satellite Tracker, base board | [KJ7NLL/Satellite-Tracker-Circuit-Design-Files](https://github.com/KJ7NLL/Satellite-Tracker-Circuit-Design-Files), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
+| `elixir.net` | Golioth Elixir, open-source cellular IoT device | [golioth/elixir-hw](https://github.com/golioth/elixir-hw) by Golioth, CERN-OHL-P-2.0. Exported from its KiCad schematic with KiCad 10. |
+| `cicada_2g.net`, `cicada_4g.net` | Okra Cicada 2G and 4G IoT communication modules | [EnAccess/Cicada-GSM-HW](https://github.com/EnAccess/Cicada-GSM-HW), MIT license ("Copyright (c) 2019 EnAccess Foundation"). Exported from its KiCad schematics with KiCad 10. |
 | `espgaggia.net` | espgaggia, ESP32 controller for a Gaggia Classic espresso machine | [rvt/espgaggia](https://github.com/rvt/espgaggia) by R. van Twisk, MIT license ("Copyright (c) 2021 R. van Twisk"). Exported from its KiCad schematic with KiCad 10. |
 | `open_vapors.net` | Open Vapors reflow oven controller, Rev 2 | [baldengineer/Open-Vapors](https://github.com/baldengineer/Open-Vapors) by baldengineer, MIT license (the project's LICENSE reads "Copyright (c) 2013-2021 Damien P. George"). Generated from the KiCad PCB with `tools/pcb2net.py`. |
 

@@ -34,6 +34,12 @@ Board profile: 10 digital-looking signals found.
       CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
                   transmission)
 
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
 == Boot-mode pins ==
    [MEDIUM] Boot pin GPIO9 (Boot-mode strap: held low at reset = download mode (firmware can be reflashed)) can be driven from J5 (via IC3, DTR), J5 (via IC3, RTS)
             -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.

@@ -10,6 +10,12 @@ Board profile: 70 digital-looking signals found.
 == Wireless interfaces (remote attack surface) ==
    nothing found
 
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
 == Boot-mode pins ==
    [MEDIUM] Boot pin nRPIBOOT (Forces USB boot (lets the eMMC be reflashed)) can be driven from SW101
             -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.

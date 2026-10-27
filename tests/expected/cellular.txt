@@ -1,0 +1,165 @@
+Loaded 13 components and 9 nets
+Board profile: 5 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface MODEM_USB_DP (Modem USB port (AT commands, diagnostics and firmware update: a programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface MODEM_USB_DM (Modem USB port (AT commands, diagnostics and firmware update: a programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U2 UART1_TXD pin (Modem AT command UART (send SMS, change APN, read SIM and network data)) reaches J3
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U3 DBG_TXD pin (Modem debug UART (debug console)) reaches TP2
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Cellular modem (remote attack surface) ==
+   [MEDIUM] Cellular modem U1 (BG95-M3) puts the device on the mobile network: reachable from anywhere, not just within radio range
+            -> Use a private APN or carrier firewall so the device has no open ports on the internet, use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   [MEDIUM] Cellular modem U2 (SIM800C) puts the device on the mobile network: reachable from anywhere, not just within radio range
+            -> Use a private APN or carrier firewall so the device has no open ports on the internet, use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   [MEDIUM] Cellular modem U3 (BC95) puts the device on the mobile network: reachable from anywhere, not just within radio range
+            -> Use a private APN or carrier firewall so the device has no open ports on the internet, use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   [LOW   ] U2 (SIM800C) is 2G-only: 2G doesn't authenticate the network, so a fake base station can intercept or inject traffic
+            -> Use end-to-end encryption (TLS) for everything. For new designs pick an LTE-M/NB-IoT modem; 2G networks are also being switched off.
+   Cybersecurity view:
+      Attack    : Reach the device from anywhere through the mobile network - no physical access or
+                  radio range needed: probe services on its IP address, send SMS commands, or (on
+                  2G) run a fake base station to intercept and inject traffic.
+      Attacker  : Cellular - from anywhere over the mobile network (internet, SMS), no physical
+                  access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Denial of service, Elevation of
+                  privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission), CWE-923 (communication channel to an unverified endpoint)
+
+== SIM card ==
+   [LOW   ] SIM card holder J2 for U1 takes a removable SIM: it can be taken out and used in another device
+            -> Someone could use the data plan, or talk to your backend as this device if it trusts the SIM. Prefer a soldered eSIM/MFF2, set a SIM PIN, and ask the carrier to lock the SIM to this device's IMEI.
+   [OK    ] U2 uses a soldered SIM/eSIM (U4), which can't simply be pulled out
+   Cybersecurity view:
+      Attack    : Take the SIM out and put it in a phone or modem: use the device's data plan, or
+                  connect to the backend as if you were this device when the backend trusts the SIM
+                  as its identity.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Information disclosure
+      CWE       : CWE-1263 (improper physical access control), CWE-290 (authentication bypass by
+                  spoofing)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin U1 USB_BOOT pin (Boot-mode pin: forces the modem into firmware download mode (modem firmware can be replaced)) can be driven from TP1
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   [MEDIUM] USB line MODEM_USB_DP goes to a connector with no ESD protection
+            -> Add a TVS/ESD diode array close to the connector.
+   [MEDIUM] USB line MODEM_USB_DM goes to a connector with no ESD protection
+            -> Add a TVS/ESD diode array close to the connector.
+   Cybersecurity view:
+      Attack    : Discharge ESD or a surge device ('USB killer') into the port to damage the chip
+                  behind it.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Availability
+      STRIDE    : Denial of service
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J1 (USB_B_Micro) is wired straight into chip pins U1.USB_DM, U1.USB_DP
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J3 (Conn_01x03) is wired straight into chip pins U2.UART1_TXD
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J2 (SIM_Card) passes through R1 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   nothing found
+
+== Supply decoupling (glitch resistance) ==
+   nothing found
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 86 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Cellular        : 4 issue(s)  [Cellular modem (remote attack surface)]
+   External        : 5 issue(s)  [Signal input/output protection, USB ESD protection]
+   Board access    : 6 issue(s)  [Boot-mode pins, Debug interfaces, SIM card]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, SIM card
+   Integrity       : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, SIM card, Signal input/output protection
+   Availability    : Cellular modem (remote attack surface), Debug interfaces, SIM card, Signal input/output protection, USB ESD protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface MODEM_USB_DP (Modem USB port (AT commands, diagnostics and firmware
+      update: a programming/debug port)) reaches J1
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [HIGH] Debug interface U2 UART1_TXD pin (Modem AT command UART (send SMS, change APN, read SIM
+      and network data)) reaches J3
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   3. [MEDIUM] Cellular modem U1 (BG95-M3) puts the device on the mobile network: reachable from
+      anywhere, not just within radio range
+      -> Use a private APN or carrier firewall so the device has no open ports on the internet, use
+         TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   4. [MEDIUM] Boot pin U1 USB_BOOT pin (Boot-mode pin: forces the modem into firmware download mode
+      (modem firmware can be replaced)) can be driven from TP1
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   5. [MEDIUM] USB line MODEM_USB_DP goes to a connector with no ESD protection
+      -> Add a TVS/ESD diode array close to the connector.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=4, MEDIUM=8, LOW=3, OK=1

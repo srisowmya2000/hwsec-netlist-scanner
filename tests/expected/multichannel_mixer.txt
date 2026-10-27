@@ -10,6 +10,12 @@ Board profile: no digital interfaces detected (looks analog-only).
 == Wireless interfaces (remote attack surface) ==
    nothing found
 
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
 == Boot-mode pins ==
    nothing found
 

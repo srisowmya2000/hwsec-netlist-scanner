@@ -1,0 +1,190 @@
+Loaded 67 components and 59 nets
+Board profile: 10 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface D_N (Modem USB port (AT commands, diagnostics and firmware update: a programming/debug port)) reaches J3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface D_P (Modem USB port (AT commands, diagnostics and firmware update: a programming/debug port)) reaches J3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [INFO  ] UART UART_RX_3v3 goes to the host interface Host (J2)
+            -> This looks like the intended link to the main board, not a debug port. Make sure the firmware offers no console or command shell on it without authentication.
+   [INFO  ] UART UART_TX_3v3 goes to the host interface Host (J2)
+            -> This looks like the intended link to the main board, not a debug port. Make sure the firmware offers no console or command shell on it without authentication.
+   [OK    ] UART_RX_2v8 (Modem AT command UART (send SMS, change APN, read SIM and network data)) is not routed to any header or test point
+   [OK    ] UART_TX_2v8 (Modem AT command UART (send SMS, change APN, read SIM and network data)) is not routed to any header or test point
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Cellular modem (remote attack surface) ==
+   [MEDIUM] Cellular modem U4 (SIM800C (ordinary version)) puts the device on the mobile network: reachable from anywhere, not just within radio range
+            -> Use a private APN or carrier firewall so the device has no open ports on the internet, use TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   [LOW   ] U4 (SIM800C (ordinary version)) is 2G-only: 2G doesn't authenticate the network, so a fake base station can intercept or inject traffic
+            -> Use end-to-end encryption (TLS) for everything. For new designs pick an LTE-M/NB-IoT modem; 2G networks are also being switched off.
+   Cybersecurity view:
+      Attack    : Reach the device from anywhere through the mobile network - no physical access or
+                  radio range needed: probe services on its IP address, send SMS commands, or (on
+                  2G) run a fake base station to intercept and inject traffic.
+      Attacker  : Cellular - from anywhere over the mobile network (internet, SMS), no physical
+                  access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Denial of service, Elevation of
+                  privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission), CWE-923 (communication channel to an unverified endpoint)
+
+== SIM card ==
+   [LOW   ] SIM card holder P1 for U4 takes a removable SIM: it can be taken out and used in another device
+            -> Someone could use the data plan, or talk to your backend as this device if it trusts the SIM. Prefer a soldered eSIM/MFF2, set a SIM PIN, and ask the carrier to lock the SIM to this device's IMEI.
+   Cybersecurity view:
+      Attack    : Take the SIM out and put it in a phone or modem: use the device's data plan, or
+                  connect to the backend as if you were this device when the backend trusts the SIM
+                  as its identity.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Information disclosure
+      CWE       : CWE-1263 (improper physical access control), CWE-290 (authentication bypass by
+                  spoofing)
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   [LOW   ] Power rail 5v exposed on test point(s) TP2, TP3
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail V_BATT exposed on test point(s) TP4
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   Cybersecurity view:
+      Attack    : Voltage glitching: dip the supply for nanoseconds at the right moment so the CPU
+                  skips an instruction - e.g. a signature check, read-out-protection check or
+                  password compare.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (no protection against voltage/clock glitches), CWE-1332 (fault ->
+                  instruction skip)
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J2 (Host) exposes bus signals: SPI_MISO_3v3, SPI_MOSI_3v3
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J2 (Host) is wired straight into chip pins U3.RUN, U5.2
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] P1 (SK-C793) is wired straight into chip pins U4.SIM_VDD
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J5 (DNP U.FL) passes through C6, R12 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J4 (U.FL) passes through C9, R12 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [OK    ] J3 (USB_OTG) signals have clamp/ESD protection (U2)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [MEDIUM] Power input 5v from J2 feeds U3 directly - no fuse, reverse-polarity diode or TVS
+            -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series diode/P-FET, a TVS and a fuse or PTC.
+   [OK    ] Power output VBUS to J3 is generated on the board
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   [MEDIUM] Supply 2v8 to U4, U5 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [MEDIUM] Supply 3v3 to U1 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [OK    ] Supply 5v to U3 is decoupled by C5, C10, C18, C19
+   [OK    ] Supply V_BATT to U4 is decoupled by C11, C12, C14, C16, C17, C20 (+2 more) and filter L4
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 63.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Cellular        : 2 issue(s)  [Cellular modem (remote attack surface)]
+   External        : 5 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 7 issue(s) + 2 info  [Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance)]
+
+What's at risk (CIA triad):
+   Confidentiality : Cellular modem (remote attack surface), Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance)
+   Integrity       : Cellular modem (remote attack surface), Debug interfaces, Power input protection, Power test points, SIM card, Signal input/output protection, Supply decoupling (glitch resistance)
+   Availability    : Cellular modem (remote attack surface), Debug interfaces, Power input protection, SIM card, Signal input/output protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface D_N (Modem USB port (AT commands, diagnostics and firmware update: a
+      programming/debug port)) reaches J3
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [MEDIUM] Cellular modem U4 (SIM800C (ordinary version)) puts the device on the mobile network:
+      reachable from anywhere, not just within radio range
+      -> Use a private APN or carrier firewall so the device has no open ports on the internet, use
+         TLS with certificate checks, ignore SMS commands, and keep the modem firmware updated.
+   3. [MEDIUM] J2 (Host) is wired straight into chip pins U3.RUN, U5.2
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+   4. [MEDIUM] Power input 5v from J2 feeds U3 directly - no fuse, reverse-polarity diode or TVS
+      -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series
+         diode/P-FET, a TVS and a fuse or PTC.
+   5. [MEDIUM] Supply 2v8 to U4, U5 has no decoupling capacitor
+      -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF
+         cap close to each supply pin.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=2, MEDIUM=6, LOW=6, INFO=3, OK=6

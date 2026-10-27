@@ -151,6 +151,62 @@ class HeaterAppliance(unittest.TestCase):
         self.assertFound("Power output +3V3 to J6 comes through U3")
 
 
+class Cellular(unittest.TestCase):
+    """Hand-written board: BG95, SIM800C and BC95 modems, plus parts that only look like modems."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.report = report_for(os.path.join(BOARDS, "cellular.net"))
+        cls.all = messages(cls.report)
+
+    def assertFound(self, text):
+        self.assertTrue(any(text in m for m in self.all), f"{text!r} not in:\n" + "\n".join(self.all))
+
+    def test_modems_found(self):
+        for ref in ("U1 (BG95-M3)", "U2 (SIM800C)", "U3 (BC95)"):
+            with self.subTest(ref=ref):
+                self.assertFound(f"Cellular modem {ref} puts the device on the mobile network")
+
+    def test_lookalikes_are_not_modems(self):
+        # BC547 transistor, M95M02 EEPROM and a GSM antenna are not modems or radios.
+        for ref in ("Q1", "U6", "AE1"):
+            with self.subTest(ref=ref):
+                self.assertFalse(any(f"{ref} (" in m for m in self.all), "\n".join(self.all))
+
+    def test_two_g_warning(self):
+        self.assertFound("U2 (SIM800C) is 2G-only")
+        self.assertFalse(any("BG95-M3) is 2G-only" in m for m in self.all))
+
+    def test_modem_service_ports(self):
+        self.assertFound("MODEM_USB_DP (Modem USB port")
+        self.assertFound("U2 UART1_TXD pin (Modem AT command UART")
+        self.assertFound("U3 DBG_TXD pin (Modem debug UART")
+        self.assertFound("Boot pin U1 USB_BOOT pin (Boot-mode pin: forces the modem into firmware download mode")
+
+    def test_sim_cards(self):
+        self.assertFound("SIM card holder J2 for U1 takes a removable SIM")      # through a 22R resistor
+        self.assertFound("U2 uses a soldered SIM/eSIM (U4)")
+
+    def test_cellular_access_level(self):
+        rows = {r["label"]: r for r in self.report["assessment"]["by_access"]}
+        self.assertEqual(rows["Cellular"]["issues"], 4)       # 3 modems + 1 2G warning
+
+    def test_real_boards(self):
+        elixir = messages(report_for(os.path.join(EXAMPLES, "elixir.net")))
+        self.assertTrue(any("SIM card holder J13 for U3" in m and "soldered eSIM U19" in m for m in elixir))
+        self.assertTrue(any("Write-protect FLASH_WP is driven by U3" in m for m in elixir))
+        cicada = messages(report_for(os.path.join(EXAMPLES, "cicada_4g.net")))
+        self.assertTrue(any("Boot pin U1A BOOT_CFG0 pin" in m and "TP1" in m for m in cicada))
+        cicada_2g = messages(report_for(os.path.join(EXAMPLES, "cicada_2g.net")))
+        # Signals named after their voltage (UART_RX_3v3) are not power rails.
+        self.assertFalse(any("Power input UART_RX_3v3" in m for m in cicada_2g))
+        # A UART on the "Host" connector is the module's normal interface, not a debug port.
+        self.assertTrue(any("UART UART_RX_3v3 goes to the host interface Host (J2)" in m for m in cicada_2g))
+        self.assertFalse(any("Debug interface UART_RX_3v3" in m for m in cicada_2g))
+        # A chip-select line named nCS_WIFI doesn't make J2 a radio.
+        self.assertFalse(any("Wireless module/header J2" in m for m in cicada_2g))
+
+
 class PinMatching(unittest.TestCase):
     def meaning(self, part, function):
         components = {"U1": {"value": part}}
