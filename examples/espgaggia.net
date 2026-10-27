@@ -1,0 +1,3405 @@
+(export
+	(version "E")
+	(design
+		(source "espgaggia/kicad/gaggia_print/gaggia_print.kicad_sch")
+		(date "2026-10-26T18:37:11")
+		(tool "Eeschema 10.0.7")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title)
+				(company)
+				(rev)
+				(date)
+				(source "gaggia_print.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "C1")
+			(value "CP")
+			(footprint "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm")
+			(fields
+				(field
+					(name "Footprint") "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "CP-Device")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "CP_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000603abdeb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "F1")
+			(value "Fuse")
+			(footprint "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
+			(fields
+				(field
+					(name "Footprint") "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "Fuse")
+				(description "Fuse")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "fuse")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "*Fuse*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060392b85")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J1")
+			(value "Brew Btn")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060320d85")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "Steam Btn")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060322862")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "220V")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00006033641c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J4")
+			(value "GNDD")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "Conn_01x04_Male-Connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060353a7f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J5")
+			(value "Misc 1234")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "Conn_01x04_Male-Connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602b397d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J6")
+			(value "3V3")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "Conn_01x04_Male-Connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060352b1a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J7")
+			(value "Display")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x14_P2.54mm_Vertical")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x14_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "Conn_01x14_Male-Connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000603b5b34")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J8")
+			(value "Valve")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00006067a30d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J9")
+			(value "Pump")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060679b10")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J10")
+			(value "SSR Boiler")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "Screw_Terminal_01x02")
+				(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "screw terminal")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "TerminalBlock*:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060671e79")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J11")
+			(value "5VD")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+			(fields
+				(field
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "Conn_01x04_Male-Connector")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Connector*:*_1x??_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060668701")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "PS1")
+			(value "HLK-PM01")
+			(footprint "Converter_ACDC:Converter_ACDC_HiLink_HLK-PMxx")
+			(datasheet "http://www.hlktech.net/product_detail.php?ProId=54")
+			(fields
+				(field
+					(name "Footprint") "Converter_ACDC:Converter_ACDC_HiLink_HLK-PMxx")
+				(field
+					(name "Datasheet") "http://www.hlktech.net/product_detail.php?ProId=54")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Converter_ACDC")
+				(part "HLK-PM01")
+				(description "Compact AC/DC board mount power module 3W 5V")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "AC/DC module power supply")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Converter*ACDC*HiLink*HLK?PM*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-00006030a3a6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q1")
+			(value "2N2222")
+			(footprint "Package_TO_SOT_THT:TO-18-3")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_THT:TO-18-3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "Q_NPN_BCE")
+				(description "NPN transistor, base/collector/emitter")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "transistor NPN")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000604ec692")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "Q2")
+			(value "2N2222")
+			(footprint "Package_TO_SOT_THT:TO-18-3")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_THT:TO-18-3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "Q_NPN_BCE")
+				(description "NPN transistor, base/collector/emitter")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "transistor NPN")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000604f4dfb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "10K")
+			(footprint "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000604fa168")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "10K")
+			(footprint "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000604fbf5b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "MAX31855K_print")
+			(footprint "private_library:CJMCU-MAX31855K")
+			(datasheet "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:CJMCU-MAX31855K")
+				(field
+					(name "Datasheet") "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "MAX31855K_print-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602ec668")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "MAX31855K_print")
+			(footprint "private_library:CJMCU-MAX31855K")
+			(datasheet "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:CJMCU-MAX31855K")
+				(field
+					(name "Datasheet") "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "MAX31855K_print-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602ee146")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "ESP32-DEVKITC-32D")
+			(footprint "private_library:MODULE_ESP32-DEVKITC-32D")
+			(fields
+				(field
+					(name "MANUFACTURER") "Espressif Systems")
+				(field
+					(name "PARTREV") "4")
+				(field
+					(name "Footprint") "private_library:MODULE_ESP32-DEVKITC-32D")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "ESP32-DEVKITC-32D-private_library")
+				(description "")
+			)
+			(property
+				(name "MANUFACTURER")
+				(value "Espressif Systems")
+			)
+			(property
+				(name "PARTREV")
+				(value "4")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060249527")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+						(pin
+							(num "21")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "25")
+						)
+						(pin
+							(num "26")
+						)
+						(pin
+							(num "27")
+						)
+						(pin
+							(num "28")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "30")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "34")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "38")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U4")
+			(value "G3MB-202P_DC5")
+			(footprint "private_library:G3MC-201PL")
+			(datasheet "http://www.sharp-world.com/products/device/lineup/data/pdf/datasheet/s102s02_e.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:G3MC-201PL")
+				(field
+					(name "Datasheet") "http://www.sharp-world.com/products/device/lineup/data/pdf/datasheet/s102s02_e.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "G3MB-202P_DC5-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "G3MB")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602434d0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U5")
+			(value "G3MB-202P_DC5")
+			(footprint "private_library:G3MC-201PL")
+			(datasheet "http://www.sharp-world.com/products/device/lineup/data/pdf/datasheet/s102s02_e.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:G3MC-201PL")
+				(field
+					(name "Datasheet") "http://www.sharp-world.com/products/device/lineup/data/pdf/datasheet/s102s02_e.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "G3MB-202P_DC5-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "G3MB")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-000060244602")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U6")
+			(value "MAX31855K_print")
+			(footprint "private_library:QS2016039-MAX31855K")
+			(datasheet "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:QS2016039-MAX31855K")
+				(field
+					(name "Datasheet") "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "MAX31855K_print-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602f907f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U7")
+			(value "MAX31855K_print")
+			(footprint "private_library:QS2016039-MAX31855K")
+			(datasheet "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+			(fields
+				(field
+					(name "Footprint") "private_library:QS2016039-MAX31855K")
+				(field
+					(name "Datasheet") "http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "gaggia_print-rescue")
+				(part "MAX31855K_print-private_library")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "gaggia_print")
+			)
+			(property
+				(name "Sheetfile")
+				(value "gaggia_print.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "00000000-0000-0000-0000-0000602f9666")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "Connector")
+			(part "Screw_Terminal_01x02")
+			(description "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "TerminalBlock*:*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Screw_Terminal_01x02")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Converter_ACDC")
+			(part "HLK-PM01")
+			(description "Compact AC/DC board mount power module 3W 5V")
+			(docs "http://www.hlktech.net/product_detail.php?ProId=54")
+			(footprints
+				(fp "Converter*ACDC*HiLink*HLK?PM*")
+			)
+			(fields
+				(field
+					(name "Reference") "PS")
+				(field
+					(name "Value") "HLK-PM01")
+				(field
+					(name "Footprint") "Converter_ACDC:Converter_ACDC_HiLink_HLK-PMxx")
+				(field
+					(name "Datasheet") "http://www.hlktech.net/product_detail.php?ProId=54")
+				(field
+					(name "Description") "Compact AC/DC board mount power module 3W 5V")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "AC/L")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "AC/N")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "-Vout")
+					(type "power_out")
+				)
+				(pin
+					(num "4")
+					(name "+Vout")
+					(type "power_out")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "Fuse")
+			(description "Fuse")
+			(footprints
+				(fp "*Fuse*")
+			)
+			(fields
+				(field
+					(name "Reference") "F")
+				(field
+					(name "Value") "Fuse")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Fuse")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "Q_NPN_BCE")
+			(description "NPN transistor, base/collector/emitter")
+			(fields
+				(field
+					(name "Reference") "Q")
+				(field
+					(name "Value") "Q_NPN_BCE")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "NPN transistor, base/collector/emitter")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "B")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "C")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "E")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Device")
+			(part "R")
+			(description "Resistor")
+			(footprints
+				(fp "R_*")
+			)
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "CP-Device")
+			(footprints
+				(fp "CP_*")
+			)
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "Device_CP")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "Conn_01x04_Male-Connector")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Connector_Conn_01x04_Male")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "Pin_3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "Pin_4")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "Conn_01x14_Male-Connector")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Connector_Conn_01x14_Male")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "Pin_3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "Pin_4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "Pin_5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "Pin_6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "Pin_7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "Pin_8")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "Pin_9")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "Pin_10")
+					(type "passive")
+				)
+				(pin
+					(num "11")
+					(name "Pin_11")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "Pin_12")
+					(type "passive")
+				)
+				(pin
+					(num "13")
+					(name "Pin_13")
+					(type "passive")
+				)
+				(pin
+					(num "14")
+					(name "Pin_14")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "ESP32-DEVKITC-32D-private_library")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "private_library_ESP32-DEVKITC-32D")
+				(field
+					(name "Footprint") "MODULE_ESP32-DEVKITC-32D")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+				(field
+					(name "MANUFACTURER") "Espressif Systems")
+				(field
+					(name "PARTREV") "4")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "3V3")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "EN")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "SENSOR_VP")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "SENSOR_VN")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "IO34")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "IO35")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "IO32")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "IO33")
+					(type "bidirectional")
+				)
+				(pin
+					(num "9")
+					(name "IO25")
+					(type "bidirectional")
+				)
+				(pin
+					(num "10")
+					(name "IO26")
+					(type "bidirectional")
+				)
+				(pin
+					(num "11")
+					(name "IO27")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "IO14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "IO12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "14")
+					(name "GND1")
+					(type "power_in")
+				)
+				(pin
+					(num "15")
+					(name "IO13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "SD2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "SD3")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "CMD")
+					(type "bidirectional")
+				)
+				(pin
+					(num "19")
+					(name "EXT_5V")
+					(type "power_in")
+				)
+				(pin
+					(num "20")
+					(name "GND3")
+					(type "power_in")
+				)
+				(pin
+					(num "21")
+					(name "IO23")
+					(type "bidirectional")
+				)
+				(pin
+					(num "22")
+					(name "IO22")
+					(type "bidirectional")
+				)
+				(pin
+					(num "23")
+					(name "TXD0")
+					(type "output")
+				)
+				(pin
+					(num "24")
+					(name "RXD0")
+					(type "input")
+				)
+				(pin
+					(num "25")
+					(name "IO21")
+					(type "bidirectional")
+				)
+				(pin
+					(num "26")
+					(name "GND2")
+					(type "power_in")
+				)
+				(pin
+					(num "27")
+					(name "IO19")
+					(type "bidirectional")
+				)
+				(pin
+					(num "28")
+					(name "IO18")
+					(type "bidirectional")
+				)
+				(pin
+					(num "29")
+					(name "IO5")
+					(type "bidirectional")
+				)
+				(pin
+					(num "30")
+					(name "IO17")
+					(type "bidirectional")
+				)
+				(pin
+					(num "31")
+					(name "IO16")
+					(type "bidirectional")
+				)
+				(pin
+					(num "32")
+					(name "IO4")
+					(type "bidirectional")
+				)
+				(pin
+					(num "33")
+					(name "IO0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "34")
+					(name "IO2")
+					(type "bidirectional")
+				)
+				(pin
+					(num "35")
+					(name "IO15")
+					(type "bidirectional")
+				)
+				(pin
+					(num "36")
+					(name "SD1")
+					(type "bidirectional")
+				)
+				(pin
+					(num "37")
+					(name "SD0")
+					(type "bidirectional")
+				)
+				(pin
+					(num "38")
+					(name "CLK")
+					(type "input")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "G3MB-202P_DC5-private_library")
+			(footprints
+				(fp "G3MB")
+			)
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "private_library_G3MB-202P_DC5")
+				(field
+					(name "Footprint") "private_library:G3MC-201PL")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "gaggia_print-rescue")
+			(part "MAX31855K_print-private_library")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "private_library_MAX31855K_print")
+				(field
+					(name "Footprint") "private_library:CJMCU-MAX31855K")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "2")
+					(name "T-")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "T+")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "VCC")
+					(type "power_in")
+				)
+				(pin
+					(num "5")
+					(name "SCK")
+					(type "input")
+				)
+				(pin
+					(num "6")
+					(name "~{CS}")
+					(type "input")
+				)
+				(pin
+					(num "7")
+					(name "SO")
+					(type "tri_state")
+				)
+				(pin
+					(num "8")
+					(name "5V")
+					(type "power_in")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "Connector")
+			(uri "${KICAD10_SYMBOL_DIR}/Connector.kicad_sym")
+		)
+		(library
+			(logical "Converter_ACDC")
+			(uri "${KICAD10_SYMBOL_DIR}/Converter_ACDC.kicad_sym")
+		)
+		(library
+			(logical "Device")
+			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
+		)
+		(library
+			(logical "gaggia_print-rescue")
+			(uri "${KIPRJMOD}/gaggia_print-rescue.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "+3V3")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "3V3_1")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "2")
+			(name "+5VD")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "PS1")
+				(pin "4")
+				(pinfunction "+Vout_4")
+				(pintype "power_out")
+			)
+			(node
+				(ref "U3")
+				(pin "19")
+				(pinfunction "EXT_5V_19")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U6")
+				(pin "8")
+				(pinfunction "5V_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U7")
+				(pin "8")
+				(pinfunction "5V_8")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "3")
+			(name "/brew_btn_pin")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "30")
+				(pinfunction "IO17_30")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "4")
+			(name "/dsp_ck")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "10")
+				(pinfunction "Pin_10_10")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "7")
+				(pinfunction "Pin_7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "28")
+				(pinfunction "IO18_28")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "5")
+			(name "/dsp_cs")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "29")
+				(pinfunction "IO5_29")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "6")
+			(name "/dsp_dc")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "5")
+				(pinfunction "Pin_5_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "34")
+				(pinfunction "IO2_34")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "7")
+			(name "/dsp_led")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "8")
+				(pinfunction "Pin_8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "25")
+				(pinfunction "IO21_25")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "8")
+			(name "/dsp_miso")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "13")
+				(pinfunction "Pin_13_13")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "9")
+				(pinfunction "Pin_9_9")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "27")
+				(pinfunction "IO19_27")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "9")
+			(name "/dsp_mosi")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "12")
+				(pinfunction "Pin_12_12")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "6")
+				(pinfunction "Pin_6_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "21")
+				(pinfunction "IO23_21")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "10")
+			(name "/dsp_rst")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "32")
+				(pinfunction "IO4_32")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "11")
+			(name "/misc_1")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "33")
+				(pinfunction "IO0_33")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "12")
+			(name "/misc_2")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "15")
+				(pinfunction "IO13_15")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "13")
+			(name "/misc_3")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "6")
+				(pinfunction "IO35_6")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "14")
+			(name "/misc_4")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "5")
+				(pinfunction "IO34_5")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "15")
+			(name "/perf_brew_cs")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "~{CS}_6")
+				(pintype "input")
+			)
+			(node
+				(ref "U3")
+				(pin "10")
+				(pinfunction "IO26_10")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U7")
+				(pin "6")
+				(pinfunction "~{CS}_6")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "16")
+			(name "/perf_ck")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "SCK_5")
+				(pintype "input")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "SCK_5")
+				(pintype "input")
+			)
+			(node
+				(ref "U3")
+				(pin "12")
+				(pinfunction "IO14_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U6")
+				(pin "5")
+				(pinfunction "SCK_5")
+				(pintype "input")
+			)
+			(node
+				(ref "U7")
+				(pin "5")
+				(pinfunction "SCK_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "17")
+			(name "/perf_do")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "SO_7")
+				(pintype "tri_state")
+			)
+			(node
+				(ref "U2")
+				(pin "7")
+				(pinfunction "SO_7")
+				(pintype "tri_state")
+			)
+			(node
+				(ref "U3")
+				(pin "13")
+				(pinfunction "IO12_13")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U6")
+				(pin "7")
+				(pinfunction "SO_7")
+				(pintype "tri_state")
+			)
+			(node
+				(ref "U7")
+				(pin "7")
+				(pinfunction "SO_7")
+				(pintype "tri_state")
+			)
+		)
+		(net
+			(code "18")
+			(name "/perf_ste_cs")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "~{CS}_6")
+				(pintype "input")
+			)
+			(node
+				(ref "U3")
+				(pin "22")
+				(pinfunction "IO22_22")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U6")
+				(pin "6")
+				(pinfunction "~{CS}_6")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "19")
+			(name "/ssr_boiler")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "8")
+				(pinfunction "IO33_8")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "20")
+			(name "/ssr_pump")
+			(class "Default")
+			(node
+				(ref "R4")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "7")
+				(pinfunction "IO32_7")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "21")
+			(name "/ssr_valve")
+			(class "Default")
+			(node
+				(ref "R3")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "9")
+				(pinfunction "IO25_9")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "22")
+			(name "/steam_btn_pin")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "31")
+				(pinfunction "IO16_31")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "23")
+			(name "/tft_cs")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "11")
+				(pinfunction "Pin_11_11")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "35")
+				(pinfunction "IO15_35")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "24")
+			(name "/tft_irq")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "14")
+				(pinfunction "Pin_14_14")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "11")
+				(pinfunction "IO27_11")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "25")
+			(name "AC")
+			(class "Default")
+			(node
+				(ref "F1")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "PS1")
+				(pin "1")
+				(pinfunction "AC/L_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U4")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "26")
+			(name "GNDD")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "4")
+				(pinfunction "Pin_4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "PS1")
+				(pin "3")
+				(pinfunction "-Vout_3")
+				(pintype "power_out")
+			)
+			(node
+				(ref "Q1")
+				(pin "3")
+				(pinfunction "E_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "Q2")
+				(pin "3")
+				(pinfunction "E_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U3")
+				(pin "14")
+				(pinfunction "GND1_14")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U6")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U7")
+				(pin "1")
+				(pinfunction "GND_1")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "27")
+			(name "GNDREF")
+			(class "Default")
+			(node
+				(ref "J3")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J8")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J9")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "PS1")
+				(pin "2")
+				(pinfunction "AC/N_2")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "28")
+			(name "Net-(J3-Pin_1)")
+			(class "Default")
+			(node
+				(ref "F1")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "1")
+				(pinfunction "Pin_1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "29")
+			(name "Net-(J8-Pin_2)")
+			(class "Default")
+			(node
+				(ref "J8")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "30")
+			(name "Net-(J9-Pin_2)")
+			(class "Default")
+			(node
+				(ref "J9")
+				(pin "2")
+				(pinfunction "Pin_2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "31")
+			(name "Net-(Q1-B)")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "1")
+				(pinfunction "B_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "32")
+			(name "Net-(Q1-C)")
+			(class "Default")
+			(node
+				(ref "Q1")
+				(pin "2")
+				(pinfunction "C_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "4")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "33")
+			(name "Net-(Q2-B)")
+			(class "Default")
+			(node
+				(ref "Q2")
+				(pin "1")
+				(pinfunction "B_1")
+				(pintype "input")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "34")
+			(name "Net-(Q2-C)")
+			(class "Default")
+			(node
+				(ref "Q2")
+				(pin "2")
+				(pinfunction "C_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "4")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "35")
+			(name "unconnected-(U1-5V-Pad8)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "5V_8")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "36")
+			(name "unconnected-(U1-T+-Pad3)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "T+_3")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "37")
+			(name "unconnected-(U1-T--Pad2)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "T-_2")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "38")
+			(name "unconnected-(U2-5V-Pad8)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "8")
+				(pinfunction "5V_8")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "39")
+			(name "unconnected-(U2-T+-Pad3)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "T+_3")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "40")
+			(name "unconnected-(U2-T--Pad2)")
+			(class "Default")
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "T-_2")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "41")
+			(name "unconnected-(U3-CLK-Pad38)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "38")
+				(pinfunction "CLK_38")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "42")
+			(name "unconnected-(U3-CMD-Pad18)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "18")
+				(pinfunction "CMD_18")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "43")
+			(name "unconnected-(U3-EN-Pad2)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "EN_2")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "44")
+			(name "unconnected-(U3-GND2-Pad26)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "26")
+				(pinfunction "GND2_26")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "45")
+			(name "unconnected-(U3-GND3-Pad20)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "20")
+				(pinfunction "GND3_20")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "46")
+			(name "unconnected-(U3-RXD0-Pad24)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "24")
+				(pinfunction "RXD0_24")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "47")
+			(name "unconnected-(U3-SD0-Pad37)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "37")
+				(pinfunction "SD0_37")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "48")
+			(name "unconnected-(U3-SD1-Pad36)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "36")
+				(pinfunction "SD1_36")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "49")
+			(name "unconnected-(U3-SD2-Pad16)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "16")
+				(pinfunction "SD2_16")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "50")
+			(name "unconnected-(U3-SD3-Pad17)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "17")
+				(pinfunction "SD3_17")
+				(pintype "bidirectional+no_connect")
+			)
+		)
+		(net
+			(code "51")
+			(name "unconnected-(U3-SENSOR_VN-Pad4)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "SENSOR_VN_4")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "52")
+			(name "unconnected-(U3-SENSOR_VP-Pad3)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "SENSOR_VP_3")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "53")
+			(name "unconnected-(U3-TXD0-Pad23)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "23")
+				(pinfunction "TXD0_23")
+				(pintype "output+no_connect")
+			)
+		)
+		(net
+			(code "54")
+			(name "unconnected-(U6-T+-Pad3)")
+			(class "Default")
+			(node
+				(ref "U6")
+				(pin "3")
+				(pinfunction "T+_3")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "55")
+			(name "unconnected-(U6-T--Pad2)")
+			(class "Default")
+			(node
+				(ref "U6")
+				(pin "2")
+				(pinfunction "T-_2")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "56")
+			(name "unconnected-(U6-VCC-Pad4)")
+			(class "Default")
+			(node
+				(ref "U6")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "57")
+			(name "unconnected-(U7-T+-Pad3)")
+			(class "Default")
+			(node
+				(ref "U7")
+				(pin "3")
+				(pinfunction "T+_3")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "58")
+			(name "unconnected-(U7-T--Pad2)")
+			(class "Default")
+			(node
+				(ref "U7")
+				(pin "2")
+				(pinfunction "T-_2")
+				(pintype "passive+no_connect")
+			)
+		)
+		(net
+			(code "59")
+			(name "unconnected-(U7-VCC-Pad4)")
+			(class "Default")
+			(node
+				(ref "U7")
+				(pin "4")
+				(pinfunction "VCC_4")
+				(pintype "power_in+no_connect")
+			)
+		)
+	)
+)

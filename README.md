@@ -23,6 +23,7 @@ Try it on the included examples (run from the project folder):
 ```bash
 python3 circuit.py examples/mygenwashy.net      # washing machine
 python3 circuit.py examples/doorman.net         # smart door opener
+python3 circuit.py examples/espgaggia.net       # espresso machine (heater appliance)
 python3 circuit.py examples/pic_programmer.net
 ```
 
@@ -55,6 +56,7 @@ On most boards the scanner works from net and pin names alone. For these chips i
 | ATmega328P, ATmega32U4 | ISP programming pins, RESET/debugWIRE, UART |
 | ATtiny 2-series | UPDI, I2C |
 | Raspberry Pi Compute Module 5 | UART console, nRPIBOOT, boot EEPROM write-protect |
+| Plug-in dev boards (ESP32 DevKitC, NodeMCU, Wemos D1 mini, Arduino, Pico, Blue Pill, Feather, XIAO) | Built-in USB programming port; their own 3.3V regulator and decoupling |
 
 To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to match, then pin name → what that pin does. Descriptions containing "programming", "debug" or "UART" are treated as debug ports, and "Boot-mode" marks a boot pin.
 
@@ -79,7 +81,7 @@ To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to m
 | Signal input/output protection | Connector pins wired straight into chip pins, or with no clamp diodes/TVS |
 | Power input protection | Power entry without fuse, reverse-polarity diode or TVS (and tells power inputs from outputs) |
 | Supply decoupling | Chip supply pins with no decoupling capacitor (easier fault injection) |
-| Mains & actuator safety | For mains appliances: fuse and surge protection at the mains input, isolation between mains and logic, and which loads (heater, motor, door lock...) the firmware controls vs. which are blocked by hardware interlocks. For boards that drive an external relay/SSR, flags the lack of a hardware cutoff |
+| Mains & actuator safety | For mains appliances: fuse and surge protection at the mains input, isolation between mains and logic (isolated supplies, optocouplers, solid-state relays), and which loads (heater, boiler, pump, motor, door lock...) the firmware controls through relays, triacs or SSRs vs. which are blocked by hardware interlocks. For boards that drive an external relay/SSR, flags the lack of a hardware cutoff |
 | Clock / crystal | Oscillator lines reachable from outside, tunable crystals |
 | Trimmers | Internal calibration parts that could be tampered with (vs. front-panel controls) |
 
@@ -92,6 +94,7 @@ The report ends with a **security assessment**: overall risk rating, findings by
 | `mygenwashy.net` | Washing machine controller (230 V, ATtiny3226) | **HIGH** | Exposed UPDI programming port; unprotected sensor and I²C pins; mains side well protected, with hardware interlocks |
 | `doorman.net` | Smart door intercom / door opener (ESP32-S3, Wi-Fi) | **HIGH** | USB-C is a built-in JTAG/programming port; UART console on test pads; boot button; Wi-Fi/BLE remote surface; door-opener relay driven by firmware alone |
 | `satellite_tracker.net` | Desktop satellite tracker base board (ESP32-C6, Wi-Fi/BLE) | **HIGH** | Auto-programming header (UART + DTR/RTS drive reset and the boot pin); USB-C is a built-in JTAG/programming port; Wi-Fi/BLE remote surface; sensor connectors wired straight into the chip |
+| `espgaggia.net` | Espresso machine controller (230 V, ESP32 DevKitC, Wi-Fi) | **HIGH** | Dev board with a USB programming port; boiler heater on an external SSR driven by firmware alone; pump and valve switched by SSRs with no hardware interlock |
 | `open_vapors.net` | Reflow oven controller (ATmega32U4, Bluetooth) | **HIGH** | AVR ISP programming header; Bluetooth module header (remote attack surface); heater SSR driven by firmware with no hardware cutoff |
 | `pic_programmer.net` | PIC programmer | **HIGH** | Programming pins on the sockets (by design); EEPROM write-protect unconnected; serial data line unclamped |
 | `sonde_xilinx.net` | JTAG cable | **HIGH** | JTAG lines on the connectors (by design); partial clamp protection |
@@ -126,6 +129,17 @@ An oven controller you can talk to over Bluetooth.
 - **Remote attack surface (MEDIUM):** a Bluetooth module header (JP1) is wired to the microcontroller's UART. Anyone in radio range can send it commands, so the firmware must authenticate and validate them.
 - **Programming header (HIGH):** the AVR ISP header (ISP1) lets anyone with the case open read out or replace the firmware.
 - **Cyber-physical risk (MEDIUM):** the firmware switches the heater through an external solid-state relay (JP4), and there is no hardware cutoff on the board. Hacked or crashed firmware could leave the heater on. A thermal fuse in the heater path would stop that.
+
+### Case study: espresso machine (espgaggia)
+
+A Wi-Fi controller that replaces the brains of a Gaggia Classic espresso machine: it runs the boiler heater, the pump and the solenoid valve. This is the same kind of circuit as a popcorn machine, kettle or toaster oven: a heater and a motor on mains, switched by a microcontroller.
+
+- **Programming port (HIGH):** the ESP32 sits on a DevKitC development board, whose USB port can dump or replace the firmware. Unless secure boot and flash encryption are on, anyone who opens the case owns the machine.
+- **Remote attack surface (MEDIUM):** Wi-Fi/Bluetooth on the ESP32. A bug in the web interface or OTA update could hand control of the heater to someone on the network.
+- **Heater driven by firmware alone (MEDIUM):** the boiler's solid-state relay is wired straight to an ESP32 pin (J10). There is no thermal cutoff on the board, so hacked or crashed firmware could keep the boiler heating. The machine's own thermostat and thermal fuse (not on this board) are what stop a fire.
+- **Pump and valve (MEDIUM):** switched by two Omron G3MB solid-state relays on mains, with no hardware interlock.
+- **Good mains design:** fused 220 V input, an isolated HLK-PM01 power module, and SSRs that keep mains away from the logic. Only surge protection (a varistor) is missing.
+- **Boot pin on a header (MEDIUM):** IO0, the ESP32's download-mode strap, is on the "Misc" header J5.
 
 ## Old KiCad projects (missing libraries)
 
@@ -176,6 +190,7 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `mygenwashy.net` | MyGenWashy washing machine controller (230 V, ATtiny3226) | [mayermakes/MyGenWashy](https://github.com/mayermakes/MyGenWashy), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 | `doorman.net` | Doorman S3 door intercom gateway, Rev 1.6.1 | [AzonInc/Doorman](https://github.com/AzonInc/Doorman), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
 | `satellite_tracker.net` | Desktop Satellite Tracker, base board | [KJ7NLL/Satellite-Tracker-Circuit-Design-Files](https://github.com/KJ7NLL/Satellite-Tracker-Circuit-Design-Files), GPL-3.0. This netlist is exported from that design and stays under GPL-3.0. |
+| `espgaggia.net` | espgaggia, ESP32 controller for a Gaggia Classic espresso machine | [rvt/espgaggia](https://github.com/rvt/espgaggia) by R. van Twisk, MIT license ("Copyright (c) 2021 R. van Twisk"). Exported from its KiCad schematic with KiCad 10. |
 | `open_vapors.net` | Open Vapors reflow oven controller, Rev 2 | [baldengineer/Open-Vapors](https://github.com/baldengineer/Open-Vapors) by baldengineer, MIT license (the project's LICENSE reads "Copyright (c) 2013-2021 Damien P. George"). Generated from the KiCad PCB with `tools/pcb2net.py`. |
 
 ## License

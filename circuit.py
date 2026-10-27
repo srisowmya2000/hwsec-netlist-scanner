@@ -230,6 +230,16 @@ def is_exposed(ref):
     return ref_prefix(ref) in EXPOSED_PREFIXES
 
 
+# Plug-in development boards carry their own USB programming port, regulator and caps.
+DEVBOARD = re.compile(r"DEVKIT|NODEMCU|WEMOS|D1[_ -]?MINI|LOLIN|ARDUINO|RASPBERRY_?PI_?PICO|\bPICO(_?W|_?2)?\b|"
+                      r"BLUE_?PILL|BLACK_?PILL|FEATHER|XIAO|THING_?PLUS", re.I)
+
+
+def is_devboard(ref, components):
+    c = components.get(ref, {})
+    return not is_exposed(ref) and bool(DEVBOARD.search(f"{c.get('value', '')} {c.get('part', '')}"))
+
+
 def is_switch(ref):
     return ref_prefix(ref) in SWITCH_PREFIXES
 
@@ -315,6 +325,12 @@ def rule_debug_ports(components, nets):
                              + (f" carries {', '.join(pins)}" if pins else ""),
                              "Anyone with access can read out or reprogram the chip. Remove the header on production "
                              "boards and set the lock/read-protection bits."))
+
+    for ref in sorted(r for r in components if is_devboard(r, components)):
+        findings.append(("HIGH", f"{ref} ({components[ref]['value']}) is a development board with a built-in USB "
+                         "programming port (USB-serial bridge with auto-reset, or native USB bootloader)",
+                         "Anyone with access to the board can plug in a USB cable and dump or replace the firmware. "
+                         "Use a bare module on production boards, or enable secure boot and flash encryption."))
     return findings
 
 
@@ -527,32 +543,73 @@ def is_triac(ref, components):
     return "TRIAC" in t or bool(re.search(r"\bBT[AB]?\d{2,3}|\bBT1\d{2}|OFF-STATE VOLTAGE", t))
 
 
+# Solid-state relays: an LED input on the logic side, a triac/MOSFET output on the mains side.
+SSR_PART = re.compile(r"\bSSR\b|SOLID.?STATE|\bG3M[BC]|\bG3NA|\bAQ[GH]\d|\bS[12]0[1-9]S|\bCPC1\d{3}", re.I)
+SSR_CONTROL_PIN = re.compile(r"^([+-]|DC[+-]?|IN[+-]?|CTRL|CONTROL|A|K|LED[+-]?)$", re.I)
+
+
+def is_ssr(ref, components):
+    return not is_exposed(ref) and bool(SSR_PART.search(part_text(ref, components)))
+
+
+def is_ac_input(node):
+    """AC input pin of a power module (e.g. HLK-PM01 'AC/L', 'AC/N')."""
+    return bool(re.match(r"^AC", pin_name(node), re.I)) and node["type"] == "power_in"
+
+
 def mains_nets(components, nets):
     """Nets that carry mains voltage: named like mains, PSU AC inputs, relay contacts,
-    triac main terminals - then spread to every pin of a connector that touches them."""
+    triac main terminals - then spread through fuses, solid-state relay outputs and
+    every pin of a connector that touches them."""
     found = set()
     for name, nodes in nets.items():
-        if is_ground(name) or is_power_net(name) or name.startswith("unconnected"):
+        if name.startswith("unconnected"):
+            continue
+        # A power module's AC input is mains even when the net is named like ground (e.g. neutral "GNDREF").
+        if any(is_ac_input(n) for n in nodes):
+            found.add(name)
+            continue
+        if is_ground(name) or is_power_net(name):
             continue
         if MAINS_NAME.search(short(name)):
             found.add(name)
             continue
         for n in nodes:
-            if (re.match(r"^AC", pin_name(n), re.I) and n["type"] == "power_in") \
-                    or (is_relay(n["ref"]) and not is_coil_pin(n)) \
+            if (is_relay(n["ref"]) and not is_coil_pin(n)) \
                     or (is_triac(n["ref"], components) and pin_name(n).upper() not in ("G", "GATE")):
                 found.add(name)
                 break
     by_ref = nets_by_ref(nets)
+
+    def skip(net):
+        return is_ground(net) or is_power_net(net) or net.startswith("unconnected")
+
+    def mains_side_only(net, ref):
+        """Net of an SSR output: everything else on it is a connector, fuse or another switch."""
+        others = [m["ref"] for m in nets[net] if m["ref"] != ref]
+        return others and all(is_exposed(o) or is_fuse(o, components) or is_ssr(o, components) or is_relay(o)
+                              for o in others)
+
     changed = True
-    while changed:                       # a connector with one mains pin is a mains connector
+    while changed:
         changed = False
         for ref, ref_nets in by_ref.items():
-            if is_exposed(ref) and ref_nets & found:
-                for net in ref_nets - found:
-                    if not (is_ground(net) or is_power_net(net) or net.startswith("unconnected")):
-                        found.add(net)
-                        changed = True
+            if not ref_nets & found:
+                continue
+            new = []
+            if is_exposed(ref):                             # a connector with one mains pin is a mains connector
+                new = [net for net in ref_nets - found if not skip(net)]
+            elif is_fuse(ref, components) and len(ref_nets) == 2:   # mains passes through a fuse
+                new = [net for net in ref_nets - found if not skip(net)]
+            elif is_ssr(ref, components):                   # SSR output side switches mains to the load
+                for net in sorted(ref_nets - found):
+                    pins = [m for m in nets[net] if m["ref"] == ref]
+                    if not skip(net) and not any(SSR_CONTROL_PIN.match(pin_name(p)) for p in pins) \
+                            and mains_side_only(net, ref):
+                        new.append(net)
+            if new:
+                found.update(new)
+                changed = True
     return found
 
 
@@ -660,7 +717,10 @@ def rule_power_input(components, nets):
                    and (n["type"] == "power_out" or ref_prefix(n["ref"]) == "Q"
                         # regulator output pins that the symbol left as "passive"
                         or (re.fullmatch(r"V?OUT(PUT)?[PS]?|VO", pin_name(n), re.I)
-                            and re.search(r"REGULATOR|LDO|CONVERTER|BUCK|BOOST", part_text(n["ref"], components))))}
+                            and re.search(r"REGULATOR|LDO|CONVERTER|BUCK|BOOST", part_text(n["ref"], components)))
+                        # a dev board's 3V3 pin is the output of its own regulator
+                        or (is_devboard(n["ref"], components)
+                            and re.search(r"3V3|3\.3V", f"{pin_name(n)} {short(name)}", re.I)))}
         # Switching regulators: chip SW/LX pin -> inductor -> this rail
         for n in nodes:
             if ref_prefix(n["ref"]) == "L":
@@ -719,7 +779,7 @@ def rule_decoupling(components, nets):
             extra = f" and filter {short_list(filters)}" if filters else ""
             findings.append(("OK", f"Supply {nice_net(name)} to {short_list(supplied)} is decoupled by "
                              f"{short_list(caps)}{extra}", ""))
-        elif all(ref_prefix(s) == "MODULE" for s in supplied):
+        elif all(ref_prefix(s) == "MODULE" or is_devboard(s, components) for s in supplied):
             findings.append(("LOW", f"Supply {nice_net(name)} to {short_list(supplied)} has no decoupling capacitor",
                              "Modules usually carry their own caps, but a 100nF here makes glitching harder."))
         else:
@@ -735,15 +795,16 @@ def connector_name(ref, components):
 
 
 LOAD_WORDS = re.compile(r"\b(SSR|RELAY|HEATER|HEAT|MOTOR|PUMP|VALVE|SOLENOID|LOCK|COMPRESSOR|MAGNETRON|"
-                        r"DOOR|OPENER|STRIKE|LATCH)\b", re.I)
+                        r"DOOR|OPENER|STRIKE|LATCH|BOILER|KETTLE|OVEN|GRINDER|ROASTER)\b", re.I)
 
 
-def external_loads(components, nets):
-    """No mains on the board, but headers that drive an external power stage (e.g. an SSR for a heater)."""
+def external_loads(components, nets, skip=()):
+    """Headers that drive an external power stage (e.g. an SSR for a heater). `skip`: mains connectors,
+    which the mains rule already covers."""
     by_ref = nets_by_ref(nets)
     found = []
     for ref, comp in sorted(components.items()):
-        if not is_exposed(ref):
+        if not is_exposed(ref) or ref in skip:
             continue
         sigs = sorted({short(n) for n in by_ref[ref] if LOAD_WORDS.search(short(n).replace("_", " "))})
         if LOAD_WORDS.search(comp["value"].replace("_", " ")) or sigs:
@@ -791,12 +852,17 @@ def rule_mains(components, nets):
                          "Mains surges can destroy the electronics (denial of service). Add a varistor or TVS."))
 
     # 2. Isolation between mains and the low-voltage logic.
-    isolated_psu = sorted(r for r in components if "ISOLATED" in part_text(r, components)
+    # Board-mount AC/DC modules (HLK-PM01, Mean Well IRM...) are isolated by design.
+    isolated_psu = sorted(r for r in components
+                          if re.search(r"ISOLATED|HLK-?\d*PM|\bIRM-?\d|AC/?DC .*MODULE|AC-DC .*MODULE",
+                                       part_text(r, components))
                           and any(re.match(r"^AC", pin_name(n), re.I) for net in by_ref[r] for n in nets[net] if n["ref"] == r))
     optos = sorted(r for r in components if re.search(r"OPTO|PC817|MOC30|MOC31|TLP\d|6N13|H11", part_text(r, components)))
-    if isolated_psu or optos:
+    ssrs = sorted(r for r in components if is_ssr(r, components))   # opto-isolated inside
+    if isolated_psu or optos or ssrs:
         parts = ([f"isolated supply {short_list(isolated_psu)}"] if isolated_psu else []) + \
-                ([f"optocouplers {short_list(optos)}"] if optos else [])
+                ([f"optocouplers {short_list(optos)}"] if optos else []) + \
+                ([f"solid-state relays {short_list(ssrs)}"] if ssrs else [])
         findings.append(("OK", "Logic is isolated from mains by " + " and ".join(parts), ""))
     else:
         findings.append(("MEDIUM", "No isolated supply or optocouplers found between mains and the logic",
@@ -829,7 +895,8 @@ def rule_mains(components, nets):
         own = [net for net in by_ref[c] if net not in rails]
         drivers = sorted({n["ref"] for net in own for n in nets[net]
                           if ((is_relay(n["ref"]) and not is_coil_pin(n) and n["ref"] not in interlock_relays)
-                              or is_triac(n["ref"], components))})
+                              or is_triac(n["ref"], components)
+                              or (is_ssr(n["ref"], components) and not SSR_CONTROL_PIN.match(pin_name(n))))})
         if not drivers:
             continue
         # Is the driver's supply side fed through an interlock relay's contacts?
@@ -859,7 +926,8 @@ def rule_mains(components, nets):
                              "If the firmware is buggy or compromised it can drive these loads unsafely. "
                              "Add hardware interlocks (door switch, water-level switch, thermal fuse) in series "
                              "with the dangerous loads."))
-    return findings
+    # Headers that drive a power stage off the board (e.g. a heater SSR) on top of the mains loads.
+    return findings + external_loads(components, nets, skip=connectors)
 
 
 def is_crystal(ref, components):
@@ -1083,6 +1151,9 @@ def wrap(label, text, indent=6):
 # 6. Build the report once, then print it as text, JSON or HTML
 # ---------------------------------------------------------------------------
 
+SAFETY_CHECK = "Mains & actuator safety (cyber-physical)"
+
+
 def assess(results, ctx):
     """results: list of (rule title, level, msg, fix). Returns the overall assessment."""
     issues = [r for r in results if r[1] != "OK"]
@@ -1103,7 +1174,11 @@ def assess(results, ctx):
            for c, name in CIA_NAMES.items()}
 
     fix_first, seen = [], set()
-    for title, level, msg, fix in sorted((r for r in issues if r[1] in ("HIGH", "MEDIUM")), key=lambda r: ORDER[r[1]]):
+    # Within a level, physical-safety findings (heater, motor, door lock) come first: on an appliance
+    # they are what turns a hack into a fire or an injury.
+    def priority(r):
+        return (ORDER[r[1]], r[0] != SAFETY_CHECK)
+    for title, level, msg, fix in sorted((r for r in issues if r[1] in ("HIGH", "MEDIUM")), key=priority):
         if (title, fix) in seen:
             continue
         seen.add((title, fix))
