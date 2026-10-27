@@ -4,12 +4,17 @@ circuit.py - a tiny hardware-security checker for KiCad netlists.
 
 Usage:
     python3 circuit.py path/to/board.net
+    python3 circuit.py board.net --html report.html --json report.json
 
 It reads a KiCad netlist (File -> Export -> Netlist, "KiCad" format),
 builds a list of components and nets, then runs simple security rules.
 No extra libraries needed - just Python 3.8+.
 """
 
+import argparse
+import html
+import json
+import os
 import re
 import sys
 import textwrap
@@ -130,6 +135,74 @@ KNOWN_PINS = {
         "TXD0": "UART0 TX (ROM bootloader / debug console)",
         "RXD0": "UART0 RX (ROM bootloader / debug console)",
     },
+    # ESP8266 modules (ESP-12E/F, ESP-07...) and the bare chip
+    "ESP-12": {
+        "GPIO0": "Boot-mode strap: held low at reset = UART download mode (firmware can be reflashed)",
+        "GPIO15": "Boot-mode strap (must be low at reset; high = boot from SD card mode)",
+        "GPIO2": "Boot-mode strap (must be high at reset)",
+        "TXD": "UART0 TX (ROM bootloader / debug console)",
+        "RXD": "UART0 RX (ROM bootloader / debug console)",
+    },
+    "ESP8266": {
+        "GPIO0": "Boot-mode strap: held low at reset = UART download mode (firmware can be reflashed)",
+        "GPIO15": "Boot-mode strap (must be low at reset; high = boot from SD card mode)",
+        "GPIO2": "Boot-mode strap (must be high at reset)",
+        "U0TXD": "UART0 TX (ROM bootloader / debug console)",
+        "U0RXD": "UART0 RX (ROM bootloader / debug console)",
+    },
+    # STM32 (all families): SWD on PA13/PA14, JTAG on PA15/PB3/PB4, ROM bootloader on USART1.
+    "STM32": {
+        "PA13": "SWD SWDIO (programming/debug port)",
+        "PA14": "SWD SWCLK (programming/debug port)",
+        "PA15": "JTAG TDI (programming/debug port)",
+        "PB3": "JTAG TDO / SWO trace output (debug)",
+        "PB4": "JTAG nTRST (debug)",
+        "BOOT0": "Boot-mode pin: high at reset = ROM bootloader (firmware can be read or reflashed over UART/USB)",
+        "PA9": "USART1 TX (ROM bootloader / debug console)",
+        "PA10": "USART1 RX (ROM bootloader / debug console)",
+    },
+    # Raspberry Pi RP2040 / RP2350 (Pico, Pico 2)
+    "RP2040": {
+        "SWCLK": "SWD clock (programming/debug port)",
+        "SWD": "SWD data (programming/debug port)",
+        "QSPI_SS": "Boot-mode pin (BOOTSEL): held low at reset = USB bootloader (firmware can be reflashed)",
+        "GPIO0": "UART0 TX (default debug console)",
+        "GPIO1": "UART0 RX (default debug console)",
+    },
+    "RP2350": {
+        "SWCLK": "SWD clock (programming/debug port)",
+        "SWDIO": "SWD data (programming/debug port)",
+        "QSPI_SS": "Boot-mode pin (BOOTSEL): held low at reset = USB bootloader (firmware can be reflashed)",
+        "GPIO0": "UART0 TX (default debug console)",
+        "GPIO1": "UART0 RX (default debug console)",
+    },
+    # Nordic nRF52 series (Bluetooth LE)
+    "nRF52": {
+        "SWDCLK": "SWD clock (programming/debug port)",
+        "SWDIO": "SWD data (programming/debug port)",
+    },
+    # Microchip SAM D21 (Arduino Zero, many Adafruit boards)
+    "ATSAMD21": {
+        "PA30": "SWD SWCLK (programming/debug port)",
+        "PA31": "SWD SWDIO (programming/debug port)",
+    },
+    # Classic AVR: ISP programming shares the SPI pins; RESET doubles as debugWIRE.
+    "ATmega32U4": {
+        "PB2": "ISP MOSI (programming port, shared with SPI MOSI)",
+        "PB3": "ISP MISO (programming port, shared with SPI MISO)",
+        "PB1": "ISP SCK (programming port, shared with SPI SCK)",
+        "RESET": "RESET / debugWIRE (programming/debug pin)",
+        "PD3": "UART TX (serial console)",
+        "PD2": "UART RX (serial console)",
+    },
+    "ATmega328": {
+        "PB3": "ISP MOSI (programming port, shared with SPI MOSI)",
+        "PB4": "ISP MISO (programming port, shared with SPI MISO)",
+        "PB5": "ISP SCK (programming port, shared with SPI SCK)",
+        "PC6": "RESET / debugWIRE (programming/debug pin)",
+        "PD1": "UART TX (Arduino bootloader upload / serial console)",
+        "PD0": "UART RX (Arduino bootloader upload / serial console)",
+    },
     # tinyAVR 2-series (matched as a substring of the part value)
     "ATtiny3226": {
         "PA0": "UPDI programming/debug pin",
@@ -187,7 +260,9 @@ def meaning_of(node, components):
     part = components.get(node["ref"], {}).get("value", "")
     pins = next((p for chip, p in KNOWN_PINS.items() if chip in part), {})
     for key, meaning in pins.items():
-        if key in node["function"]:
+        # "GPIO1" must not match "GPIO10", so a key ending in a digit can't be followed by one.
+        tail = r"(?!\d)" if key[-1].isdigit() else ""
+        if re.search(re.escape(key) + tail, node["function"]):
             return meaning
     return None
 
@@ -204,7 +279,7 @@ def rule_debug_ports(components, nets):
     pattern = re.compile(r"UART|_TX|_RX|TXD|RXD|SWD|SWCLK|SWDIO|JTAG|TCK|TMS|TDI|TDO|UPDI|CONSOLE|DEBUG", re.I)
     for name, nodes in nets.items():
         meanings = [m for m in (meaning_of(n, components) for n in nodes)
-                    if m and re.search(r"UART|UPDI|debug", m) and "Boot-mode" not in m]
+                    if m and re.search(r"UART|UPDI|debug|programming", m) and "Boot-mode" not in m]
         prog = [f"{n['ref']}.{pin_name(n)}" for n in nodes if PROG_PIN.search(pin_name(n))]
         if re.search(r"UPDI|ICSP|SWD|JTAG", short(name), re.I) or any("programming" in m for m in meanings):
             prog = prog or [f"{n['ref']}.{pin_name(n)}" for n in nodes if not is_exposed(n["ref"])]
@@ -280,7 +355,7 @@ def rule_boot_pins(components, nets):
         by_ref = nets_by_ref(nets)
         for n in nodes:
             if ref_prefix(n["ref"]) == "Q" or "TRANSISTOR" in part_text(n["ref"], components):
-                for other in by_ref[n["ref"]] - {name}:
+                for other in sorted(by_ref[n["ref"]] - {name}):
                     if is_ground(other) or is_power_net(other):
                         continue
                     hits = sorted({m["ref"] for m in nets[other] if is_exposed(m["ref"])})
@@ -288,7 +363,7 @@ def rule_boot_pins(components, nets):
         reach = list(dict.fromkeys(reach))
         label = meaning_of(boot_node, components) or "boot-mode pin"
         if reach:
-            findings.append(("MEDIUM", f"Boot pin {short(name)} ({label}) can be driven from {', '.join(reach)}",
+            findings.append(("MEDIUM", f"Boot pin {nice_net(name)} ({label}) can be driven from {', '.join(reach)}",
                              "Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot."))
     return findings
 
@@ -509,7 +584,7 @@ def protection_near(net, nets, components, by_ref, skip_ref):
     found = [n["ref"] for n in nets[net] if n["ref"] != skip_ref and is_protection(n["ref"], components)]
     for n in nets[net]:
         if ref_prefix(n["ref"]) in SERIES_PREFIXES:
-            for other in by_ref[n["ref"]] - {net}:
+            for other in sorted(by_ref[n["ref"]] - {net}):
                 if not is_ground(other):
                     found += [m["ref"] for m in nets[other] if is_protection(m["ref"], components)]
     return found
@@ -589,7 +664,7 @@ def rule_power_input(components, nets):
         # Switching regulators: chip SW/LX pin -> inductor -> this rail
         for n in nodes:
             if ref_prefix(n["ref"]) == "L":
-                for other in by_ref[n["ref"]] - {name}:
+                for other in sorted(by_ref[n["ref"]] - {name}):
                     sources |= {m["ref"] for m in nets[other]
                                 if ref_prefix(m["ref"]) == "U" and re.fullmatch(r"SW\d?|LX\d?|PH", pin_name(m), re.I)}
         sources = sorted(sources)
@@ -1004,128 +1079,357 @@ def wrap(label, text, indent=6):
                          subsequent_indent=pad + " " * 12)
 
 
-def print_threat(title, ctx):
-    t = threat_for(title, ctx)
-    if not t:
-        return
-    print("   Cybersecurity view:")
-    print(wrap("Attack", t["attack"]))
-    print(wrap("Attacker", t["access"]))
-    print(wrap("Impact", ", ".join(CIA_NAMES[c] for c in t["cia"])))
-    print(wrap("STRIDE", t["stride"]))
-    print(wrap("CWE", t["cwe"]))
+# ---------------------------------------------------------------------------
+# 6. Build the report once, then print it as text, JSON or HTML
+# ---------------------------------------------------------------------------
 
-
-def print_assessment(results, ctx):
-    """results: list of (rule title, level, msg, fix)."""
-    issues = [r for r in results if r[1] not in ("OK",)]
-    print("######## SECURITY ASSESSMENT ########\n")
-
+def assess(results, ctx):
+    """results: list of (rule title, level, msg, fix). Returns the overall assessment."""
+    issues = [r for r in results if r[1] != "OK"]
     score = sum(WEIGHT[r[1]] for r in issues)
     worst = min((ORDER[r[1]] for r in issues), default=ORDER["OK"])
     rating = {0: "HIGH", 1: "MEDIUM", 2: "LOW"}.get(worst, "MINIMAL")
-    print(f"Overall risk: {rating}   (score {score:g} - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)\n")
 
-    print("Who can exploit it (by attacker access):")
+    by_access = []
     for access in ACCESS_LEVELS:
         mine = [r for r in issues if threat_for(r[0], ctx).get("access") == access]
         if access in (PARENT, REMOTE) and not mine:
             continue
         hits = [r for r in mine if r[1] != "INFO"]
-        infos = len(mine) - len(hits)
-        print(f"   {access.split(' - ')[0]:<16}: {len(hits)} issue(s)" +
-              (f" + {infos} info" if infos else "") +
-              (f"  [{', '.join(sorted({r[0] for r in mine}))}]" if mine else ""))
+        by_access.append({"access": access, "label": access.split(" - ")[0], "issues": len(hits),
+                          "info": len(mine) - len(hits), "checks": sorted({r[0] for r in mine})})
+
+    cia = {name: sorted({r[0] for r in issues if r[1] != "INFO" and c in threat_for(r[0], ctx).get("cia", "")})
+           for c, name in CIA_NAMES.items()}
+
+    fix_first, seen = [], set()
+    for title, level, msg, fix in sorted((r for r in issues if r[1] in ("HIGH", "MEDIUM")), key=lambda r: ORDER[r[1]]):
+        if (title, fix) in seen:
+            continue
+        seen.add((title, fix))
+        fix_first.append({"check": title, "level": level, "message": msg, "fix": fix})
+        if len(fix_first) == 5:
+            break
+
+    return {"overall_risk": rating, "score": score, "by_access": by_access, "cia": cia,
+            "fix_first": fix_first, "scope": scope_text(ctx)}
+
+
+def scope_text(ctx):
+    if ctx["analog"]:
+        unseen = ("the enclosure, PCB layout, or the parent board this module plugs into" if ctx["module"]
+                  else "the enclosure or PCB layout")
+        return (f"This is a netlist-only review of an analog board (no firmware to attack). It can't "
+                f"see {unseen}. Treat findings as places to check on the physical board.")
+    return ("This is a netlist-only review. It can't see firmware settings (secure boot, read-out "
+            "protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places "
+            "to check, and confirm them against the firmware and the physical board.")
+
+
+def build_report(path, components, nets):
+    digital = digital_signals(nets)
+    ctx = {"analog": not digital, "module": interface_points(components, nets)[1]}
+    sections, results = [], []
+    for section, rules in (("DIGITAL CHECKS", DIGITAL_RULES), ("ANALOG CHECKS", ANALOG_RULES)):
+        checks = []
+        for title, rule in rules:
+            findings = sorted(rule(components, nets), key=lambda f: ORDER[f[0]])
+            results += [(title, *f) for f in findings]
+            threat = None
+            t = threat_for(title, ctx)
+            if t and any(f[0] != "OK" for f in findings):
+                threat = {"attack": t["attack"], "attacker": t["access"],
+                          "impact": [CIA_NAMES[c] for c in t["cia"]], "stride": t["stride"], "cwe": t["cwe"]}
+            checks.append({"title": title,
+                           "findings": [{"level": lv, "message": msg, "fix": fix} for lv, msg, fix in findings],
+                           "threat": threat})
+        sections.append({"name": section, "checks": checks})
+    return {
+        "tool": "circuit.py",
+        "netlist": os.path.basename(path),
+        "components": len(components),
+        "nets": len(nets),
+        "board_profile": {"digital_signals": len(digital), "analog_only": ctx["analog"], "module": ctx["module"]},
+        "sections": sections,
+        "assessment": assess(results, ctx),
+        "summary": {k: n for k in ORDER if (n := sum(1 for r in results if r[1] == k))},
+    }
+
+
+# ---- Text ------------------------------------------------------------------
+
+def print_threat(t):
+    print("   Cybersecurity view:")
+    print(wrap("Attack", t["attack"]))
+    print(wrap("Attacker", t["attacker"]))
+    print(wrap("Impact", ", ".join(t["impact"])))
+    print(wrap("STRIDE", t["stride"]))
+    print(wrap("CWE", t["cwe"]))
+
+
+def print_assessment(a, profile):
+    print("######## SECURITY ASSESSMENT ########\n")
+    print(f"Overall risk: {a['overall_risk']}   (score {a['score']:g} - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)\n")
+
+    print("Who can exploit it (by attacker access):")
+    for row in a["by_access"]:
+        print(f"   {row['label']:<16}: {row['issues']} issue(s)" +
+              (f" + {row['info']} info" if row["info"] else "") +
+              (f"  [{', '.join(row['checks'])}]" if row["checks"] else ""))
     print()
 
     print("What's at risk (CIA triad):")
-    for c, name in CIA_NAMES.items():
-        areas = sorted({r[0] for r in issues if r[1] != "INFO" and c in threat_for(r[0], ctx).get("cia", "")})
+    for name, areas in a["cia"].items():
         print(f"   {name:<16}: " + (", ".join(areas) if areas else "no issues found"))
     print()
 
     print("Fix first (highest risk):")
-    top = sorted((r for r in issues if r[1] in ("HIGH", "MEDIUM")), key=lambda r: ORDER[r[1]])
-    seen = set()
-    n = 0
-    for title, level, msg, fix in top:
-        key = (title, fix)
-        if key in seen:
-            continue
-        seen.add(key)
-        n += 1
-        print(textwrap.fill(f"{n}. [{level}] {msg}", width=100, initial_indent="   ", subsequent_indent="      "))
-        if fix:
-            print(textwrap.fill(f"-> {fix}", width=100, initial_indent="      ", subsequent_indent="         "))
-        if n == 5:
-            break
-    if n == 0:
+    for n, f in enumerate(a["fix_first"], 1):
+        print(textwrap.fill(f"{n}. [{f['level']}] {f['message']}", width=100,
+                            initial_indent="   ", subsequent_indent="      "))
+        if f["fix"]:
+            print(textwrap.fill(f"-> {f['fix']}", width=100, initial_indent="      ", subsequent_indent="         "))
+    if not a["fix_first"]:
         print("   Nothing urgent - only low-risk or informational items.")
     print()
 
     print("Scope / limits:")
-    if ctx["analog"]:
-        unseen = ("the enclosure, PCB layout, or the parent board this module plugs into" if ctx["module"]
-                  else "the enclosure or PCB layout")
-        print(textwrap.fill(f"This is a netlist-only review of an analog board (no firmware to attack). It can't "
-                            f"see {unseen}. Treat findings as places to check on the physical board.",
-                            width=100, initial_indent="   ", subsequent_indent="   ") + "\n")
+    if profile["analog_only"]:
+        print(textwrap.fill(a["scope"], width=100, initial_indent="   ", subsequent_indent="   ") + "\n")
     else:
         print("   This is a netlist-only review. It can't see firmware settings (secure boot, read-out")
         print("   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places")
         print("   to check, and confirm them against the firmware and the physical board.\n")
 
 
-def main():
-    if len(sys.argv) != 2:
-        print(__doc__)
-        sys.exit(1)
-
-    try:
-        components, nets = load_netlist(sys.argv[1])
-    except FileNotFoundError:
-        sys.exit(f"Error: file not found: {sys.argv[1]}")
-    except (ValueError, IndexError) as e:
-        sys.exit(f"Error: could not read {sys.argv[1]}: {e}")
-    if not components or not nets:
-        sys.exit(f"Error: {sys.argv[1]} has no components or nets, so nothing can be checked.\n"
-                 "The export probably failed - e.g. KiCad couldn't find the project's symbol libraries. "
-                 "Open the schematic in KiCad, fix any missing symbols, and export the netlist again.")
-    print(f"Loaded {len(components)} components and {len(nets)} nets")
-
-    digital = digital_signals(nets)
-    if digital:
-        print(f"Board profile: {len(digital)} digital-looking signals found.\n")
+def print_text(report):
+    print(f"Loaded {report['components']} components and {report['nets']} nets")
+    profile = report["board_profile"]
+    if not profile["analog_only"]:
+        print(f"Board profile: {profile['digital_signals']} digital-looking signals found.\n")
     else:
         print("Board profile: no digital interfaces detected (looks analog-only).")
         print("               Digital checks will mostly say 'nothing found' - see the analog checks.\n")
 
-    ctx = {"analog": not digital, "module": interface_points(components, nets)[1]}
-    counts = defaultdict(int)
-    results = []
-    for section, rules in (("DIGITAL CHECKS", DIGITAL_RULES), ("ANALOG CHECKS", ANALOG_RULES)):
-        print(f"######## {section} ########\n")
-        for title, rule in rules:
-            findings = sorted(rule(components, nets), key=lambda f: ORDER[f[0]])
-            print(f"== {title} ==")
-            if not findings:
+    for section in report["sections"]:
+        print(f"######## {section['name']} ########\n")
+        for check in section["checks"]:
+            print(f"== {check['title']} ==")
+            if not check["findings"]:
                 print("   nothing found")
-            for level, msg, fix in findings:
-                counts[level] += 1
-                results.append((title, level, msg, fix))
-                print(f"   [{level:6}] {msg}")
-                if fix:
-                    print(f"            -> {fix}")
-            if any(f[0] != "OK" for f in findings):
-                print_threat(title, ctx)
+            for f in check["findings"]:
+                print(f"   [{f['level']:6}] {f['message']}")
+                if f["fix"]:
+                    print(f"            -> {f['fix']}")
+            if check["threat"]:
+                print_threat(check["threat"])
             print()
 
-    print_assessment(results, ctx)
+    print_assessment(report["assessment"], profile)
 
+    counts = report["summary"]
     if counts:
-        print("Summary: " + ", ".join(f"{k}={counts[k]}" for k in ORDER if counts[k]))
+        print("Summary: " + ", ".join(f"{k}={n}" for k, n in counts.items()))
     else:
         print("Summary: no security findings.")
+
+
+# ---- HTML ------------------------------------------------------------------
+
+HTML_STYLE = """
+:root {
+  --bg: #f6f6f3; --card: #ffffff; --text: #1c1c1e; --muted: #66666d; --border: #e2e2dc;
+  --high: #b42318; --high-bg: #fdecea; --medium: #b54708; --medium-bg: #fef3e2;
+  --low: #8a6a00; --low-bg: #fbf5d8; --info: #1f5fa8; --info-bg: #e8f0fb;
+  --ok: #2b7a3a; --ok-bg: #e7f4ea; --minimal: #2b7a3a; --minimal-bg: #e7f4ea;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141416; --card: #1d1d20; --text: #ececee; --muted: #a0a0a8; --border: #2f2f34;
+    --high: #ff8a80; --high-bg: #3a1d1b; --medium: #ffb066; --medium-bg: #3a2a17;
+    --low: #e6cc5c; --low-bg: #343016; --info: #8ab8ff; --info-bg: #1b2a40;
+    --ok: #7fd18e; --ok-bg: #1a3020; --minimal: #7fd18e; --minimal-bg: #1a3020;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 36px 0 12px; }
+h3 { font-size: 15px; margin: 0 0 10px; }
+.meta { color: var(--muted); margin: 0 0 24px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.risk { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+.risk-level { font-size: 34px; font-weight: 700; line-height: 1; }
+.risk-label { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  white-space: nowrap; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+td { padding: 6px 0; border-top: 1px solid var(--border); vertical-align: top; }
+tr:first-child td { border-top: 0; }
+td.num { text-align: right; white-space: nowrap; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.sub { color: var(--muted); font-size: 12.5px; }
+ol.fixes { margin: 0; padding-left: 22px; }
+ol.fixes li { margin: 0 0 12px; }
+ol.fixes li:last-child { margin-bottom: 0; }
+.fix { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.toolbar { display: flex; justify-content: flex-end; margin: 28px 0 -20px; font-size: 14px; color: var(--muted); }
+.toolbar label { cursor: pointer; user-select: none; }
+details.check { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; }
+details.check > summary { list-style: none; cursor: pointer; padding: 13px 18px; display: flex; gap: 12px;
+  align-items: center; justify-content: space-between; flex-wrap: wrap; font-weight: 600; }
+details.check > summary::-webkit-details-marker { display: none; }
+details.check > summary::before { content: "\\25B8"; color: var(--muted); margin-right: -4px; transition: transform .15s; }
+details.check[open] > summary::before { transform: rotate(90deg); }
+details.check > summary .name { flex: 1; min-width: 200px; }
+.body { padding: 0 18px 16px; }
+ul.findings { list-style: none; margin: 0; padding: 0; }
+ul.findings li { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
+ul.findings li .pill { flex: none; width: 74px; text-align: center; height: fit-content; }
+.msg { overflow-wrap: anywhere; }
+.empty { color: var(--muted); font-size: 14px; padding: 4px 0; }
+.threat { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: var(--bg); font-size: 14px; }
+.threat dl { display: grid; grid-template-columns: 90px 1fr; gap: 6px 12px; margin: 0; }
+.threat dt { color: var(--muted); }
+.threat dd { margin: 0; }
+@media (max-width: 520px) { .threat dl { grid-template-columns: 1fr; gap: 0; } .threat dd { margin-bottom: 8px; } }
+.scope { color: var(--muted); font-size: 14px; margin-top: 36px; }
+.lv-HIGH { color: var(--high); background: var(--high-bg); }
+.lv-MEDIUM { color: var(--medium); background: var(--medium-bg); }
+.lv-LOW { color: var(--low); background: var(--low-bg); }
+.lv-INFO { color: var(--info); background: var(--info-bg); }
+.lv-OK { color: var(--ok); background: var(--ok-bg); }
+.lv-MINIMAL { color: var(--minimal); background: var(--minimal-bg); }
+.risk-level.lv-HIGH, .risk-level.lv-MEDIUM, .risk-level.lv-LOW, .risk-level.lv-MINIMAL { background: none; }
+body.hide-ok li.f-OK, body.hide-ok details.clean { display: none; }
+"""
+
+
+def render_html(report):
+    e = html.escape
+    a = report["assessment"]
+    profile = report["board_profile"]
+
+    def pill(level, text=None):
+        return f'<span class="pill lv-{e(level)}">{e(text or level)}</span>'
+
+    kind = "analog-only board" if profile["analog_only"] else f"{profile['digital_signals']} digital signals"
+    out = [
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'>",
+        "<meta name='viewport' content='width=device-width, initial-scale=1'>",
+        f"<title>Security report - {e(report['netlist'])}</title><style>{HTML_STYLE}</style></head><body><main>",
+        "<h1>Hardware security report</h1>",
+        f"<p class='meta'>{e(report['netlist'])} &middot; {report['components']} components &middot; "
+        f"{report['nets']} nets &middot; {e(kind)}</p>",
+        "<div class='card risk'><div><div class='risk-label'>Overall risk</div>",
+        f"<div class='risk-level lv-{e(a['overall_risk'])}'>{e(a['overall_risk'])}</div>",
+        f"<div class='sub' style='margin-top:6px'>score {a['score']:g} &middot; HIGH=10, MEDIUM=5, LOW=2, INFO=0.5</div>"
+        "</div><div class='pills'>",
+        "".join(pill(k, f"{n} {k}") for k, n in report["summary"].items()) or pill("OK", "no findings"),
+        "</div></div>",
+    ]
+
+    # Who can exploit it / what's at risk
+    rows = "".join(
+        f"<tr><td><strong>{e(r['label'])}</strong><div class='sub'>{e(', '.join(r['checks']) or 'nothing found')}"
+        f"</div></td><td class='num'>{r['issues']} issue(s)" + (f" + {r['info']} info" if r["info"] else "")
+        + "</td></tr>" for r in a["by_access"])
+    cia = "".join(f"<tr><td><strong>{e(name)}</strong><div class='sub'>{e(', '.join(areas) or 'no issues found')}"
+                  f"</div></td><td class='num'>{len(areas)}</td></tr>" for name, areas in a["cia"].items())
+    out += ["<div class='grid'>",
+            f"<div class='card'><h3>Who can exploit it</h3><table>{rows}</table></div>",
+            f"<div class='card'><h3>What's at risk (CIA)</h3><table>{cia}</table></div></div>"]
+
+    out.append("<h2>Fix first</h2><div class='card'>")
+    if a["fix_first"]:
+        out.append("<ol class='fixes'>" + "".join(
+            f"<li>{pill(f['level'])} <span class='msg'>{e(f['message'])}</span>"
+            + (f"<div class='fix'>&rarr; {e(f['fix'])}</div>" if f["fix"] else "") + "</li>"
+            for f in a["fix_first"]) + "</ol>")
+    else:
+        out.append("<p class='empty'>Nothing urgent - only low-risk or informational items.</p>")
+    out.append("</div>")
+
+    out.append("<div class='toolbar'><label><input type='checkbox' id='show-ok'> Show passed checks</label></div>")
+    for section in report["sections"]:
+        out.append(f"<h2>{e(section['name'].title())}</h2>")
+        for check in section["checks"]:
+            levels = [f["level"] for f in check["findings"]]
+            issues = [lv for lv in levels if lv != "OK"]
+            counts = {lv: issues.count(lv) for lv in ORDER if lv in issues}
+            badges = "".join(pill(lv, f"{n} {lv}") for lv, n in counts.items()) or \
+                pill("OK", "passed" if levels else "nothing found")
+            is_open = " open" if any(lv in ("HIGH", "MEDIUM") for lv in levels) else ""
+            clean = "" if issues else " clean"
+            out.append(f"<details class='check{clean}'{is_open}><summary><span class='name'>{e(check['title'])}"
+                       f"</span><span class='pills'>{badges}</span></summary><div class='body'>")
+            if check["findings"]:
+                out.append("<ul class='findings'>" + "".join(
+                    f"<li class='f-{e(f['level'])}'>{pill(f['level'])}<div><div class='msg'>{e(f['message'])}</div>"
+                    + (f"<div class='fix'>&rarr; {e(f['fix'])}</div>" if f["fix"] else "") + "</div></li>"
+                    for f in check["findings"]) + "</ul>")
+            else:
+                out.append("<p class='empty'>Nothing found.</p>")
+            t = check["threat"]
+            if t:
+                out.append("<div class='threat'><dl>" + "".join(
+                    f"<dt>{label}</dt><dd>{e(value)}</dd>" for label, value in (
+                        ("Attack", t["attack"]), ("Attacker", t["attacker"]), ("Impact", ", ".join(t["impact"])),
+                        ("STRIDE", t["stride"]), ("CWE", t["cwe"]))) + "</dl></div>")
+            out.append("</div></details>")
+
+    out += [f"<p class='scope'><strong>Scope:</strong> {e(a['scope'])}</p>",
+            "<p class='scope'>Generated by circuit.py.</p></main>",
+            "<script>(function(){var b=document.getElementById('show-ok');"
+            "function u(){document.body.classList.toggle('hide-ok',!b.checked);}"
+            "b.addEventListener('change',u);u();})();</script></body></html>"]
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------
+# 7. Command line
+# ---------------------------------------------------------------------------
+
+def main():
+    ap = argparse.ArgumentParser(
+        description="Hardware-security checker for KiCad netlists (File -> Export -> Netlist, KiCad format).")
+    ap.add_argument("netlist", help="path to the .net file")
+    ap.add_argument("--json", metavar="FILE",
+                    help="also save the report as JSON (use '-' to print only JSON to the screen)")
+    ap.add_argument("--html", metavar="FILE", help="also save the report as an HTML page")
+    args = ap.parse_args()
+    path = args.netlist
+
+    try:
+        components, nets = load_netlist(path)
+    except FileNotFoundError:
+        sys.exit(f"Error: file not found: {path}")
+    except (ValueError, IndexError) as err:
+        sys.exit(f"Error: could not read {path}: {err}")
+    if not components or not nets:
+        sys.exit(f"Error: {path} has no components or nets, so nothing can be checked.\n"
+                 "The export probably failed - e.g. KiCad couldn't find the project's symbol libraries. "
+                 "Open the schematic in KiCad, fix any missing symbols, and export the netlist again.")
+
+    report = build_report(path, components, nets)
+    if args.json == "-":
+        print(json.dumps(report, indent=2))
+    else:
+        print_text(report)
+
+    for target, content in ((args.json, lambda: json.dumps(report, indent=2) + "\n"),
+                            (args.html, lambda: render_html(report))):
+        if target and target != "-":
+            try:
+                with open(target, "w", encoding="utf-8") as f:
+                    f.write(content())
+            except OSError as err:
+                sys.exit(f"Error: could not write {target}: {err}")
+            print(f"Report saved to {target}", file=sys.stderr)
 
 
 if __name__ == "__main__":

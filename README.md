@@ -26,6 +26,38 @@ python3 circuit.py examples/doorman.net         # smart door opener
 python3 circuit.py examples/pic_programmer.net
 ```
 
+### JSON and HTML reports
+
+Besides the text report, you can save the results as JSON (for scripts and other tools) or as an HTML page (to read in a browser or share):
+
+```bash
+python3 circuit.py examples/doorman.net --html doorman.html     # styled web page
+python3 circuit.py examples/doorman.net --json doorman.json     # machine-readable
+python3 circuit.py examples/doorman.net --json - | jq .assessment   # JSON only, to the screen
+```
+
+The HTML page is a single self-contained file (no internet needed). It shows the overall risk, who can exploit the board, the CIA impact, the top fixes, and every check with its cybersecurity view. It follows your system's light/dark mode. Passed checks are hidden until you tick "Show passed checks".
+
+The JSON has the same content: `components`, `nets`, `board_profile`, `sections` (each check with its `findings` and `threat`), `assessment` (overall risk, score, attacker access, CIA, fix-first list) and a `summary` count per level.
+
+## Chips it knows
+
+On most boards the scanner works from net and pin names alone. For these chips it also knows what specific pins do, so it catches debug and boot pins even when the nets have generic names:
+
+| Chip | Pins it understands |
+|---|---|
+| ESP32, ESP32-S3, ESP32-C3, ESP32-C6 | Boot strap pins, UART0 bootloader console, built-in USB-Serial/JTAG |
+| ESP8266 (ESP-12E/F modules) | GPIO0/GPIO2/GPIO15 boot straps, UART0 |
+| STM32 (all families) | SWD (PA13/PA14), JTAG (PA15/PB3/PB4), BOOT0, USART1 ROM bootloader (PA9/PA10) |
+| RP2040, RP2350 (Raspberry Pi Pico) | SWD, BOOTSEL (QSPI_SS), UART0 on GPIO0/1 |
+| nRF52 series | SWD |
+| ATSAMD21 | SWD (PA30/PA31) |
+| ATmega328P, ATmega32U4 | ISP programming pins, RESET/debugWIRE, UART |
+| ATtiny 2-series | UPDI, I2C |
+| Raspberry Pi Compute Module 5 | UART console, nRPIBOOT, boot EEPROM write-protect |
+
+To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to match, then pin name → what that pin does. Descriptions containing "programming", "debug" or "UART" are treated as debug ports, and "Boot-mode" marks a boot pin.
+
 ## What it checks
 
 **Digital checks**
