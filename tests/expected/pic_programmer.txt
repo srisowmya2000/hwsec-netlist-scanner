@@ -1,0 +1,122 @@
+Loaded 63 components and 111 nets
+Board profile: 3 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface CLOCK-RB6 (programming/debug pin U5.ICSPC/RB6) reaches P2, P3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface DATA-RB7 (programming/debug pin U5.ICSPD/RB7) reaches P2, P3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface VPP/MCLR (programming/debug pin U5.MCLR, U6.GP3/MCLR) reaches P2, P3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   [MEDIUM] Write-protect pin U1.WP is left unconnected
+            -> Most EEPROMs/flash then default to writable, so anyone on the bus can overwrite them. Tie WP high if the contents must be protected.
+   Cybersecurity view:
+      Attack    : Rewrite the boot EEPROM or config memory over its bus to change boot settings,
+                  plant persistent malicious config, or brick the device.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-1233 (security-sensitive hardware control without lock protection)
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] P2 (SUPP28) is wired straight into chip pins U1.SCL, U1.SDA, U5.MCLR, U5.ICSPC/RB6, U5.ICSPD/RB7, U6.GP0 (+3 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] P3 (SUPP40) is wired straight into chip pins U1.SCL, U1.SDA, U5.MCLR, U5.ICSPC/RB6, U5.ICSPD/RB7, U6.GP0 (+3 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (DB9-FEMAL) is wired straight into chip pins U2.11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [OK    ] P1 (CONN_2) signals have clamp/ESD protection (D1)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output VCC_PIC to JP1, P2, P3 comes through Q3 (switch/regulator, can limit a short)
+   [OK    ] Power output VCC to JP1 comes through Q3, U3 (switch/regulator, can limit a short)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply VCC_PIC to U1, U5, U6 is decoupled by C6, C7
+   [OK    ] Supply VCC to U2, U4 is decoupled by C1 and filter L1
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   [INFO  ] Internal trimmers RV1 (1K) set calibration and can be turned by anyone who opens the case
+            -> Seal them with lacquer/tamper paint, or swap for fixed parts after calibration.
+   Cybersecurity view:
+      Attack    : Physical tampering: turning a calibration part quietly shifts gain, thresholds,
+                  voltages or frequency without leaving obvious traces.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering
+      CWE       : CWE-1263 (improper physical access control)
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 50.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 3 issue(s)  [Signal input/output protection]
+   Board access    : 4 issue(s) + 1 info  [Debug interfaces, Trimmers and adjustable parts, Write protection]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces
+   Integrity       : Debug interfaces, Signal input/output protection, Write protection
+   Availability    : Debug interfaces, Signal input/output protection, Write protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface CLOCK-RB6 (programming/debug pin U5.ICSPC/RB6) reaches P2, P3
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [MEDIUM] Write-protect pin U1.WP is left unconnected
+      -> Most EEPROMs/flash then default to writable, so anyone on the bus can overwrite them. Tie
+         WP high if the contents must be protected.
+   3. [MEDIUM] P2 (SUPP28) is wired straight into chip pins U1.SCL, U1.SDA, U5.MCLR, U5.ICSPC/RB6,
+      U5.ICSPD/RB7, U6.GP0 (+3 more)
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=3, MEDIUM=4, INFO=1, OK=5

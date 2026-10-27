@@ -1,0 +1,154 @@
+Loaded 13 components and 14 nets
+Board profile: 8 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface U1 PA13 pin (SWD SWDIO (programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U1 PA14 pin (SWD SWCLK (programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U1 PA9 pin (USART1 TX (ROM bootloader / debug console)) reaches J2
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U2 SWCLK pin (SWD clock (programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U3 PB3 pin (ISP MOSI (programming port, shared with SPI MOSI)) reaches J3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U3 PC6 pin (RESET / debugWIRE (programming/debug pin)) reaches J3
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U4 SWDCLK pin (SWD clock (programming/debug port)) reaches J4
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U5 PA30 pin (SWD SWCLK (programming/debug port)) reaches J4
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface U6 TXD pin (UART0 TX (ROM bootloader / debug console)) reaches J4
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header U4 (nRF52832-QFxx) talks to the board
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   [MEDIUM] Wireless module/header U6 (ESP-12E) talks to the board
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin U1 BOOT0 pin (Boot-mode pin: high at reset = ROM bootloader (firmware can be read or reflashed over UART/USB)) can be driven from SW1
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   [MEDIUM] Boot pin U2 QSPI_SS pin (Boot-mode pin (BOOTSEL): held low at reset = USB bootloader (firmware can be reflashed)) can be driven from SW2
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   [MEDIUM] Boot pin U6 GPIO0 pin (Boot-mode strap: held low at reset = UART download mode (firmware can be reflashed)) can be driven from SW3
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J3 (Conn_01x06) exposes bus signals: ISP MOSI (programming port, shared with SPI MOSI) (Net-(U3-PB3))
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J1 (SWD) is wired straight into chip pins U2.SWCLK, U1.PA13, U1.PA14
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J2 (Conn_01x03) is wired straight into chip pins U1.PA9, U2.GPIO10
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J3 (Conn_01x06) is wired straight into chip pins U3.PB3, U3.PC6
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J4 (Conn_01x04) is wired straight into chip pins U4.SWDCLK, U6.TXD, U5.PA30
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   nothing found
+
+== Supply decoupling (glitch resistance) ==
+   nothing found
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 135.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Remote          : 2 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 4 issue(s) + 1 info  [Exposed SPI/I2C buses, Signal input/output protection]
+   Board access    : 12 issue(s)  [Boot-mode pins, Debug interfaces]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Debug interfaces, Wireless interfaces (remote attack surface)
+   Integrity       : Boot-mode pins, Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface U1 PA13 pin (SWD SWDIO (programming/debug port)) reaches J1
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [HIGH] Debug interface U1 PA9 pin (USART1 TX (ROM bootloader / debug console)) reaches J2
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   3. [MEDIUM] Wireless module/header U4 (nRF52832-QFxx) talks to the board
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+   4. [MEDIUM] Boot pin U1 BOOT0 pin (Boot-mode pin: high at reset = ROM bootloader (firmware can be
+      read or reflashed over UART/USB)) can be driven from SW1
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   5. [MEDIUM] J1 (SWD) is wired straight into chip pins U2.SWCLK, U1.PA13, U1.PA14
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=9, MEDIUM=9, INFO=1

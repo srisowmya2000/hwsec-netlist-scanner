@@ -1,5 +1,7 @@
 # hwsec-netlist-scanner
 
+[![tests](https://github.com/srisowmya2000/hwsec-netlist-scanner/actions/workflows/tests.yml/badge.svg)](https://github.com/srisowmya2000/hwsec-netlist-scanner/actions/workflows/tests.yml)
+
 A small hardware-security checker for KiCad schematics. Give it a KiCad netlist and it flags places where an attacker with physical access could get into the board: exposed debug ports, boot-mode overrides, unprotected power inputs, glitchable supplies, tamperable trimmers and more. Each finding comes with a cybersecurity explanation (attack, attacker access, CIA impact, STRIDE category, CWE ID).
 
 It works on digital boards, analog boards and **mains-powered IoT appliances**. For appliances like a washing machine it also checks the cyber-physical side: which dangerous loads (heater, motor, door lock) the firmware controls, and whether hardware interlocks still keep the machine safe if that firmware is hacked.
@@ -170,6 +172,29 @@ The PCB has every part and connection but no pin names or types, so a few checks
 ######## SECURITY ASSESSMENT ########
 
 Overall risk: MEDIUM   (score 15 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+```
+
+## Tests
+
+The tests use Python's built-in `unittest`, so there's nothing to install. From the project folder:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+They check that:
+- every example board still gives exactly the same report (saved copies in `tests/expected/`)
+- each chip in `KNOWN_PINS` is recognised, using a hand-written test board (`tests/boards/chips.net`)
+- the report is the same on every run
+- the JSON and HTML reports are valid and match the findings
+- bad input (no file, wrong file type) gives a clear error
+
+GitHub runs them on every push, on Python 3.8 and 3.13.
+
+If you change a rule on purpose and the findings change, refresh the saved reports. Then review the changes with `git diff tests/expected` before committing:
+
+```bash
+python3 tests/test_circuit.py --update
 ```
 
 ## Limitations

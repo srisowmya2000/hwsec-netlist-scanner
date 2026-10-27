@@ -1,0 +1,97 @@
+Loaded 114 components and 80 nets
+Board profile: no digital interfaces detected (looks analog-only).
+               Digital checks will mostly say 'nothing found' - see the analog checks.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   nothing found
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [LOW   ] J6 (Out) passes through C4 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J1 (CH1) passes through C5 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J7 (CH1) passes through C14 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J8 (CH1) passes through C23 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J9 (CH1) passes through C32 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD or overvoltage into an input/output to damage or latch up the chip, or
+                  inject an unwanted signal. Unbuffered outputs can also be tapped to monitor the
+                  signal.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Denial of service, Tampering, Information disclosure
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [MEDIUM] Power input +12V from J5 feeds IC1, IC2, IC3, IC4, IC5 directly - no fuse, reverse-polarity diode or TVS
+            -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series diode/P-FET, a TVS and a fuse or PTC.
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply +12V to IC1, IC2, IC3, IC4, IC5 is decoupled by C3, C12, C21, C30, C39
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   [OK    ] 16 front-panel controls (Bass, Mid, Treble, Volume) - user-adjustable by design
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: MEDIUM   (score 15 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 6 issue(s)  [Power input protection, Signal input/output protection]
+   Board access    : 0 issue(s)
+
+What's at risk (CIA triad):
+   Confidentiality : Signal input/output protection
+   Integrity       : Power input protection, Signal input/output protection
+   Availability    : Power input protection, Signal input/output protection
+
+Fix first (highest risk):
+   1. [MEDIUM] Power input +12V from J5 feeds IC1, IC2, IC3, IC4, IC5 directly - no fuse, reverse-
+      polarity diode or TVS
+      -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series
+         diode/P-FET, a TVS and a fuse or PTC.
+
+Scope / limits:
+   This is a netlist-only review of an analog board (no firmware to attack). It can't see the
+   enclosure or PCB layout. Treat findings as places to check on the physical board.
+
+Summary: MEDIUM=1, LOW=5, OK=2

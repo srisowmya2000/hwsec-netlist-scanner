@@ -1,0 +1,176 @@
+Loaded 25 components and 59 nets
+Board profile: 2 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] U3 (ESP32-DEVKITC-32D) is a development board with a built-in USB programming port (USB-serial bridge with auto-reset, or native USB bootloader)
+            -> Anyone with access to the board can plug in a USB cable and dump or replace the firmware. Use a bare module on production boards, or enable secure boot and flash encryption.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header U3 (ESP32-DEVKITC-32D) talks to the board
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin misc_1 (Boot-mode strap: held low at reset = UART download mode (firmware can be reflashed)) can be driven from J5
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J7 (Display) exposes bus signals: dsp_cs, dsp_miso, dsp_miso, dsp_mosi, dsp_mosi, tft_cs
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J1 (Brew Btn) is wired straight into chip pins U3.IO17
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J7 (Display) is wired straight into chip pins U3.IO2, U3.IO4, U3.IO5, U3.IO15, U3.IO18, U3.IO19 (+3 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J5 (Misc 1234) is wired straight into chip pins U3.IO0, U3.IO13, U3.IO34, U3.IO35
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J10 (SSR Boiler) is wired straight into chip pins U3.IO33
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J2 (Steam Btn) is wired straight into chip pins U3.IO16
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [LOW   ] Rail +5VD (made by PS1) is brought out on J7, J11 and also feeds U3, U6, U7
+            -> A short or injected voltage on that pin hits the rail directly. Consider a PTC, series resistor or load switch on connector power pins.
+   [OK    ] Power output +3V3 to J6 comes through U3 (switch/regulator, can limit a short)
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   [MEDIUM] Supply +3V3 to U1, U2, U3 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [OK    ] Supply +5VD to U3, U6, U7 is decoupled by C1
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   [MEDIUM] Firmware-controlled mains loads: Valve (J8) via U4; Pump (J9) via U5 - no hardware interlocks found
+            -> If the firmware is buggy or compromised it can drive these loads unsafely. Add hardware interlocks (door switch, water-level switch, thermal fuse) in series with the dangerous loads.
+   [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through SSR Boiler (J10) (ssr_boiler) - no hardware interlock on this board
+            -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path or a watchdog-driven enable.
+   [LOW   ] Mains input 220V (J3) has no surge protection (MOV/TVS)
+            -> Mains surges can destroy the electronics (denial of service). Add a varistor or TVS.
+   [OK    ] Mains input 220V (J3) is fused (F1)
+   [OK    ] Logic is isolated from mains by isolated supply PS1 and solid-state relays U4, U5
+   Cybersecurity view:
+      Attack    : On a mains appliance a firmware compromise becomes a physical one: malicious or
+                  buggy firmware (e.g. reflashed through an exposed programming port or a connected
+                  Wi-Fi module) can run the heater dry, unlock the door mid-cycle or stall the
+                  motor. Weak mains-entry protection also lets surges destroy the device.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-693 (protection mechanism failure), CWE-1384 (physical/environmental
+                  conditions)
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 64.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Remote          : 1 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 6 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 6 issue(s)  [Boot-mode pins, Debug interfaces, Mains & actuator safety (cyber-physical), Supply decoupling (glitch resistance)]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Debug interfaces, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Integrity       : Boot-mode pins, Debug interfaces, Mains & actuator safety (cyber-physical), Power input protection, Signal input/output protection, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Mains & actuator safety (cyber-physical), Power input protection, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] U3 (ESP32-DEVKITC-32D) is a development board with a built-in USB programming port
+      (USB-serial bridge with auto-reset, or native USB bootloader)
+      -> Anyone with access to the board can plug in a USB cable and dump or replace the firmware.
+         Use a bare module on production boards, or enable secure boot and flash encryption.
+   2. [MEDIUM] Firmware-controlled mains loads: Valve (J8) via U4; Pump (J9) via U5 - no hardware
+      interlocks found
+      -> If the firmware is buggy or compromised it can drive these loads unsafely. Add hardware
+         interlocks (door switch, water-level switch, thermal fuse) in series with the dangerous
+         loads.
+   3. [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through SSR Boiler
+      (J10) (ssr_boiler) - no hardware interlock on this board
+      -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater
+         running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path
+         or a watchdog-driven enable.
+   4. [MEDIUM] Wireless module/header U3 (ESP32-DEVKITC-32D) talks to the board
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+   5. [MEDIUM] Boot pin misc_1 (Boot-mode strap: held low at reset = UART download mode (firmware
+      can be reflashed)) can be driven from J5
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=1, MEDIUM=10, LOW=2, INFO=1, OK=4

@@ -1,0 +1,168 @@
+Loaded 84 components and 221 nets
+Board profile: 70 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [OK    ] GPIO14 (UART0 TX (Linux/bootloader debug console)) is not routed to any header or test point
+   [OK    ] GPIO15 (UART0 RX (Linux/bootloader debug console)) is not routed to any header or test point
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin nRPIBOOT (Forces USB boot (lets the eMMC be reflashed)) can be driven from SW101
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   [OK    ] Write-protect EEPROM_nWP is tied via R104
+
+== Power test points ==
+   [LOW   ] Power rail +3V3_PI exposed on test point(s) TP103
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail +5V exposed on test point(s) TP101, TP102
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   Cybersecurity view:
+      Attack    : Voltage glitching: dip the supply for nanoseconds at the right moment so the CPU
+                  skips an instruction - e.g. a signature check, read-out-protection check or
+                  password compare.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (no protection against voltage/clock glitches), CWE-1332 (fault ->
+                  instruction skip)
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J503 (SPI) exposes bus signals: CS_GPIO18, MISO_GPIO19, MOSI_GPIO20, SCLK_GPIO21
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J501 (GT-HD001B-CNNG1) exposes bus signals: HDMI_PI.SCL, HDMI_PI.SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J802 (Conn_01x22_Female) exposes bus signals: SCL0, SDA0
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J502 (I2C) exposes bus signals: SCL, SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   [OK    ] USB line USB2P.D_N has ESD protection (D701)
+   [OK    ] USB line USB2P.D_P has ESD protection (D701)
+   [OK    ] USB line USB_C.D_N has ESD protection (D101)
+   [OK    ] USB line USB_C.D_P has ESD protection (D101)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J802 (Conn_01x22_Female) is wired straight into chip pins Module302.MIPI0_C_N, Module302.MIPI0_C_P, Module302.MIPI0_D0_N, Module302.MIPI0_D0_P, Module302.MIPI0_D1_N, Module302.MIPI0_D1_P (+4 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J701 (Bus_M.2_Socket_M) is wired straight into chip pins Module302.PCIE_nWAKE, Module302.PCIe_CLK_N, Module302.PCIe_CLK_P, Module302.PCIe_RX_N, Module302.PCIe_RX_P, Module302.PCIe_TX_N (+4 more)
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J601 (JST_SHBM04B-SRSS-TB) is wired straight into chip pins Module301.FAN_PWM, Module301.FAN_TACHO
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J101 (TYPEC-305-ACP16H458): only 2 of 4 signal lines have clamps (D101). Unclamped: CC1 -> Module301, CC2 -> Module301
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [LOW   ] J1 (GLPLX-SMT-188S7): only 8 of 11 signal lines have clamps (U401, U402). Unclamped: J1 K_GREEN pin -> R401, J1 K_YELLOW pin -> R402, J1 VCC pin -> C401
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [LOW   ] USB701 (TYPEC-305-ACP16H458): only 2 of 4 signal lines have clamps (D701). Unclamped: CC1 -> R703, CC2 -> R702
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [OK    ] J501 (GT-HD001B-CNNG1) signals have clamp/ESD protection (D401, D402, D403)
+   [OK    ] J502 (I2C) signals have clamp/ESD protection (D502)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [MEDIUM] Power input +5V from J101, J601 feeds Module301, U405, U602, U701, U702 directly - no fuse, reverse-polarity diode or TVS
+            -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series diode/P-FET, a TVS and a fuse or PTC.
+   [LOW   ] Rail +3V3_PI (made by Module301) is brought out on J1, J502, J503, J802 and also feeds U1
+            -> A short or injected voltage on that pin hits the rail directly. Consider a PTC, series resistor or load switch on connector power pins.
+   [LOW   ] Power input +BATT from CN1 has no fuse, reverse-polarity diode or TVS
+            -> Add reverse-polarity and overvoltage protection at the power entry.
+   [OK    ] Power output HDMI_+5V to J501 comes through U405 (switch/regulator, can limit a short)
+   [OK    ] Power output M2_3V3 to J701 comes through U702 (switch/regulator, can limit a short)
+   [OK    ] Power output VBUS_USB2.0 to USB701 comes through U701 (switch/regulator, can limit a short)
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   [LOW   ] Supply +BATT to Module301 has no decoupling capacitor
+            -> Modules usually carry their own caps, but a 100nF here makes glitching harder.
+   [LOW   ] Supply GPIO_VREF to Module301 has no decoupling capacitor
+            -> Modules usually carry their own caps, but a 100nF here makes glitching harder.
+   [OK    ] Supply +3V3_PI to U1 is decoupled by C503, C601
+   [OK    ] Supply +5V to Module301, U405, U602, U701, U702 is decoupled by C101, C102, C501, C701, C704, C705 (+1 more)
+   [OK    ] Supply M2_3V3 to U703 is decoupled by C707, C708, C709, C710, C711, C712 and filter L701
+   [OK    ] Supply VBUS_USB2.0 to USB701 is decoupled by C702, C703
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: MEDIUM   (score 45 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 9 issue(s) + 4 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 5 issue(s)  [Boot-mode pins, Power test points, Supply decoupling (glitch resistance)]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Power test points, Supply decoupling (glitch resistance)
+   Integrity       : Boot-mode pins, Power input protection, Power test points, Signal input/output protection, Supply decoupling (glitch resistance)
+   Availability    : Power input protection, Signal input/output protection
+
+Fix first (highest risk):
+   1. [MEDIUM] Boot pin nRPIBOOT (Forces USB boot (lets the eMMC be reflashed)) can be driven from
+      SW101
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   2. [MEDIUM] J802 (Conn_01x22_Female) is wired straight into chip pins Module302.MIPI0_C_N,
+      Module302.MIPI0_C_P, Module302.MIPI0_D0_N, Module302.MIPI0_D0_P, Module302.MIPI0_D1_N,
+      Module302.MIPI0_D1_P (+4 more)
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+   3. [MEDIUM] Power input +5V from J101, J601 feeds Module301, U405, U602, U701, U702 directly - no
+      fuse, reverse-polarity diode or TVS
+      -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series
+         diode/P-FET, a TVS and a fuse or PTC.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: MEDIUM=5, LOW=9, INFO=4, OK=16

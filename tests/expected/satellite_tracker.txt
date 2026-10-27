@@ -1,0 +1,157 @@
+Loaded 55 components and 52 nets
+Board profile: 10 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface J5 Pin_4 pin (UART0 RX (ROM bootloader / debug console)) reaches J5
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface J5 Pin_5 pin (UART0 TX (ROM bootloader / debug console)) reaches J5
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface USB D+ (USB D+ of the built-in USB-Serial/JTAG (programming and debug port)) reaches J2
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface USB D- (USB D- of the built-in USB-Serial/JTAG (programming and debug port)) reaches J2
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header U1 (ESP32-C6-WROOM-1-N8) talks to the board
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin GPIO9 (Boot-mode strap: held low at reset = download mode (firmware can be reflashed)) can be driven from J5 (via IC3, DTR), J5 (via IC3, RTS)
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J1 (47286-1001) exposes bus signals: SCL, SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J3 (47286-1001) exposes bus signals: SCL, SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J4 (47286-1001) exposes bus signals: SCL, SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J7 (Conn_01x04_Pin) exposes bus signals: SCL, SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   [OK    ] USB line USB D+ has ESD protection (CR1)
+   [OK    ] USB line USB D- has ESD protection (CR1)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J5 (Conn_01x06_Pin) is wired straight into chip pins U1.TXD0/GPIO16, U1.RXD0/GPIO17
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J8 (Conn_01x04_Pin) is wired straight into chip pins U1.IO18, U1.IO19
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (47286-1001) is wired straight into chip pins U1.IO10, U1.IO11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J3 (47286-1001) is wired straight into chip pins U1.IO10, U1.IO11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J4 (47286-1001) is wired straight into chip pins U1.IO10, U1.IO11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J7 (Conn_01x04_Pin) is wired straight into chip pins U1.IO10, U1.IO11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J2 (USB4105-GF-A): only 2 of 4 signal lines have clamps (CR1). Unclamped: J2 CC1 pin -> R1, J2 CC2 pin -> R2
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [OK    ] J6 (Conn_01x02_Pin) signals have clamp/ESD protection (D1)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output +3V3 to J5, J7, J8 comes through IC9 (switch/regulator, can limit a short)
+   [OK    ] Power output +5V to J1, J3, J4 comes through IC1 (switch/regulator, can limit a short)
+   [OK    ] Power output VBUS to J2 comes through Q1 (switch/regulator, can limit a short)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply +3V3 to U1 is decoupled by C1, C2, C6
+   [OK    ] Supply +5V to U2 is decoupled by C3, C9, C11
+   [OK    ] Supply D1 K pin to IC1 is decoupled by C10 and filter L1
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 84 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Remote          : 1 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 7 issue(s) + 4 info  [Exposed SPI/I2C buses, Signal input/output protection]
+   Board access    : 5 issue(s)  [Boot-mode pins, Debug interfaces]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Debug interfaces, Wireless interfaces (remote attack surface)
+   Integrity       : Boot-mode pins, Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface J5 Pin_4 pin (UART0 RX (ROM bootloader / debug console)) reaches J5
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   2. [HIGH] Debug interface USB D+ (USB D+ of the built-in USB-Serial/JTAG (programming and debug
+      port)) reaches J2
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   3. [MEDIUM] Wireless module/header U1 (ESP32-C6-WROOM-1-N8) talks to the board
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+   4. [MEDIUM] Boot pin GPIO9 (Boot-mode strap: held low at reset = download mode (firmware can be
+      reflashed)) can be driven from J5 (via IC3, DTR), J5 (via IC3, RTS)
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   5. [MEDIUM] J5 (Conn_01x06_Pin) is wired straight into chip pins U1.TXD0/GPIO16, U1.RXD0/GPIO17
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=4, MEDIUM=8, LOW=1, INFO=4, OK=9

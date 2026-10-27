@@ -1,0 +1,22 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Oldest supported version and a current one.
+        python-version: ["3.8", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      # uv can install old Python versions (like 3.8) that setup-python no longer offers on new runners.
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run tests
+        run: uv run --no-project python -m unittest discover -s tests -v

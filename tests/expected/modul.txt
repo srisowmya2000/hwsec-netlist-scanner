@@ -1,0 +1,88 @@
+Loaded 39 components and 43 nets
+Board profile: no digital interfaces detected (looks analog-only).
+               Digital checks will mostly say 'nothing found' - see the analog checks.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   nothing found
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [LOW   ] Module ports BLUE, COUT, CSYNC-OUT, CVBSOUT, GREEN, RED, YOUT go through C58, C59, C60, R30, R39, R40 (+1 more) with no clamp diodes
+            -> Fine if the parent board protects its connectors; otherwise add clamps here.
+   Cybersecurity view:
+      Attack    : Push ESD or overvoltage into an input/output to damage or latch up the chip, or
+                  inject an unwanted signal. Unbuffered outputs can also be tapped to monitor the
+                  signal.
+      Attacker  : Via parent board - these are module ports, not connectors; exposure depends on
+                  that board
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Denial of service, Tampering, Information disclosure
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   nothing found
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply U20 VCC pin to U20 is decoupled by C54 and filter L2
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   [OK    ] Crystal X3 (4.433618MHz) for U20 is not reachable from any connector or test point (frequency tunable via CV1 - see Trimmers)
+
+== Trimmers and adjustable parts ==
+   [INFO  ] Internal trimmers CV1 (5/30pF, tunes crystal X3), POT1 (100K) set calibration and can be turned by anyone who opens the case
+            -> Seal them with lacquer/tamper paint, or swap for fixed parts after calibration.
+   Cybersecurity view:
+      Attack    : Physical tampering: turning a calibration part quietly shifts gain, thresholds,
+                  voltages or frequency without leaving obvious traces.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering
+      CWE       : CWE-1263 (improper physical access control)
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: LOW   (score 2.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 0 issue(s)
+   Via parent board: 1 issue(s)  [Signal input/output protection]
+   Board access    : 0 issue(s) + 1 info  [Trimmers and adjustable parts]
+
+What's at risk (CIA triad):
+   Confidentiality : Signal input/output protection
+   Integrity       : Signal input/output protection
+   Availability    : Signal input/output protection
+
+Fix first (highest risk):
+   Nothing urgent - only low-risk or informational items.
+
+Scope / limits:
+   This is a netlist-only review of an analog board (no firmware to attack). It can't see the
+   enclosure, PCB layout, or the parent board this module plugs into. Treat findings as places to
+   check on the physical board.
+
+Summary: LOW=1, INFO=1, OK=2

@@ -1,0 +1,163 @@
+Loaded 41 components and 59 nets
+Board profile: 5 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface RXD (UART0 RX (ROM bootloader / debug console)) reaches J5
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface TXD (UART0 TX (ROM bootloader / debug console)) reaches J4
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface USB_D+ (USB D+ of the built-in USB-Serial/JTAG (programming and debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface USB_D- (USB D- of the built-in USB-Serial/JTAG (programming and debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [OK    ] BUS_TX (debug-looking signal) is not routed to any header or test point
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header U1 (ESP32-S3-WROOM-1) talks to the board
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Boot-mode pins ==
+   [MEDIUM] Boot pin FLASH (Boot-mode strap: held low at reset = UART/USB download mode (firmware can be reflashed)) can be driven from SW2
+            -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+   Cybersecurity view:
+      Attack    : Hold the boot pin/switch to put the chip in recovery or USB-boot mode, skipping
+                  the normal boot chain to read the storage or load attacker firmware.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege, Information disclosure
+      CWE       : CWE-1263 (improper physical access control)
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   [MEDIUM] USB line USB_D+ goes to a connector with no ESD protection
+            -> Add a TVS/ESD diode array close to the connector.
+   [MEDIUM] USB line USB_D- goes to a connector with no ESD protection
+            -> Add a TVS/ESD diode array close to the connector.
+   Cybersecurity view:
+      Attack    : Discharge ESD or a surge device ('USB killer') into the port to damage the chip
+                  behind it.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Availability
+      STRIDE    : Denial of service
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J5 (RX Test Pad) is wired straight into chip pins U1.RXD0
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J4 (TX Test Pad) is wired straight into chip pins U1.TXD0
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J2 (Terminal) is wired straight into chip pins U1.IO40, U1.IO41
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (USB_C_Receptacle_USB2.0) is wired straight into chip pins U1.IO19, U1.IO20
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] JP2 (SolderJumper_2_Open): only 1 of 2 signal lines have clamps (D2). Unclamped: JP2 B pin -> C8
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [OK    ] J7 (BUS RX Test Pad) signals have clamp/ESD protection (D2)
+   [OK    ] JP1 (Bus power Jumper) signals have clamp/ESD protection (D6)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output +3.3V to J2, J3 comes through U2 (switch/regulator, can limit a short)
+   [OK    ] Power input +5V from J1 has protection (D1)
+   [OK    ] Power output +24V Bus to J6, JP1 comes through Q1 (switch/regulator, can limit a short)
+   [OK    ] Power input VCC from J2 has protection (D5)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply +3.3V to D3, U1 is decoupled by C2, C6, C7 and filter L1
+   [OK    ] Supply D1 K pin to U2 is decoupled by C3, C4
+
+== Mains & actuator safety (cyber-physical) ==
+   [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through Terminal (J2) (RELAY_WIRE1, RELAY_WIRE2) - no hardware interlock on this board
+            -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path or a watchdog-driven enable.
+   Cybersecurity view:
+      Attack    : On a mains appliance a firmware compromise becomes a physical one: malicious or
+                  buggy firmware (e.g. reflashed through an exposed programming port or a connected
+                  Wi-Fi module) can run the heater dry, unlock the door mid-cycle or stall the
+                  motor. Weak mains-entry protection also lets surges destroy the device.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-693 (protection mechanism failure), CWE-1384 (physical/environmental
+                  conditions)
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 87 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Remote          : 1 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 7 issue(s)  [Signal input/output protection, USB ESD protection]
+   Board access    : 6 issue(s)  [Boot-mode pins, Debug interfaces, Mains & actuator safety (cyber-physical)]
+
+What's at risk (CIA triad):
+   Confidentiality : Boot-mode pins, Debug interfaces, Wireless interfaces (remote attack surface)
+   Integrity       : Boot-mode pins, Debug interfaces, Mains & actuator safety (cyber-physical), Signal input/output protection, Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Mains & actuator safety (cyber-physical), Signal input/output protection, USB ESD protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface RXD (UART0 RX (ROM bootloader / debug console)) reaches J5
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   2. [HIGH] Debug interface USB_D+ (USB D+ of the built-in USB-Serial/JTAG (programming and debug
+      port)) reaches J1
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   3. [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through Terminal (J2)
+      (RELAY_WIRE1, RELAY_WIRE2) - no hardware interlock on this board
+      -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater
+         running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path
+         or a watchdog-driven enable.
+   4. [MEDIUM] Wireless module/header U1 (ESP32-S3-WROOM-1) talks to the board
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+   5. [MEDIUM] Boot pin FLASH (Boot-mode strap: held low at reset = UART/USB download mode (firmware
+      can be reflashed)) can be driven from SW2
+      -> Fine for dev boards. On products, remove the switch or lock boot mode with OTP/secure boot.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=4, MEDIUM=9, LOW=1, OK=9

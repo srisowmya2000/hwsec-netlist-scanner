@@ -1,0 +1,153 @@
+Loaded 62 components and 82 nets
+Board profile: 9 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Programming header ISP1 (AVRISP-6) carries MISO, MOSI, RESET, SCK
+            -> Anyone with access can read out or reprogram the chip. Remove the header on production boards and set the lock/read-protection bits.
+   [OK    ] TXD (debug-looking signal) is not routed to any header or test point
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Wireless module/header JP1 (BT Header) talks to the board over UART (BT-RX, BT-TX)
+            -> This is a remote attack surface: anyone in radio range can reach the firmware. Require pairing/authentication, validate every command, and keep the module's firmware updated.
+   Cybersecurity view:
+      Attack    : Connect to the Bluetooth/Wi-Fi/radio link from nearby - no physical access needed
+                  - and send commands, replay traffic, or exploit bugs in the firmware's command
+                  handling to take over the device.
+      Attacker  : Remote - within radio range, no physical access needed
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Information disclosure, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-319 (cleartext
+                  transmission)
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] JP3A1 (THERM) exposes bus signals: THERM_CS
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] ISP1 (AVRISP-6) exposes bus signals: MISO, MOSI, SCK
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [LOW   ] ISP1 (AVRISP-6) passes through R1 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J5 (PWR_SW) passes through C14, F1 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] JP1 (BT Header) passes through R16, R17, R18, R19 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] J2 (JACK) passes through C4, F1 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [LOW   ] Power input VCC from ISP1, J1, J7, JP1, JP3B1 has no fuse, reverse-polarity diode or TVS
+            -> Add reverse-polarity and overvoltage protection at the power entry.
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   nothing found
+
+== Mains & actuator safety (cyber-physical) ==
+   [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through SSR Button (JP2) (SSR_SW); SSR LED (JP3) (SSR_SIG); SSR CTRL (JP4) (SSR_SIG) - no hardware interlock on this board
+            -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path or a watchdog-driven enable.
+   Cybersecurity view:
+      Attack    : On a mains appliance a firmware compromise becomes a physical one: malicious or
+                  buggy firmware (e.g. reflashed through an exposed programming port or a connected
+                  Wi-Fi module) can run the heater dry, unlock the door mid-cycle or stall the
+                  motor. Weak mains-entry protection also lets surges destroy the device.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-693 (protection mechanism failure), CWE-1384 (physical/environmental
+                  conditions)
+
+== Clock / crystal ==
+   [OK    ] Crystal Y1 (CRYSTALHC49US) is not reachable from any connector or test point
+
+== Trimmers and adjustable parts ==
+   [INFO  ] Internal trimmers RV1 (10K) set calibration and can be turned by anyone who opens the case
+            -> Seal them with lacquer/tamper paint, or swap for fixed parts after calibration.
+   Cybersecurity view:
+      Attack    : Physical tampering: turning a calibration part quietly shifts gain, thresholds,
+                  voltages or frequency without leaving obvious traces.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering
+      CWE       : CWE-1263 (improper physical access control)
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 31.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Remote          : 1 issue(s)  [Wireless interfaces (remote attack surface)]
+   External        : 5 issue(s) + 2 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 2 issue(s) + 1 info  [Debug interfaces, Mains & actuator safety (cyber-physical), Trimmers and adjustable parts]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces, Wireless interfaces (remote attack surface)
+   Integrity       : Debug interfaces, Mains & actuator safety (cyber-physical), Power input protection, Signal input/output protection, Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Mains & actuator safety (cyber-physical), Power input protection, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Programming header ISP1 (AVRISP-6) carries MISO, MOSI, RESET, SCK
+      -> Anyone with access can read out or reprogram the chip. Remove the header on production
+         boards and set the lock/read-protection bits.
+   2. [MEDIUM] Firmware drives an external power load (relay/SSR/heater/motor) through SSR Button
+      (JP2) (SSR_SW); SSR LED (JP3) (SSR_SIG); SSR CTRL (JP4) (SSR_SIG) - no hardware interlock on
+      this board
+      -> If the firmware hangs, is buggy or is compromised, the load can stay on (e.g. a heater
+         running away). Add an independent hardware cutoff: thermal fuse/thermostat in the load path
+         or a watchdog-driven enable.
+   3. [MEDIUM] Wireless module/header JP1 (BT Header) talks to the board over UART (BT-RX, BT-TX)
+      -> This is a remote attack surface: anyone in radio range can reach the firmware. Require
+         pairing/authentication, validate every command, and keep the module's firmware updated.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=1, MEDIUM=2, LOW=5, INFO=3, OK=2

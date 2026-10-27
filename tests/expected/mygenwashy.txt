@@ -1,0 +1,132 @@
+Loaded 54 components and 66 nets
+Board profile: 18 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface UPDI (UPDI programming/debug pin) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] J13 (Conn_01x05_Socket) exposes bus signals: I2C SCL (9), I2C SDA (8)
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J17 (NTC 5k) is wired straight into chip pins U1.PB2
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J13 (Conn_01x05_Socket) is wired straight into chip pins U1.PB0, U1.PB1
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (PRG_01x03_Pin) is wired straight into chip pins U1.~{RESET}/PA0
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J12 (TACHO) passes through R4 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [LOW   ] Rail +5V (made by PS1) is brought out on J13 and also feeds U6
+            -> A short or injected voltage on that pin hits the rail directly. Consider a PTC, series resistor or load switch on connector power pins.
+   [OK    ] Power output +3V3 to J1, J13, J17 comes through U6 (switch/regulator, can limit a short)
+   Cybersecurity view:
+      Attack    : Reverse the plug, apply overvoltage or a surge on the power input to destroy the
+                  board. A controllable bench supply on that input also makes voltage glitching
+                  easy.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply +3V3 to U1 is decoupled by C1, C2, C9
+   [OK    ] Supply +5V to U6 is decoupled by C5, C6, C7, C8
+
+== Mains & actuator safety (cyber-physical) ==
+   [INFO  ] Loads switched by firmware alone (no interlock in their path): STATOR (J10) via Q1
+            -> Confirm none of these can create a dangerous state (e.g. motor or drain running with the door open) if the firmware misbehaves.
+   [OK    ] Mains input 230V_IN (J16) is fused (F2)
+   [OK    ] Mains input 230V_IN (J16) has surge protection (D5)
+   [OK    ] Logic is isolated from mains by isolated supply PS1 and optocouplers U3, U4, U5
+   [OK    ] Hardware interlocks that work without firmware: LOW_LEVEL (J6) -> K6; HIGH_LEVEL (J7) -> K7; DOOR_INTERLOCK (J9) -> K9
+   [OK    ] Loads blocked in hardware by an interlock: DRAIN PUMP (J2) via K1, gated by LOW_LEVEL (J6), HIGH_LEVEL (J7); HEATER (J3) via K2, gated by LOW_LEVEL (J6); WATER INLET 1 (J4) via K3, gated by HIGH_LEVEL (J7); WATER INLET 2 (J5) via K4, gated by HIGH_LEVEL (J7); DOOR LOCK (J8) via K1, K5, K8, gated by LOW_LEVEL (J6), HIGH_LEVEL (J7), DOOR_INTERLOCK (J9)
+   Cybersecurity view:
+      Attack    : On a mains appliance a firmware compromise becomes a physical one: malicious or
+                  buggy firmware (e.g. reflashed through an exposed programming port or a connected
+                  Wi-Fi module) can run the heater dry, unlock the door mid-cycle or stall the
+                  motor. Weak mains-entry protection also lets surges destroy the device.
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-693 (protection mechanism failure), CWE-1384 (physical/environmental
+                  conditions)
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 30 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 5 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 1 issue(s) + 1 info  [Debug interfaces, Mains & actuator safety (cyber-physical)]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces
+   Integrity       : Debug interfaces, Power input protection, Signal input/output protection
+   Availability    : Debug interfaces, Power input protection, Signal input/output protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface UPDI (UPDI programming/debug pin) reaches J1
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [MEDIUM] J17 (NTC 5k) is wired straight into chip pins U1.PB2
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=1, MEDIUM=3, LOW=2, INFO=2, OK=8

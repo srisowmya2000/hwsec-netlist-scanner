@@ -1,0 +1,99 @@
+Loaded 25 components and 42 nets
+Board profile: 5 digital-looking signals found.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface TCK-CCLK (debug-looking signal) reaches J2, P1
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface TDI-DIN (debug-looking signal) reaches J2, P1
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface TDI-DIN-D0 (debug-looking signal) reaches J1
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface TMS-PROG (debug-looking signal) reaches J2, P1
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface TMS-PROG-D2 (debug-looking signal) reaches J1
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Board access - case opened, probes or wires on the PCB
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   nothing found
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   nothing found
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [LOW   ] J1 (DB25MALE): only 1 of 7 signal lines have clamps (D1). Unclamped: CLK-D1 -> R10, CTRL-D3 -> R8, DONE-SELECT* -> R4, TD0-PROG-D4 -> R6 (+2 more)
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [LOW   ] J2 (DB9MALE) passes through R11, R12, R13, R14 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   [LOW   ] P1 (CONN_6) passes through R11, R12, R13, R14 only - no clamp diodes
+            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : External - just plug something into a connector, no need to open the case
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power input PWR_3,3-5V from J2, P1 has protection (D2)
+
+== Supply decoupling (glitch resistance) ==
+   [OK    ] Supply VCC to U1, U2 is decoupled by C1
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   nothing found
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 56 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   External        : 3 issue(s)  [Signal input/output protection]
+   Board access    : 5 issue(s)  [Debug interfaces]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces
+   Integrity       : Debug interfaces, Signal input/output protection
+   Availability    : Debug interfaces, Signal input/output protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface TCK-CCLK (debug-looking signal) reaches J2, P1
+      -> Remove the header/pad on production boards or disable the console in firmware.
+
+Scope / limits:
+   This is a netlist-only review. It can't see firmware settings (secure boot, read-out
+   protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
+   to check, and confirm them against the firmware and the physical board.
+
+Summary: HIGH=5, LOW=3, OK=2
