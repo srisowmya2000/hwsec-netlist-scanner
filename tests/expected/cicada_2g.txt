@@ -98,10 +98,6 @@ Board profile: 10 digital-looking signals found.
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
    [MEDIUM] P1 (SK-C793) is wired straight into chip pins U4.SIM_VDD
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
-   [LOW   ] J5 (DNP U.FL) passes through C6, R12 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
-   [LOW   ] J4 (U.FL) passes through C9, R12 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
    [OK    ] J3 (USB_OTG) signals have clamp/ESD protection (U2)
    Cybersecurity view:
       Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
@@ -126,7 +122,7 @@ Board profile: 10 digital-looking signals found.
       CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
 
 == Supply decoupling (glitch resistance) ==
-   [MEDIUM] Supply 2v8 to U4, U5 has no decoupling capacitor
+   [MEDIUM] Supply 2v8 to U5 has no decoupling capacitor
             -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
    [MEDIUM] Supply 3v3 to U1 has no decoupling capacitor
             -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
@@ -151,11 +147,11 @@ Board profile: 10 digital-looking signals found.
 
 ######## SECURITY ASSESSMENT ########
 
-Overall risk: HIGH   (score 63.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+Overall risk: HIGH   (score 59.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
 
 Who can exploit it (by attacker access):
    Cellular        : 2 issue(s)  [Cellular modem (remote attack surface)]
-   External        : 5 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   External        : 3 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
    Board access    : 7 issue(s) + 2 info  [Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance)]
 
 What's at risk (CIA triad):
@@ -178,7 +174,7 @@ Fix first (highest risk):
    4. [MEDIUM] Power input 5v from J2 feeds U3 directly - no fuse, reverse-polarity diode or TVS
       -> A wrong adapter, reversed plug or deliberate voltage spike reaches the chips. Add a series
          diode/P-FET, a TVS and a fuse or PTC.
-   5. [MEDIUM] Supply 2v8 to U4, U5 has no decoupling capacitor
+   5. [MEDIUM] Supply 2v8 to U5 has no decoupling capacitor
       -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF
          cap close to each supply pin.
 
@@ -187,4 +183,4 @@ Scope / limits:
    protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
    to check, and confirm them against the firmware and the physical board.
 
-Summary: HIGH=2, MEDIUM=6, LOW=6, INFO=3, OK=6
+Summary: HIGH=2, MEDIUM=6, LOW=4, INFO=3, OK=6

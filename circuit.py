@@ -320,6 +320,46 @@ def meaning_of(node, components):
 
 PROG_PIN = re.compile(r"\b(ICSP\w*|PGC\d?|PGD\d?|SWDIO|SWCLK|TCK|TMS|TDI|TDO|nTRST|MCLR|UPDI|PDI_?DATA)\b", re.I)
 
+# Nets whose names contain TX/RX but belong to other kinds of links (Ethernet, radio, CAN...),
+# so a "_TX"/"RXD" in the name alone doesn't make them a debug UART.
+NOT_DEBUG_NET = re.compile(r"(?<![A-Z])(R?G?MII|ETH|ENET|UHF|VHF|[LSX]-?BAND|RF|LNA|ANT|CAN|I2S|LVDS|MIPI|PCIE|"
+                           r"SATA|SERDES|LORA|SPI|GPS|GNSS)", re.I)
+
+# ---- Spacecraft profile ---------------------------------------------------------
+# A satellite can't be opened once it's in orbit: its radio is the way in, and the
+# physical findings matter before launch. Recognised by a satellite-band radio chip
+# plus subsystem names (EPS, ADCS, OBC, UHF...) on the nets.
+
+SAT_RADIO = re.compile(r"AX5\d{3}|SX12\d\d|RFM9\d|RFM69|CC1101|CC112\d|CC1200|SI446\d|ADF70\d\d|AT86RF\d+", re.I)
+SAT_WORDS = re.compile(r"(?<![A-Z0-9])(EPS|ADCS|OBC|UHF|VHF|[LSX]-?BAND|DEPLOY\w*|CUBESAT|SATELLITE|BEACON|OPD|"
+                       r"BACKPLANE|TT&?C)(?![A-Z0-9])", re.I)
+CAN_PIN = re.compile(r"CAN_?(H|L|HI|LO|HIGH|LOW)", re.I)
+RF_CONNECTOR = re.compile(r"COAX|\bSMA\b|U\.?FL|MMCX|IPEX|MHF|\bBNC\b|\bSMB\b", re.I)
+
+_space_cache = [None, None]          # (nets object, result) for the board being checked
+
+
+def spacecraft(components, nets):
+    """{'spacecraft': bool, 'radios': [...], 'stack': [connectors carrying the internal CAN bus], 'words': [...]}"""
+    if _space_cache[0] is nets:
+        return _space_cache[1]
+    radios = sorted(r for r in components if SAT_RADIO.search(part_text(r, components)))
+    words = sorted({m.group(1).upper() for name in nets
+                    for m in SAT_WORDS.finditer(short(name).replace("_", " "))})
+    is_sat = bool(radios) and len(words) >= 2
+    stack = set()
+    if is_sat:
+        for nodes in nets.values():
+            if any(CAN_PIN.fullmatch(pin_name(n)) for n in nodes):
+                stack |= {n["ref"] for n in nodes if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP"}
+    result = {"spacecraft": is_sat, "radios": radios, "stack": sorted(stack), "words": words}
+    _space_cache[0], _space_cache[1] = nets, result
+    return result
+
+
+def is_rf_connector(ref, components):
+    return is_exposed(ref) and bool(RF_CONNECTOR.search(part_text(ref, components)))
+
 
 # Connectors that are a board's normal interface to its host (e.g. a module's "Host" header).
 HOST_CONNECTOR = re.compile(r"\b(HOST|MAIN|MAINBOARD|EXT|EXTERNAL|INTERFACE|UEXT|MIKRO_?BUS)\b", re.I)
@@ -334,7 +374,8 @@ def rule_debug_ports(components, nets):
         prog = [f"{n['ref']}.{pin_name(n)}" for n in nodes if PROG_PIN.search(pin_name(n))]
         if re.search(r"UPDI|ICSP|SWD|JTAG", short(name), re.I) or any("programming" in m for m in meanings):
             prog = prog or [f"{n['ref']}.{pin_name(n)}" for n in nodes if not is_exposed(n["ref"])]
-        if not (pattern.search(name) or meanings or prog):
+        name_hit = pattern.search(name) and not NOT_DEBUG_NET.search(short(name))
+        if not (name_hit or meanings or prog):
             continue
         if name.startswith("unconnected"):
             continue
@@ -348,7 +389,14 @@ def rule_debug_ports(components, nets):
         # A UART that only goes to the board's host/main connector is usually the intended link, not a console.
         host_link = (not meanings and not prog and exposed
                      and all(HOST_CONNECTOR.search(components.get(r, {}).get("value", "")) for r in exposed))
-        if host_link:
+        stack = spacecraft(components, nets)["stack"]
+        if exposed and all(r in stack for r in exposed):
+            findings.append(("INFO", f"{nice_net(name)} ({label}) goes only to the stack connector "
+                             f"{', '.join(exposed)}: an internal link to the satellite's other boards",
+                             "Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised "
+                             "neighbouring board) can use it, so make sure it offers no unauthenticated console, "
+                             "bootloader or debug access."))
+        elif host_link:
             findings.append(("INFO", f"UART {nice_net(name)} goes to the host interface "
                              f"{', '.join(connector_name(r, components) for r in exposed)}",
                              "This looks like the intended link to the main board, not a debug port. Make sure the "
@@ -402,9 +450,18 @@ def rule_wireless(components, nets):
             continue
         if WIRELESS.search(short(name).replace("-", " ").replace("_", " ")):
             for n in nodes:
-                if is_exposed(n["ref"]) or n["ref"] in radios:
+                # an antenna socket (SMA, U.FL...) on a radio's net is just where the antenna plugs in
+                if (is_exposed(n["ref"]) and not is_rf_connector(n["ref"], components)) or n["ref"] in radios:
                     radios[n["ref"]].add(short(name))
     findings = []
+    space = spacecraft(components, nets)
+    for ref in space["radios"] if space["spacecraft"] else []:
+        radios.pop(ref, None)
+        findings.append(("MEDIUM", f"Radio {ref} ({components[ref]['value']}) is the satellite's link to the ground: "
+                         "commands can be sent to it from any ground station in view",
+                         "Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter "
+                         "against replay), keep a safe mode that commands cannot switch off, and limit what can "
+                         "be changed over the air."))
     for ref, sigs in sorted(radios.items()):
         uart = sorted(s for s in sigs if re.search(r"TX|RX", s, re.I))
         link = f" over UART ({', '.join(uart)})" if uart else (f" ({', '.join(sorted(sigs)[:5])})" if sigs else "")
@@ -549,7 +606,7 @@ def rule_exposed_buses(components, nets):
         for n in nodes:
             if is_exposed(n["ref"]):
                 headers[n["ref"]].append(label)
-    return [("INFO", f"{ref} ({components.get(ref, {}).get('value', '')}) exposes bus signals: {', '.join(sorted(sigs))}",
+    return [("INFO", f"{ref} ({components.get(ref, {}).get('value', '')}) exposes bus signals: {', '.join(sorted(set(sigs)))}",
              "Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.")
             for ref, sigs in headers.items()]
 
@@ -740,7 +797,8 @@ def interface_points(components, nets):
             continue
         for n in nodes:
             mechanical = re.match(r"^(MP|SH|SHIELD|MH)\d*$", pin_name(n), re.I)
-            if is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP" and not mechanical:
+            if (is_exposed(n["ref"]) and ref_prefix(n["ref"]) != "TP" and not mechanical
+                    and not is_rf_connector(n["ref"], components)):     # antenna sockets are RF, not signals
                 if name not in points[n["ref"]]:
                     points[n["ref"]].append(name)
     if points:
@@ -768,7 +826,16 @@ def rule_signal_protection(components, nets):
     by_ref = nets_by_ref(nets)
     points, is_module = interface_points(components, nets)
     module_low = []
+    stack = spacecraft(components, nets)["stack"]
+    if stack:
+        findings.append(("INFO", f"Stack connector{'s' if len(stack) > 1 else ''} {short_list(stack)} carr"
+                         f"{'y' if len(stack) > 1 else 'ies'} the satellite's internal buses (CAN, UART...) "
+                         "to its other boards",
+                         "Not reachable in orbit. Before launch, protect these lines against ESD during handling "
+                         "and make sure no board on the stack offers an unauthenticated console or bootloader."))
     for label, net_names in points.items():
+        if label in stack:
+            continue
         direct, series, clamps = [], [], []
         used_nets, clamped_nets = 0, 0
         unclamped = []                  # (net, parts it connects to) for lines without clamps
@@ -780,7 +847,9 @@ def rule_signal_protection(components, nets):
             unclamped_direct = [f"{n['ref']}.{pin_name(n)}" for n in others
                                 if is_active_pin(n) and n["type"] != "power_in" and not is_exposed(n["ref"])]
             series += [n["ref"] for n in others if ref_prefix(n["ref"]) in SERIES_PREFIXES]
-            here = protection_near(net, nets, components, by_ref, label)
+            # CAN transceiver bus pins are built to be wired off the board (with their own ESD protection)
+            here = protection_near(net, nets, components, by_ref, label) + \
+                [n["ref"] for n in others if CAN_PIN.fullmatch(pin_name(n))]
             if here:
                 clamped_nets += 1
                 clamps += here
@@ -884,9 +953,13 @@ def rule_decoupling(components, nets):
     for name, nodes in nets.items():
         if is_ground(name) or name.startswith("unconnected") or name in mains:
             continue
+        # A chip's own power outputs and sense pins aren't supplies that need decoupling here.
         supplied = sorted({n["ref"] for n in nodes
                            if ref_prefix(n["ref"]) not in SERIES_PREFIXES + ("J", "P", "TP")
+                           and n["type"] != "power_out" and not re.search(r"SENSE", pin_name(n), re.I)
                            and (n["type"] == "power_in" or POWER_PIN.match(pin_name(n)))})
+        made_here = {n["ref"] for n in nodes if n["type"] == "power_out"}
+        supplied = [s for s in supplied if s not in made_here]    # a module feeding its own pins internally
         if not supplied:
             continue
         caps = [n["ref"] for n in nodes if ref_prefix(n["ref"]) == "C"]
@@ -895,7 +968,9 @@ def rule_decoupling(components, nets):
             extra = f" and filter {short_list(filters)}" if filters else ""
             findings.append(("OK", f"Supply {nice_net(name)} to {short_list(supplied)} is decoupled by "
                              f"{short_list(caps)}{extra}", ""))
-        elif all(ref_prefix(s) == "MODULE" or is_devboard(s, components) for s in supplied):
+        elif all(ref_prefix(s) == "MODULE" or is_devboard(s, components)
+                 or re.search(r"\bMODULE\b|SYSTEM.IN.PACKAGE|\bSIP\b", components.get(s, {}).get("description", ""),
+                              re.I) for s in supplied):
             findings.append(("LOW", f"Supply {nice_net(name)} to {short_list(supplied)} has no decoupling capacitor",
                              "Modules usually carry their own caps, but a 100nF here makes glitching harder."))
         else:
@@ -1258,7 +1333,21 @@ ANALOG_THREATS = {
 PARENT = "Via parent board - these are module ports, not connectors; exposure depends on that board"
 REMOTE = "Remote - within radio range, no physical access needed"
 CELLULAR = "Cellular - from anywhere over the mobile network (internet, SMS), no physical access needed"
-ACCESS_LEVELS = (CELLULAR, REMOTE, EXTERNAL, PARENT, BOARD)
+GROUND = "Ground station - anyone who can transmit to the satellite while it passes overhead"
+PRELAUNCH = "Before launch - during assembly, testing and integration; out of reach once in orbit"
+ACCESS_LEVELS = (CELLULAR, GROUND, REMOTE, EXTERNAL, PARENT, BOARD, PRELAUNCH)
+
+# On a satellite the radio is the only way in once it's in orbit.
+SPACE_THREATS = {
+    "Wireless interfaces (remote attack surface)": dict(
+        attack="Transmit telecommands from a ground station while the satellite passes overhead: send forged or "
+               "replayed commands, or exploit bugs in command parsing, to take control, change its configuration, "
+               "drain its power or silence its radio.",
+        access=GROUND,
+        stride="Spoofing, Tampering, Denial of service, Elevation of privilege",
+        cwe="CWE-306 (missing authentication for critical function), CWE-294 (authentication bypass by "
+            "capture-replay)"),
+}
 
 CIA_NAMES = {"C": "Confidentiality", "I": "Integrity", "A": "Availability"}
 
@@ -1272,6 +1361,10 @@ def threat_for(title, ctx):
         t.update(ANALOG_THREATS.get(title, {}))
     if ctx["module"] and t.get("access") == EXTERNAL:
         t["access"] = PARENT
+    if ctx.get("space"):
+        t.update(SPACE_THREATS.get(title, {}))
+        if t.get("access") in (EXTERNAL, BOARD, PARENT):
+            t["access"] = PRELAUNCH
     return t
 
 
@@ -1298,7 +1391,8 @@ def assess(results, ctx):
     by_access = []
     for access in ACCESS_LEVELS:
         mine = [r for r in issues if threat_for(r[0], ctx).get("access") == access]
-        if access in (PARENT, REMOTE, CELLULAR) and not mine:
+        optional = (PARENT, REMOTE, CELLULAR, GROUND, PRELAUNCH) + ((EXTERNAL, BOARD) if ctx.get("space") else ())
+        if access in optional and not mine:
             continue
         hits = [r for r in mine if r[1] != "INFO"]
         by_access.append({"access": access, "label": access.split(" - ")[0], "issues": len(hits),
@@ -1325,6 +1419,11 @@ def assess(results, ctx):
 
 
 def scope_text(ctx):
+    if ctx.get("space"):
+        return ("This is a netlist-only review of a spacecraft board. In orbit the radio link is the only way in, "
+                "so the physical-access findings apply before launch (assembly, testing, integration and the "
+                "supply chain). It can't see whether telecommands are authenticated, firmware settings, or PCB "
+                "layout. Treat findings as places to check.")
     if ctx["analog"]:
         unseen = ("the enclosure, PCB layout, or the parent board this module plugs into" if ctx["module"]
                   else "the enclosure or PCB layout")
@@ -1337,7 +1436,8 @@ def scope_text(ctx):
 
 def build_report(path, components, nets):
     digital = digital_signals(nets)
-    ctx = {"analog": not digital, "module": interface_points(components, nets)[1]}
+    space = spacecraft(components, nets)
+    ctx = {"analog": not digital, "module": interface_points(components, nets)[1], "space": space["spacecraft"]}
     sections, results = [], []
     for section, rules in (("DIGITAL CHECKS", DIGITAL_RULES), ("ANALOG CHECKS", ANALOG_RULES)):
         checks = []
@@ -1358,7 +1458,9 @@ def build_report(path, components, nets):
         "netlist": os.path.basename(path),
         "components": len(components),
         "nets": len(nets),
-        "board_profile": {"digital_signals": len(digital), "analog_only": ctx["analog"], "module": ctx["module"]},
+        "board_profile": {"digital_signals": len(digital), "analog_only": ctx["analog"], "module": ctx["module"],
+                          "spacecraft": ctx["space"], "spacecraft_radios": space["radios"] if ctx["space"] else [],
+                          "spacecraft_signals": space["words"] if ctx["space"] else []},
         "sections": sections,
         "assessment": assess(results, ctx),
         "summary": {k: n for k in ORDER if (n := sum(1 for r in results if r[1] == k))},
@@ -1403,7 +1505,7 @@ def print_assessment(a, profile):
     print()
 
     print("Scope / limits:")
-    if profile["analog_only"]:
+    if profile["analog_only"] or profile.get("spacecraft"):
         print(textwrap.fill(a["scope"], width=100, initial_indent="   ", subsequent_indent="   ") + "\n")
     else:
         print("   This is a netlist-only review. It can't see firmware settings (secure boot, read-out")
@@ -1414,7 +1516,12 @@ def print_assessment(a, profile):
 def print_text(report):
     print(f"Loaded {report['components']} components and {report['nets']} nets")
     profile = report["board_profile"]
-    if not profile["analog_only"]:
+    if profile.get("spacecraft"):
+        print(f"Board profile: spacecraft - satellite radio {', '.join(profile['spacecraft_radios'])} and subsystem "
+              f"signals ({', '.join(profile['spacecraft_signals'])}) found.")
+        print("               In orbit the radio link is the only way in; physical-access findings apply "
+              "before launch.\n")
+    elif not profile["analog_only"]:
         print(f"Board profile: {profile['digital_signals']} digital-looking signals found.\n")
     else:
         print("Board profile: no digital interfaces detected (looks analog-only).")
@@ -1526,7 +1633,8 @@ def render_html(report):
     def pill(level, text=None):
         return f'<span class="pill lv-{e(level)}">{e(text or level)}</span>'
 
-    kind = "analog-only board" if profile["analog_only"] else f"{profile['digital_signals']} digital signals"
+    kind = ("spacecraft board" if profile.get("spacecraft") else
+            "analog-only board" if profile["analog_only"] else f"{profile['digital_signals']} digital signals")
     out = [
         "<!doctype html><html lang='en'><head><meta charset='utf-8'>",
         "<meta name='viewport' content='width=device-width, initial-scale=1'>",

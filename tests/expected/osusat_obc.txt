@@ -1,0 +1,169 @@
+Loaded 148 components and 194 nets
+Board profile: spacecraft - satellite radio U2 and subsystem signals (EPS, OBC) found.
+               In orbit the radio link is the only way in; physical-access findings apply before launch.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface SWCLK (SWD SWCLK (programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface SWDIO (SWD SWDIO (programming/debug port)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface SWTRACE (JTAG TDO / SWO trace output (debug)) reaches J1
+            -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production boards and enable code/read protection.
+   [HIGH  ] Debug interface UART3_RX (debug-looking signal) reaches J6
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface UART3_TX (debug-looking signal) reaches J6
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [INFO  ] OBC_EPS_RESET (JTAG nTRST (debug)) goes only to the stack connector J10, J11: an internal link to the satellite's other boards
+            -> Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised neighbouring board) can use it, so make sure it offers no unauthenticated console, bootloader or debug access.
+   [INFO  ] SYSTEM_AUX_UART_RX (debug-looking signal) goes only to the stack connector J10, J11: an internal link to the satellite's other boards
+            -> Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised neighbouring board) can use it, so make sure it offers no unauthenticated console, bootloader or debug access.
+   [INFO  ] SYSTEM_AUX_UART_TX (debug-looking signal) goes only to the stack connector J10, J11: an internal link to the satellite's other boards
+            -> Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised neighbouring board) can use it, so make sure it offers no unauthenticated console, bootloader or debug access.
+   [INFO  ] SYSTEM_MAIN_UART_RX (USART1 TX (ROM bootloader / debug console)) goes only to the stack connector J10, J11: an internal link to the satellite's other boards
+            -> Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised neighbouring board) can use it, so make sure it offers no unauthenticated console, bootloader or debug access.
+   [INFO  ] SYSTEM_MAIN_UART_TX (USART1 RX (ROM bootloader / debug console)) goes only to the stack connector J10, J11: an internal link to the satellite's other boards
+            -> Not reachable in orbit. Before launch, anyone with access to the stack (or a compromised neighbouring board) can use it, so make sure it offers no unauthenticated console, bootloader or debug access.
+   [OK    ] FRAM_WP (JTAG TDI (programming/debug port)) is not routed to any header or test point
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Radio U2 (RFM96W-433S2) is the satellite's link to the ground: commands can be sent to it from any ground station in view
+            -> Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter against replay), keep a safe mode that commands cannot switch off, and limit what can be changed over the air.
+   Cybersecurity view:
+      Attack    : Transmit telecommands from a ground station while the satellite passes overhead:
+                  send forged or replayed commands, or exploit bugs in command parsing, to take
+                  control, change its configuration, drain its power or silence its radio.
+      Attacker  : Ground station - anyone who can transmit to the satellite while it passes overhead
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Denial of service, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-294 (authentication
+                  bypass by capture-replay)
+
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   [OK    ] Write-protect FRAM_WP is tied via R14
+
+== Power test points ==
+   nothing found
+
+== Exposed SPI/I2C buses ==
+   nothing found
+
+== USB ESD protection ==
+   [OK    ] USB line UNPROT_USB_D+ has ESD protection (U12)
+   [OK    ] USB line UNPROT_USB_D- has ESD protection (U12)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J2 (Micro_SD_Card) is wired straight into chip pins U1.PD2, U1.PC8, U1.PC9, U1.PC10, U1.PC11, U1.PC12
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J1 (Conn_ARM_JTAG_SWD_10) is wired straight into chip pins U1.PB3, U1.PA13, U1.PA14
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J6 (Conn_02x02_Odd_Even) is wired straight into chip pins U1.PF6, U1.PF7
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [LOW   ] J4 (USB_C_Receptacle_USB2.0_16P): only 2 of 4 signal lines have clamps (U12). Unclamped: J4 CC1 pin -> R7, J4 CC2 pin -> R12
+            -> Add clamp diodes or a TVS array covering every signal pin on the connector.
+   [INFO  ] Stack connectors J10, J11 carry the satellite's internal buses (CAN, UART...) to its other boards
+            -> Not reachable in orbit. Before launch, protect these lines against ESD during handling and make sure no board on the stack offers an unauthenticated console or bootloader.
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output +3V3 to J1, J2, J6 comes through U10, U11 (switch/regulator, can limit a short)
+   [OK    ] Power input VBUS from J4 has protection (U12)
+   [OK    ] Power input VDD_RADIO from J10, J11 has protection (D11)
+
+== Supply decoupling (glitch resistance) ==
+   [MEDIUM] Supply D3 K pin to U1 has no decoupling capacitor
+            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
+   [OK    ] Supply +3V3 to U1, U3, U4, U5, U6, U7 (+2 more) is decoupled by C1, C2, C3, C4, C5, C6 (+15 more) and filter FB1
+   [OK    ] Supply +BATT to U14, U15 is decoupled by C40, C41, C42, C44, C45, C46
+   [OK    ] Supply RAIL_1_VOUT to U10 is decoupled by C27
+   [OK    ] Supply U10 ~{CE} pin to U11 is decoupled by C29
+   [OK    ] Supply VBUS to U9 is decoupled by C28, C36
+   [OK    ] Supply VDDA to U1 is decoupled by C15, C16 and filter FB1
+   [OK    ] Supply VDD_RADIO to U2 is decoupled by C34, C35
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   [OK    ] Crystal Y1 (25 MHz) for U1 is not reachable from any connector or test point
+   [OK    ] Crystal Y2 (32.768 kHz) for U1 is not reachable from any connector or test point
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 80 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Ground station  : 1 issue(s)  [Wireless interfaces (remote attack surface)]
+   Before launch   : 10 issue(s) + 6 info  [Debug interfaces, Signal input/output protection, Supply decoupling (glitch resistance)]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Integrity       : Debug interfaces, Signal input/output protection, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Availability    : Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface)
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface SWCLK (SWD SWCLK (programming/debug port)) reaches J1
+      -> Anyone with access can read out or reprogram the chip. Remove the header/pad on production
+         boards and enable code/read protection.
+   2. [HIGH] Debug interface UART3_RX (debug-looking signal) reaches J6
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   3. [MEDIUM] Radio U2 (RFM96W-433S2) is the satellite's link to the ground: commands can be sent
+      to it from any ground station in view
+      -> Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter against
+         replay), keep a safe mode that commands cannot switch off, and limit what can be changed
+         over the air.
+   4. [MEDIUM] J2 (Micro_SD_Card) is wired straight into chip pins U1.PD2, U1.PC8, U1.PC9, U1.PC10,
+      U1.PC11, U1.PC12
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+   5. [MEDIUM] Supply D3 K pin to U1 has no decoupling capacitor
+      -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF
+         cap close to each supply pin.
+
+Scope / limits:
+   This is a netlist-only review of a spacecraft board. In orbit the radio link is the only way in,
+   so the physical-access findings apply before launch (assembly, testing, integration and the
+   supply chain). It can't see whether telecommands are authenticated, firmware settings, or PCB
+   layout. Treat findings as places to check.
+
+Summary: HIGH=5, MEDIUM=5, LOW=1, INFO=6, OK=16

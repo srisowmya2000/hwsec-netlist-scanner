@@ -94,14 +94,6 @@ Board profile: 16 digital-looking signals found.
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
    [MEDIUM] P1 (SK-C793) is wired straight into chip pins U1.USIM_VDD
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
-   [LOW   ] J5 (IPX) passes through C6, R12 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
-   [LOW   ] J4 (IPX) passes through R13 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
-   [LOW   ] J6 (IPX) passes through R15 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
-   [LOW   ] J8 (IPX) passes through C13, L1 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
    [OK    ] J3 (USB_OTG) signals have clamp/ESD protection (U2)
    Cybersecurity view:
       Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
@@ -126,17 +118,8 @@ Board profile: 16 digital-looking signals found.
       CWE       : CWE-1384 (physical/environmental conditions), CWE-1247 (voltage glitches)
 
 == Supply decoupling (glitch resistance) ==
-   [MEDIUM] Supply 1v8 to U1 has no decoupling capacitor
-            -> Supply glitches and noise reach the chip unfiltered (easier fault injection). Add a 100nF cap close to each supply pin.
    [OK    ] Supply 5v to U3 is decoupled by C5, C14, C18, C19
    [OK    ] Supply V_BATT to U1 is decoupled by C7, C8, C15, C16, C17, C20 (+4 more) and filter L4
-   Cybersecurity view:
-      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
-                  so fault injection works more reliably.
-      Attacker  : Board access - case opened, probes or wires on the PCB
-      Impact    : Confidentiality, Integrity
-      STRIDE    : Tampering, Elevation of privilege
-      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
 
 == Mains & actuator safety (cyber-physical) ==
    nothing found
@@ -149,16 +132,16 @@ Board profile: 16 digital-looking signals found.
 
 ######## SECURITY ASSESSMENT ########
 
-Overall risk: HIGH   (score 66.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+Overall risk: HIGH   (score 53.5 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
 
 Who can exploit it (by attacker access):
    Cellular        : 1 issue(s)  [Cellular modem (remote attack surface)]
-   External        : 8 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
-   Board access    : 5 issue(s) + 2 info  [Boot-mode pins, Debug interfaces, SIM card, Supply decoupling (glitch resistance)]
+   External        : 4 issue(s) + 1 info  [Exposed SPI/I2C buses, Power input protection, Signal input/output protection]
+   Board access    : 4 issue(s) + 2 info  [Boot-mode pins, Debug interfaces, SIM card]
 
 What's at risk (CIA triad):
-   Confidentiality : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, SIM card, Supply decoupling (glitch resistance)
-   Integrity       : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, Power input protection, SIM card, Signal input/output protection, Supply decoupling (glitch resistance)
+   Confidentiality : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, SIM card
+   Integrity       : Boot-mode pins, Cellular modem (remote attack surface), Debug interfaces, Power input protection, SIM card, Signal input/output protection
    Availability    : Cellular modem (remote attack surface), Debug interfaces, Power input protection, SIM card, Signal input/output protection
 
 Fix first (highest risk):
@@ -186,4 +169,4 @@ Scope / limits:
    protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
    to check, and confirm them against the firmware and the physical board.
 
-Summary: HIGH=2, MEDIUM=7, LOW=5, INFO=3, OK=6
+Summary: HIGH=2, MEDIUM=6, LOW=1, INFO=3, OK=6

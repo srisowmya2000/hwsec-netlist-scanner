@@ -267,6 +267,41 @@ class OutputFormats(unittest.TestCase):
         self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", page)
 
 
+class Spacecraft(unittest.TestCase):
+    """Satellite boards: the radio is the way in once in orbit; physical access means before launch."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.oresat = report_for(os.path.join(EXAMPLES, "oresat_c3.net"))
+        cls.osusat = report_for(os.path.join(EXAMPLES, "osusat_obc.net"))
+
+    def test_only_satellites_get_the_profile(self):
+        self.assertTrue(self.oresat["board_profile"]["spacecraft"])
+        self.assertTrue(self.osusat["board_profile"]["spacecraft"])
+        for board in boards():
+            if os.path.basename(board) not in ("oresat_c3.net", "osusat_obc.net"):
+                with self.subTest(board=os.path.basename(board)):
+                    self.assertFalse(report_for(board)["board_profile"]["spacecraft"])
+
+    def test_radio_is_the_ground_link(self):
+        self.assertTrue(any("link to the ground" in m for m in messages(self.oresat, "MEDIUM")))
+        access = [row["label"] for row in self.osusat["assessment"]["by_access"]]
+        self.assertIn("Ground station", access)
+        self.assertIn("Before launch", access)
+        self.assertNotIn("Board access", access)
+
+    def test_stack_links_are_internal(self):
+        info = messages(self.osusat, "INFO")
+        self.assertTrue(any(m.startswith("SYSTEM_MAIN_UART_TX") and "stack connector" in m for m in info))
+        self.assertFalse(any("SYSTEM_MAIN_UART" in m for m in messages(self.osusat, "HIGH")))
+        self.assertTrue(any("SWDIO" in m for m in messages(self.osusat, "HIGH")))      # real debug port stays
+
+    def test_ethernet_and_radio_lines_are_not_debug_ports(self):
+        high = messages(self.oresat, "HIGH")
+        self.assertFalse(any("MII" in m or "UHF_TX" in m for m in high))
+        self.assertTrue(any("TCK" in m for m in high))                                 # JTAG test points stay
+
+
 class CommandLine(unittest.TestCase):
     def test_no_arguments(self):
         result = run_cli()

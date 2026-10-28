@@ -1,0 +1,229 @@
+Loaded 503 components and 546 nets
+Board profile: spacecraft - satellite radio U16, U44 and subsystem signals (LBAND, OPD, UHF) found.
+               In orbit the radio link is the only way in; physical-access findings apply before launch.
+
+######## DIGITAL CHECKS ########
+
+== Debug interfaces ==
+   [HIGH  ] Debug interface C3-UART-RX (debug-looking signal) reaches J1, J8
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface C3-UART-TX (debug-looking signal) reaches J1, J8
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface J8 DEBUG-0 pin (debug-looking signal) reaches J8, TP106
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U1B TCK pin (debug-looking signal) reaches TP93
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U1B TDI pin (debug-looking signal) reaches TP91
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U1B TDO pin (debug-looking signal) reaches TP92
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   [HIGH  ] Debug interface U1B TMS pin (debug-looking signal) reaches TP94
+            -> Remove the header/pad on production boards or disable the console in firmware.
+   Cybersecurity view:
+      Attack    : Attach a USB-UART, JTAG, SWD or ICSP adapter to dump the firmware, pull out keys
+                  and passwords, get a root shell, or flash modified firmware (e.g. a backdoor).
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Information disclosure, Tampering, Elevation of privilege
+      CWE       : CWE-1191 (debug interface with improper access control), CWE-1263 (physical
+                  access)
+
+== Wireless interfaces (remote attack surface) ==
+   [MEDIUM] Radio U16 (AT86RF215) is the satellite's link to the ground: commands can be sent to it from any ground station in view
+            -> Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter against replay), keep a safe mode that commands cannot switch off, and limit what can be changed over the air.
+   [MEDIUM] Radio U44 (AT86RF215) is the satellite's link to the ground: commands can be sent to it from any ground station in view
+            -> Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter against replay), keep a safe mode that commands cannot switch off, and limit what can be changed over the air.
+   Cybersecurity view:
+      Attack    : Transmit telecommands from a ground station while the satellite passes overhead:
+                  send forged or replayed commands, or exploit bugs in command parsing, to take
+                  control, change its configuration, drain its power or silence its radio.
+      Attacker  : Ground station - anyone who can transmit to the satellite while it passes overhead
+      Impact    : Confidentiality, Integrity, Availability
+      STRIDE    : Spoofing, Tampering, Denial of service, Elevation of privilege
+      CWE       : CWE-306 (missing authentication for critical function), CWE-294 (authentication
+                  bypass by capture-replay)
+
+== Cellular modem (remote attack surface) ==
+   nothing found
+
+== SIM card ==
+   nothing found
+
+== Boot-mode pins ==
+   nothing found
+
+== Write protection ==
+   [MEDIUM] Write-protect EEPROM_WP reachable from J7
+            -> Someone could change the protection state from outside.
+   [MEDIUM] Write-protect Net-(U30-WP) reachable from TP160
+            -> Someone could change the protection state from outside.
+   Cybersecurity view:
+      Attack    : Rewrite the boot EEPROM or config memory over its bus to change boot settings,
+                  plant persistent malicious config, or brick the device.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Integrity, Availability
+      STRIDE    : Tampering, Denial of service
+      CWE       : CWE-1233 (security-sensitive hardware control without lock protection)
+
+== Power test points ==
+   [LOW   ] Power rail SYS_RTC_1P8V exposed on test point(s) TP83
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail VBUSP-RADIO exposed on test point(s) TP17
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail 3.3V exposed on test point(s) TP81
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail 5V exposed on test point(s) TP110
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail Net-(U1B-USB0_DRVVBUS) exposed on test point(s) TP139
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail Net-(U1B-USB1_DRVVBUS) exposed on test point(s) TP72
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail Net-(U1B-USB1_VBUS) exposed on test point(s) TP100
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail VBUS exposed on test point(s) TP13
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail VBUSP exposed on test point(s) TP12
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   [LOW   ] Power rail VDD exposed on test point(s) TP80
+            -> Easy access for voltage-glitch attacks. Consider removing or covering on production boards.
+   Cybersecurity view:
+      Attack    : Voltage glitching: dip the supply for nanoseconds at the right moment so the CPU
+                  skips an instruction - e.g. a signature check, read-out-protection check or
+                  password compare.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (no protection against voltage/clock glitches), CWE-1332 (fault ->
+                  instruction skip)
+
+== Exposed SPI/I2C buses ==
+   [INFO  ] TP5 (Test-Point) exposes bus signals: LBAND_LO_SCLK
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] TP168 (Test-Point) exposes bus signals: I2C2_SYS_SCL
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] TP169 (Test-Point) exposes bus signals: I2C2_SYS_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J1 (TFM-120-01-L-D-RA) exposes bus signals: OPD_SCL, OPD_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] TP164 (Test-Point) exposes bus signals: OPD_SCL
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] TP165 (Test-Point) exposes bus signals: OPD_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   [INFO  ] J7 (GRPB041VWVN-RC) exposes bus signals: I2C0_SCL, I2C0_SDA
+            -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
+   Cybersecurity view:
+      Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data
+                  or keys in an EEPROM, or impersonate a peripheral.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Information disclosure, Spoofing, Tampering
+      CWE       : CWE-319 (cleartext transmission of sensitive data), CWE-1263 (physical access)
+
+== USB ESD protection ==
+   [OK    ] USB line USB_CLI_DM has ESD protection (U11)
+   [OK    ] USB line USB_CLI_DP has ESD protection (U11)
+
+######## ANALOG CHECKS ########
+
+== Signal input/output protection ==
+   [MEDIUM] J8 (SM14B-SHLS-TF) is wired straight into chip pins U1.UART0_RXD_A12, U1.UART0_TXD_B12
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [MEDIUM] J7 (GRPB041VWVN-RC) is wired straight into chip pins U1.EEPROM_WP_M2, U1.PMIC_SCL_D10, U1.PMIC_SDA_D11, U1.I2C0_SCL_C10, U1.I2C0_SDA_C11
+            -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
+   [INFO  ] Stack connector J1 carries the satellite's internal buses (CAN, UART...) to its other boards
+            -> Not reachable in orbit. Before launch, protect these lines against ESD during handling and make sure no board on the stack offers an unauthenticated console or bootloader.
+   [OK    ] J5 (DM3BT-DSF-PEJS) signals have clamp/ESD protection (D13)
+   [OK    ] J6 (Conn_01x02) signals have clamp/ESD protection (D13)
+   Cybersecurity view:
+      Attack    : Push ESD, overvoltage or crafted signals into a connector to damage or latch up
+                  the chip, or cause faults that change its behaviour. Unprotected outputs can also
+                  be tapped.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Integrity, Availability
+      STRIDE    : Denial of service, Tampering
+      CWE       : CWE-1384 (improper handling of physical/environmental conditions)
+
+== Power input protection ==
+   [OK    ] Power output 3.3V to J5 comes through Q1, U1 (switch/regulator, can limit a short)
+   [OK    ] Power input VBUS from J1 has protection (D1)
+
+== Supply decoupling (glitch resistance) ==
+   [LOW   ] Supply U1A PMIC_BAT_SENSE pin to U1 has no decoupling capacitor
+            -> Modules usually carry their own caps, but a 100nF here makes glitching harder.
+   [LOW   ] Supply U1A SYS_VDD_1P8V@1 pin to U1 has no decoupling capacitor
+            -> Modules usually carry their own caps, but a 100nF here makes glitching harder.
+   [OK    ] Supply OPD_PWR to U12, U37 is decoupled by C129, C131
+   [OK    ] Supply SYS_RTC_1P8V to U10 is decoupled by C78
+   [OK    ] Supply VBUSP-RADIO to U36 is decoupled by C123, C124
+   [OK    ] Supply VIN_USB to U1, U11 is decoupled by C30, C35
+   [OK    ] Supply WDT-VIN to U28 is decoupled by C107, C108, C109
+   [OK    ] Supply 3.3V to U8, U9, U13, U39, U42 is decoupled by C16, C17, C18, C21, C22, C23 (+5 more)
+   [OK    ] Supply 3.3V-L to U4, U16, U17, X1 is decoupled by C4, C8, C39, C49, C50, C51 (+8 more) and filter L2, L22
+   [OK    ] Supply 3.3V-U to U18, U22, U25, U26, U27, U40 (+2 more) is decoupled by C46, C57, C58, C67, C68, C89 (+11 more) and filter L26
+   [OK    ] Supply 5V to U1 is decoupled by C13, C14, C15, C34, C65, C93 and filter L1
+   [OK    ] Supply 5V-R to U20, U47 is decoupled by C60, C126, C127, C128, C164 and filter FB2, FB3, L21
+   [OK    ] Supply Q1 D pin to U24, U30 is decoupled by C116, C117
+   [OK    ] Supply U24 VBKP pin to U24 is decoupled by C115
+   [OK    ] Supply U31 VIN pin to U31 is decoupled by C5, C130 and filter L23
+   [OK    ] Supply U38 VIN pin to U38 is decoupled by C53, C137 and filter L24
+   [OK    ] Supply VBUS to U34, U35 is decoupled by C74, C100, C101
+   [OK    ] Supply VBUSP to U6 is decoupled by C6, C7
+   Cybersecurity view:
+      Attack    : Without local capacitors, supply glitches and EM pulses reach the chip unfiltered,
+                  so fault injection works more reliably.
+      Attacker  : Before launch - during assembly, testing and integration; out of reach once in
+                  orbit
+      Impact    : Confidentiality, Integrity
+      STRIDE    : Tampering, Elevation of privilege
+      CWE       : CWE-1247 (voltage/clock glitches), CWE-1332 (fault -> instruction skip)
+
+== Mains & actuator safety (cyber-physical) ==
+   nothing found
+
+== Clock / crystal ==
+   [OK    ] Crystal Y1 (ECS-240-12-30BQ-AEN-TR) for U1 is not reachable from any connector or test point
+   [OK    ] Crystal Y2 (ABS07-32.768KHZ-T) for U1 is not reachable from any connector or test point
+
+== Trimmers and adjustable parts ==
+   nothing found
+
+######## SECURITY ASSESSMENT ########
+
+Overall risk: HIGH   (score 128 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+
+Who can exploit it (by attacker access):
+   Ground station  : 2 issue(s)  [Wireless interfaces (remote attack surface)]
+   Before launch   : 23 issue(s) + 8 info  [Debug interfaces, Exposed SPI/I2C buses, Power test points, Signal input/output protection, Supply decoupling (glitch resistance), Write protection]
+
+What's at risk (CIA triad):
+   Confidentiality : Debug interfaces, Power test points, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface)
+   Integrity       : Debug interfaces, Power test points, Signal input/output protection, Supply decoupling (glitch resistance), Wireless interfaces (remote attack surface), Write protection
+   Availability    : Debug interfaces, Signal input/output protection, Wireless interfaces (remote attack surface), Write protection
+
+Fix first (highest risk):
+   1. [HIGH] Debug interface C3-UART-RX (debug-looking signal) reaches J1, J8
+      -> Remove the header/pad on production boards or disable the console in firmware.
+   2. [MEDIUM] Radio U16 (AT86RF215) is the satellite's link to the ground: commands can be sent to
+      it from any ground station in view
+      -> Authenticate every telecommand (e.g. an HMAC with per-satellite keys and a counter against
+         replay), keep a safe mode that commands cannot switch off, and limit what can be changed
+         over the air.
+   3. [MEDIUM] Write-protect EEPROM_WP reachable from J7
+      -> Someone could change the protection state from outside.
+   4. [MEDIUM] J8 (SM14B-SHLS-TF) is wired straight into chip pins U1.UART0_RXD_A12,
+      U1.UART0_TXD_B12
+      -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp
+         diodes/TVS at the connector.
+
+Scope / limits:
+   This is a netlist-only review of a spacecraft board. In orbit the radio link is the only way in,
+   so the physical-access findings apply before launch (assembly, testing, integration and the
+   supply chain). It can't see whether telecommands are authenticated, firmware settings, or PCB
+   layout. Treat findings as places to check.
+
+Summary: HIGH=7, MEDIUM=6, LOW=12, INFO=8, OK=24

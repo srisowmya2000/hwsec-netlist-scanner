@@ -52,7 +52,7 @@ Board profile: 2 digital-looking signals found.
    nothing found
 
 == Exposed SPI/I2C buses ==
-   [INFO  ] J7 (Display) exposes bus signals: dsp_cs, dsp_miso, dsp_miso, dsp_mosi, dsp_mosi, tft_cs
+   [INFO  ] J7 (Display) exposes bus signals: dsp_cs, dsp_miso, dsp_mosi, tft_cs
             -> Anything on this bus (sensors, EEPROMs, flash) can be read or spoofed by a device plugged in here.
    Cybersecurity view:
       Attack    : Sniff or inject bus traffic with a logic analyser / Bus Pirate: read sensor data

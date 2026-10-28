@@ -4,7 +4,7 @@
 
 A small hardware-security checker for KiCad schematics. Give it a KiCad netlist and it flags places where an attacker with physical access could get into the board: exposed debug ports, boot-mode overrides, unprotected power inputs, glitchable supplies, tamperable trimmers and more. Each finding comes with a cybersecurity explanation (attack, attacker access, CIA impact, STRIDE category, CWE ID).
 
-It works on digital boards, analog boards and **mains-powered IoT appliances**. For appliances like a washing machine it also checks the cyber-physical side: which dangerous loads (heater, motor, door lock) the firmware controls, and whether hardware interlocks still keep the machine safe if that firmware is hacked.
+It works on digital boards, analog boards, **mains-powered IoT appliances** and **satellites**. For appliances like a washing machine it also checks the cyber-physical side: which dangerous loads (heater, motor, door lock) the firmware controls, and whether hardware interlocks still keep the machine safe if that firmware is hacked. For satellite boards it switches to a spacecraft view: in orbit the radio link is the only way in, so physical-access findings are reported as risks before launch.
 
 It's a single Python file with no dependencies (Python 3.8+).
 
@@ -27,6 +27,7 @@ python3 circuit.py examples/mygenwashy.net      # washing machine
 python3 circuit.py examples/doorman.net         # smart door opener
 python3 circuit.py examples/espgaggia.net       # espresso machine (heater appliance)
 python3 circuit.py examples/cicada_2g.net       # 2G cellular IoT module
+python3 circuit.py examples/oresat_c3.net       # satellite flight computer
 python3 circuit.py examples/pic_programmer.net
 ```
 
@@ -93,6 +94,8 @@ To add a chip, add an entry to `KNOWN_PINS` in `circuit.py`: the part value to m
 
 The report ends with a **security assessment**: overall risk rating, findings by attacker access (external vs. case opened), impact on confidentiality/integrity/availability, and the top fixes.
 
+**Spacecraft profile.** When a board has a satellite-band radio chip (AT86RF215, AX5043, SX12xx, RFM9x...) and subsystem names on its nets (EPS, ADCS, OBC, UHF, L-band...), the report treats it as a satellite. The radio is reported as the link to the ground, reachable from any ground station in view. Links to the satellite's other boards over the CAN stack connector are reported as internal links, not debug ports. And physical-access findings are grouped as "before launch" (assembly, testing and integration), since nobody can touch the board in orbit.
+
 ## Results on the example boards
 
 | Board | Type | Overall risk | Main findings |
@@ -105,6 +108,8 @@ The report ends with a **security assessment**: overall risk rating, findings by
 | `cicada_4g.net` | EnAccess Cicada 4G IoT module (SIM7600) | **HIGH** | Modem USB port on a connector; modem boot pin (BOOT_CFG0) on a test pad; removable SIM |
 | `espgaggia.net` | Espresso machine controller (230 V, ESP32 DevKitC, Wi-Fi) | **HIGH** | Dev board with a USB programming port; boiler heater on an external SSR driven by firmware alone; pump and valve switched by SSRs with no hardware interlock |
 | `open_vapors.net` | Reflow oven controller (ATmega32U4, Bluetooth) | **HIGH** | AVR ISP programming header; Bluetooth module header (remote attack surface); heater SSR driven by firmware with no hardware cutoff |
+| `oresat_c3.net` | OreSat C3 satellite flight computer (OSD3358, UHF and L-band radios) | **HIGH** | JTAG test points and a debug UART connector (before launch); two radios as the ground command link; EEPROM write-protect reachable from a header |
+| `osusat_obc.net` | OSUSat CubeSat flight computer (STM32H743, LoRa radio) | **HIGH** | SWD programming header and a spare UART header (before launch); LoRa radio as the ground command link; inter-board UART and CAN links on the stack connectors |
 | `pic_programmer.net` | PIC programmer | **HIGH** | Programming pins on the sockets (by design); EEPROM write-protect unconnected; serial data line unclamped |
 | `sonde_xilinx.net` | JTAG cable | **HIGH** | JTAG lines on the connectors (by design); partial clamp protection |
 | `CM5_MINIMA_3.net` | Raspberry Pi CM5 carrier | MEDIUM | Boot pin on a switch; USB-C power input with no TVS/fuse; power rails on test points |
@@ -147,6 +152,14 @@ A cellular modem changes who can attack a device: Wi-Fi and Bluetooth need someo
 - **Modem boot pin on a test pad (MEDIUM, Cicada 4G):** the SIM7600's BOOT_CFG0 is on TP1. Shorting it at power-up puts the modem in download mode, so its firmware can be replaced.
 - **2G-only modem (LOW, Cicada 2G):** 2G phones never check that the cell tower is real, so a cheap fake base station can intercept or inject traffic. 2G networks are also being switched off.
 - **Removable SIM (LOW):** both Cicada boards use a SIM card holder. Elixir has a soldered eSIM, but also a nano-SIM slot on the same lines. A SIM taken out can use the data plan, or impersonate the device if the backend trusts the SIM.
+
+### Case study: satellites (OreSat and OSUSat)
+
+A satellite flips the usual threat model. Once it's in orbit nobody can open the case, so the radio is the only way in, and the debug ports matter before launch, during assembly, testing and integration.
+
+- **Ground command link (MEDIUM):** OreSat's C3 card has two AT86RF215 radios (UHF and L-band) and OSUSat's flight computer has a LoRa radio. Anyone with a ground station in view can transmit to them, so every telecommand needs authentication with replay protection, and a safe mode that commands can't switch off.
+- **Debug access before launch (HIGH):** OreSat brings the processor's JTAG pins out to test points and its debug UART to a connector (J8); OSUSat has an SWD programming header (J1) and a spare UART header (J6). They're needed for development, and they're the place to tamper with a flight board on its way to the launch.
+- **Internal links (INFO):** OSUSat's main and auxiliary UARTs go only to the stack connectors (J10, J11) that join it to the satellite's other boards. One of them is also the STM32's ROM bootloader port, so a compromised neighbouring board could reflash this one.
 
 ### Case study: espresso machine (espgaggia)
 
@@ -234,6 +247,8 @@ The netlists in [`examples/`](examples/) were exported from third-party open des
 | `elixir.net` | Golioth Elixir, open-source cellular IoT device | [golioth/elixir-hw](https://github.com/golioth/elixir-hw) by Golioth, CERN-OHL-P-2.0. Exported from its KiCad schematic with KiCad 10. |
 | `cicada_2g.net`, `cicada_4g.net` | Okra Cicada 2G and 4G IoT communication modules | [EnAccess/Cicada-GSM-HW](https://github.com/EnAccess/Cicada-GSM-HW), MIT license ("Copyright (c) 2019 EnAccess Foundation"). Exported from its KiCad schematics with KiCad 10. |
 | `espgaggia.net` | espgaggia, ESP32 controller for a Gaggia Classic espresso machine | [rvt/espgaggia](https://github.com/rvt/espgaggia) by R. van Twisk, MIT license ("Copyright (c) 2021 R. van Twisk"). Exported from its KiCad schematic with KiCad 10. |
+| `oresat_c3.net` | OreSat C3 (Command, Communication and Control) card, the flight computer of the OreSat CubeSats | [oresat/oresat-c3-hardware](https://github.com/oresat/oresat-c3-hardware) by the Portland State Aerospace Society (OreSat), CERN-OHL-S-2.0. Exported from its KiCad schematic (commit 738a430) with KiCad 10. This netlist stays under CERN-OHL-S-2.0. |
+| `osusat_obc.net` | OSUSat on-board computer (OBC) v1 | [OSUSat/cubesat](https://github.com/OSUSat/cubesat) by OSUSat (Oregon State University), MIT license ("Copyright (c) 2025 OSUSat"). Exported from its KiCad schematic (commit afa93ab) with KiCad 10. |
 | `open_vapors.net` | Open Vapors reflow oven controller, Rev 2 | [baldengineer/Open-Vapors](https://github.com/baldengineer/Open-Vapors) by baldengineer, MIT license (the project's LICENSE reads "Copyright (c) 2013-2021 Damien P. George"). Generated from the KiCad PCB with `tools/pcb2net.py`. |
 
 ## License

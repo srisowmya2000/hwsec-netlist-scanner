@@ -158,10 +158,6 @@ Board profile: 32 digital-looking signals found.
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
    [MEDIUM] J13 (104224-0820) is wired straight into chip pins U3.SIM_CLK, U3.SIM_IO, U3.SIM_RST, U19.CLK, U19.I/O, U19.RST
             -> Noise, ESD or an injected signal hits the chip directly. Add a series resistor and clamp diodes/TVS at the connector.
-   [LOW   ] J15 (u.FL) passes through C14, L2 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
-   [LOW   ] J14 (u.FL) passes through C28, L4 only - no clamp diodes
-            -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
    [LOW   ] J4 (BAT_CHG_ALT) passes through C7, R14, R84 only - no clamp diodes
             -> The series part limits current but won't stop ESD or overvoltage. Add clamp diodes or a TVS at the connector.
    [OK    ] J9 (Screw_Terminal_01x02) signals have clamp/ESD protection (D9, D14)
@@ -225,12 +221,12 @@ Board profile: 32 digital-looking signals found.
 
 ######## SECURITY ASSESSMENT ########
 
-Overall risk: HIGH   (score 203 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
+Overall risk: HIGH   (score 199 - HIGH=10, MEDIUM=5, LOW=2, INFO=0.5 each)
 
 Who can exploit it (by attacker access):
    Cellular        : 1 issue(s)  [Cellular modem (remote attack surface)]
    Remote          : 2 issue(s)  [Wireless interfaces (remote attack surface)]
-   External        : 16 issue(s) + 6 info  [Exposed SPI/I2C buses, Signal input/output protection]
+   External        : 14 issue(s) + 6 info  [Exposed SPI/I2C buses, Signal input/output protection]
    Board access    : 16 issue(s)  [Boot-mode pins, Debug interfaces, Power test points, SIM card, Supply decoupling (glitch resistance)]
 
 What's at risk (CIA triad):
@@ -263,4 +259,4 @@ Scope / limits:
    protection, disabled consoles), the enclosure, or PCB layout. Treat findings as places
    to check, and confirm them against the firmware and the physical board.
 
-Summary: HIGH=8, MEDIUM=22, LOW=5, INFO=6, OK=28
+Summary: HIGH=8, MEDIUM=22, LOW=3, INFO=6, OK=28
